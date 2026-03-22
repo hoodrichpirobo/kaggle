@@ -5,7 +5,7 @@
 **Course 1 of 17** — the starting point.
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Programming-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-programming)
-[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)]()
+[![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)]()
 
 </div>
 
@@ -19,7 +19,7 @@
 | 2 | Functions | [Done](./FunctionsExercise.py) |
 | 3 | Data Types | [Done](./DataTypesExercise.py) |
 | 4 | Conditions and Conditional Statements | [Done](./ConditionsAndConditionalStatementsExercise.py) |
-| 5 | Intro to Lists | — |
+| 5 | Intro to Lists | [Done](./IntroToListsExercise.py) |
 
 ---
 
@@ -34,6 +34,14 @@
 ---
 
 <div align="center">
+
+## Certificate of Completion
+
+<img src="./Cux%20Prada%20-%20Intro%20to%20Programming.png" alt="Kaggle Certificate — Intro to Programming" width="600">
+
+*Completed March 22, 2026*
+
+---
 
 [Back to Roadmap](../README.md)
 

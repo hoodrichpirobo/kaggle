@@ -10,7 +10,7 @@
 
 ---
 
-`▓░░░░░░░░░░░░░░░░░░░ 1 in progress · 0 / 17 complete`
+`█░░░░░░░░░░░░░░░░░░░ 0 in progress · 1 / 17 complete`
 
 </div>
 
@@ -28,7 +28,7 @@ Every exercise is solved, committed, and documented here.
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 1 | [Intro to Programming](./IntroToProgramming/) | 5h | **In Progress** |
+| 1 | [Intro to Programming](./IntroToProgramming/) | 5h | [**Complete**](./IntroToProgramming/Cux%20Prada%20-%20Intro%20to%20Programming.png) |
 | 2 | Python | 5h | — |
 
 ### Phase 2 — Data
