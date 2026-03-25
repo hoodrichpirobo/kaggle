@@ -17,7 +17,7 @@
 |:-:|--------|:--------:|
 | 1 | Hello, Python | [Done](./HelloPythonExercise.py) |
 | 2 | Functions and Getting Help | [Done](./FunctionsAndGettingHelpExercise.py) |
-| 3 | Booleans and Conditionals | — |
+| 3 | Booleans and Conditionals | [Done](./BooleansAndConditionalsExercise.py) |
 | 4 | Lists | — |
 | 5 | Loops and List Comprehensions | — |
 | 6 | Strings and Dictionaries | — |
