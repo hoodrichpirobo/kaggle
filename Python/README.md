@@ -19,7 +19,7 @@
 | 2 | Functions and Getting Help | [Done](./FunctionsAndGettingHelpExercise.py) |
 | 3 | Booleans and Conditionals | [Done](./BooleansAndConditionalsExercise.py) |
 | 4 | Lists | [Done](./ListsExercise.py) |
-| 5 | Loops and List Comprehensions | — |
+| 5 | Loops and List Comprehensions | [Done](./LoopsAndListComprehensionsExercise.py) |
 | 6 | Strings and Dictionaries | — |
 | 7 | Working with External Libraries | — |
 
