@@ -20,7 +20,7 @@
 | 3 | Booleans and Conditionals | [Done](./BooleansAndConditionalsExercise.py) |
 | 4 | Lists | [Done](./ListsExercise.py) |
 | 5 | Loops and List Comprehensions | [Done](./LoopsAndListComprehensionsExercise.py) |
-| 6 | Strings and Dictionaries | — |
+| 6 | Strings and Dictionaries | [Done](./StringsAndDictionariesExercise.py) |
 | 7 | Working with External Libraries | — |
 
 ---
