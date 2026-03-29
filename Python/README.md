@@ -5,7 +5,7 @@
 **Course 2 of 17** — leveling up the fundamentals.
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Python-20BEFF.svg)](https://www.kaggle.com/learn/python)
-[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)]()
+[![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)]()
 
 </div>
 
@@ -21,7 +21,7 @@
 | 4 | Lists | [Done](./ListsExercise.py) |
 | 5 | Loops and List Comprehensions | [Done](./LoopsAndListComprehensionsExercise.py) |
 | 6 | Strings and Dictionaries | [Done](./StringsAndDictionariesExercise.py) |
-| 7 | Working with External Libraries | — |
+| 7 | Working with External Libraries | [Done](./WorkingWithExternalLibrariesExercise.py) |
 
 ---
 
@@ -34,6 +34,18 @@
 - For loops, while loops, and list comprehensions
 - String methods, formatting, and dictionaries
 - Imports, operator overloading, and using external libraries
+
+---
+
+<div align="center">
+
+## Certificate of Completion
+
+<img src="./Cux%20Prada%20-%20Python.png" width="600" alt="Certificate of Completion — Python">
+
+Completed March 2026
+
+</div>
 
 ---
 
