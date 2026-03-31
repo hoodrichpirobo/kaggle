@@ -16,7 +16,7 @@
 | # | Lesson | Exercise |
 |:-:|--------|:--------:|
 | 1 | Creating, Reading, and Writing | [Done](./CreatingReadingAndWritingExercise.py) |
-| 2 | Indexing, Selecting & Assigning | — |
+| 2 | Indexing, Selecting & Assigning | [Done](./IndexingSelectingAndAssigningExercise.py) |
 | 3 | Summary Functions and Maps | — |
 | 4 | Grouping and Sorting | — |
 | 5 | Data Types and Missing Values | — |
