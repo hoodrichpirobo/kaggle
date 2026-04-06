@@ -10,7 +10,7 @@
 
 ---
 
-`████░░░░░░░░░░░░░░░░ 1 in progress · 2 / 17 complete`
+`█████░░░░░░░░░░░░░░░ 1 in progress · 2 / 17 complete`
 
 </div>
 

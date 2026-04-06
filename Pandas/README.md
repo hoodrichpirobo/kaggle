@@ -19,7 +19,7 @@
 | 2 | Indexing, Selecting & Assigning | [Done](./IndexingSelectingAndAssigningExercise.py) |
 | 3 | Summary Functions and Maps | [Done](./SummaryFunctionsAndMapsExercise.py) |
 | 4 | Grouping and Sorting | [Done](./GroupingAndSortingExercise.py) |
-| 5 | Data Types and Missing Values | — |
+| 5 | Data Types and Missing Values | [Done](./DataTypesAndMissingValuesExercise.py) |
 | 6 | Renaming and Combining | — |
 
 ---
