@@ -10,7 +10,7 @@
 
 ---
 
-`█████░░░░░░░░░░░░░░░ 1 in progress · 2 / 17 complete`
+`████████░░░░░░░░░░░░ 3 / 17 complete`
 
 </div>
 
@@ -35,7 +35,7 @@ Every exercise is solved, committed, and documented here.
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 3 | [Pandas](./Pandas/) | 4h | **In Progress** |
+| 3 | [Pandas](./Pandas/) | 4h | [**Complete**](./Pandas/Cux%20Prada%20-%20Pandas.png) |
 | 4 | Data Visualization | 4h | — |
 | 5 | Data Cleaning | 4h | — |
 
