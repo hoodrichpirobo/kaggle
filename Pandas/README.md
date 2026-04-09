@@ -31,7 +31,7 @@
 - Indexing, selecting, and assigning data
 - Summary functions and mapping operations
 - Grouping, sorting, and aggregating data
-- Handling data types and missing values
+- Handling data types and missing values 
 - Renaming columns/indexes and combining DataFrames
 
 ---
