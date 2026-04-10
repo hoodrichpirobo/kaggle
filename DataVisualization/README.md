@@ -16,7 +16,7 @@
 | # | Lesson | Exercise |
 |:-:|--------|:--------:|
 | 1 | Hello, Seaborn | [Done](./HelloSeabornExercise.py) |
-| 2 | Line Charts | — |
+| 2 | Line Charts | [Done](./LineChartsExercise.py) |
 | 3 | Bar Charts and Heatmaps | — |
 | 4 | Scatter Plots | — |
 | 5 | Distributions | — |

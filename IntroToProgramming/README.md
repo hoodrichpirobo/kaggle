@@ -1,6 +1,6 @@
 <div align="center">
 
-# Intro to Programming
+# Intro to Programming 
 
 **Course 1 of 17** — the starting point.
 
