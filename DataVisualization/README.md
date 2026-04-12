@@ -18,7 +18,7 @@
 | 1 | Hello, Seaborn | [Done](./HelloSeabornExercise.py) |
 | 2 | Line Charts | [Done](./LineChartsExercise.py) |
 | 3 | Bar Charts and Heatmaps | [Done](./BarChartsAndHeatmapsExercise.py) |
-| 4 | Scatter Plots | — |
+| 4 | Scatter Plots | [Done](./ScatterPlotsExercise.py) |
 | 5 | Distributions | — |
 | 6 | Choosing Plot Types and Custom Styles | — |
 
