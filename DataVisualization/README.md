@@ -19,7 +19,7 @@
 | 2 | Line Charts | [Done](./LineChartsExercise.py) |
 | 3 | Bar Charts and Heatmaps | [Done](./BarChartsAndHeatmapsExercise.py) |
 | 4 | Scatter Plots | [Done](./ScatterPlotsExercise.py) |
-| 5 | Distributions | — |
+| 5 | Distributions | [Done](./DistributionsExercise.py) |
 | 6 | Choosing Plot Types and Custom Styles | — |
 
 ---
