@@ -10,7 +10,7 @@
 
 ---
 
-`████░░░░░░░░░░░░░░░░ 3 / 17 complete · 1 in progress`
+`█████░░░░░░░░░░░░░░░ 4 / 17 complete`
 
 </div>
 
@@ -36,7 +36,7 @@ Every exercise is solved, committed, and documented here.
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
 | 3 | [Pandas](./Pandas/) | 4h | [**Complete**](./Pandas/Cux%20Prada%20-%20Pandas.png) |
-| 4 | [Data Visualization](./DataVisualization/) | 4h | **In Progress** |
+| 4 | [Data Visualization](./DataVisualization/) | 4h | [**Complete**](./DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
 | 5 | Data Cleaning | 4h | — |
 
 ### Phase 3 — SQL
