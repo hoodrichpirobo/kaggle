@@ -10,7 +10,7 @@
 
 ---
 
-`█████░░░░░░░░░░░░░░░ 4 / 17 complete`
+`█████░░░░░░░░░░░░░░░ 4 / 17 complete | course 5 in progress`
 
 </div>
 
@@ -18,7 +18,7 @@
 
 This repository tracks my complete journey through the [Kaggle Learn](https://www.kaggle.com/learn) AI track — 17 courses covering programming fundamentals, data science, SQL, machine learning, deep learning, and AI ethics. After finishing Kaggle Learn, I continue with [fast.ai — Practical Deep Learning for Coders](https://course.fast.ai).
 
-Every exercise is solved, committed, and documented here.
+Completed work is solved, committed, and documented here. The current focus is [Data Cleaning](./DataCleaning/).
 
 ---
 
@@ -37,7 +37,7 @@ Every exercise is solved, committed, and documented here.
 |:-:|--------|:-----:|:------:|
 | 3 | [Pandas](./Pandas/) | 4h | [**Complete**](./Pandas/Cux%20Prada%20-%20Pandas.png) |
 | 4 | [Data Visualization](./DataVisualization/) | 4h | [**Complete**](./DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
-| 5 | Data Cleaning | 4h | — |
+| 5 | [Data Cleaning](./DataCleaning/) | 4h | [**In Progress**](./DataCleaning/) |
 
 ### Phase 3 — SQL
 
@@ -88,9 +88,20 @@ Every exercise is solved, committed, and documented here.
 kaggle/
 ├── README.md
 ├── LICENSE
-└── CourseName/
-    ├── README.md              # Overview, lesson tracker, notes
-    └── *Exercise.py           # One file per completed lesson
+├── IntroToProgramming/
+├── Python/
+├── Pandas/
+├── DataVisualization/
+├── DataCleaning/
+└── ...
+```
+
+Each course directory follows the same pattern:
+
+```
+CourseName/
+├── README.md                  # Overview, lesson tracker, notes
+└── *Exercise.py               # One file per completed lesson
 ```
 
 ---
