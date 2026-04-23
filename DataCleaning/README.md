@@ -17,7 +17,7 @@
 |:-:|--------|:--------:|
 | 1 | Handling Missing Values | [Done](./HandlingMissingValuesExercise.py) |
 | 2 | Scaling and Normalization | [Done](./ScalingAndNormalizationExercise.py) |
-| 3 | Parsing Dates | Pending |
+| 3 | Parsing Dates | [Done](./ParsingDatesExercise.py) |
 | 4 | Character Encodings | Pending |
 | 5 | Inconsistent Data Entry | Pending |
 
@@ -37,7 +37,7 @@
 
 ## Progress
 
-2 of 5 lessons completed
+3 of 5 lessons completed
 
 ---
 
