@@ -30,6 +30,12 @@
 | 4 | Conditions and Conditional Statements | [Done](./ConditionsAndConditionalStatementsExercise.py) |
 | 5 | Intro to Lists | [Done](./IntroToListsExercise.py) |
 
+## Supplemental Practice
+
+| Topic | File | Notes |
+|-------|------|-------|
+| Titanic competition starter workflow | [Getting Started With Titanic](./GettingStartedWithTitanicExercise.py) | Loads the Titanic train/test data, compares survival rates by sex, trains a Random Forest baseline, and writes a Kaggle submission file. |
+
 ## Core Skills
 
 - Python arithmetic, variables, and expressions
@@ -41,6 +47,7 @@
 ## Artifacts
 
 - Exercise solutions are exported as Python files for quick review.
+- Supplemental practice work is exported when it extends the course material into a Kaggle competition workflow.
 - The course certificate is included below.
 
 <div align="center">

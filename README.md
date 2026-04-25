@@ -16,7 +16,7 @@
 
 ## Purpose
 
-This repository tracks my progress through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each completed course has its own directory with exported exercise solutions, lesson notes, and completion evidence where available.
+This repository tracks my progress through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each completed course has its own directory with exported exercise solutions, supplemental practice work where relevant, lesson notes, and completion evidence where available.
 
 The goal is simple: keep the full learning path auditable, easy to navigate, and ready to revisit when later courses build on earlier work.
 
@@ -92,7 +92,7 @@ Each completed course directory follows this pattern:
 ```text
 CourseName/
 ├── README.md                  # Course overview, lesson tracker, core skills
-├── *Exercise.py               # Exported Kaggle exercise solution cells
+├── *Exercise.py               # Exported Kaggle exercise solution cells and supplemental practice
 └── Cux Prada - Course.png     # Certificate when available
 ```
 
@@ -100,7 +100,7 @@ CourseName/
 
 The `*Exercise.py` files preserve the solved cells from Kaggle notebooks. They are useful as study references, but they are not always standalone scripts because Kaggle injects datasets, starter variables, and answer-checking helpers inside the notebook environment.
 
-When reviewing a course, start with its `README.md`, then open the exercise file for the specific lesson.
+When reviewing a course, start with its `README.md`, then open the exercise file for the specific lesson. Supplemental practice files are called out in the course README when they are present.
 
 ---
 
