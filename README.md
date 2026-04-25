@@ -1,8 +1,8 @@
 <div align="center">
 
-# Kaggle Learn — AI Track
+# Kaggle Learn - AI Track
 
-**From zero to deep learning. Every course. Every exercise. All documented.**
+**A documented path from programming fundamentals to machine learning and deep learning.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Kaggle%20Learn-20BEFF.svg)](https://www.kaggle.com/learn)
@@ -10,104 +10,102 @@
 
 ---
 
-`█████░░░░░░░░░░░░░░░ 4 / 17 complete | course 5 in progress`
+`██████░░░░░░░░░░░░░░ 5 / 17 complete | next: Intro to SQL`
 
 </div>
 
-## About
+## Purpose
 
-This repository tracks my complete journey through the [Kaggle Learn](https://www.kaggle.com/learn) AI track — 17 courses covering programming fundamentals, data science, SQL, machine learning, deep learning, and AI ethics. After finishing Kaggle Learn, I continue with [fast.ai — Practical Deep Learning for Coders](https://course.fast.ai).
+This repository tracks my progress through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each completed course has its own directory with exported exercise solutions, lesson notes, and completion evidence where available.
 
-Completed work is solved, committed, and documented here. The current focus is [Data Cleaning](./DataCleaning/).
+The goal is simple: keep the full learning path auditable, easy to navigate, and ready to revisit when later courses build on earlier work.
 
----
+## Current Status
+
+| Metric | Value |
+|--------|-------|
+| Kaggle Learn courses completed | 5 / 17 |
+| Current milestone | SQL foundations |
+| Last completed course | [Data Cleaning](./5_DataCleaning/) |
+| Next course | [Intro to SQL](https://www.kaggle.com/learn/intro-to-sql) |
+| Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Roadmap
 
-### Phase 1 — Foundations
+### Phase 1 - Foundations
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 1 | [Intro to Programming](./IntroToProgramming/) | 5h | [**Complete**](./IntroToProgramming/Cux%20Prada%20-%20Intro%20to%20Programming.png) |
-| 2 | [Python](./Python/) | 5h | [**Complete**](./Python/Cux%20Prada%20-%20Python.png) |
+| 1 | [Intro to Programming](./1_IntroToProgramming/) | 5h | [Complete](./1_IntroToProgramming/Cux%20Prada%20-%20Intro%20to%20Programming.png) |
+| 2 | [Python](./2_Python/) | 5h | [Complete](./2_Python/Cux%20Prada%20-%20Python.png) |
 
-### Phase 2 — Data
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 3 | [Pandas](./Pandas/) | 4h | [**Complete**](./Pandas/Cux%20Prada%20-%20Pandas.png) |
-| 4 | [Data Visualization](./DataVisualization/) | 4h | [**Complete**](./DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
-| 5 | [Data Cleaning](./DataCleaning/) | 4h | [**In Progress**](./DataCleaning/) |
-
-### Phase 3 — SQL
+### Phase 2 - Data
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 6 | Intro to SQL | 3h | — |
-| 7 | Advanced SQL | 4h | — |
+| 3 | [Pandas](./3_Pandas/) | 4h | [Complete](./3_Pandas/Cux%20Prada%20-%20Pandas.png) |
+| 4 | [Data Visualization](./4_DataVisualization/) | 4h | [Complete](./4_DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
+| 5 | [Data Cleaning](./5_DataCleaning/) | 4h | [Complete](./5_DataCleaning/Cux%20Prada%20-%20Data%20Cleaning.png) |
 
-### Phase 4 — Machine Learning
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 8 | Intro to Machine Learning | 3h | — |
-| 9 | Intermediate Machine Learning | 4h | — |
-| 10 | Machine Learning Explainability | 4h | — |
-| 11 | Feature Engineering | 5h | — |
-
-### Phase 5 — Specialized
+### Phase 3 - SQL
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 12 | Time Series | 5h | — |
-| 13 | Intro to Deep Learning | 4h | — |
-| 14 | Computer Vision | 4h | — |
-| 15 | Geospatial Analysis | 4h | — |
-| 16 | Intro to Game AI and Reinforcement Learning | 4h | — |
-| 17 | Intro to AI Ethics | 4h | — |
+| 6 | [Intro to SQL](https://www.kaggle.com/learn/intro-to-sql) | 3h | Next |
+| 7 | [Advanced SQL](https://www.kaggle.com/learn/advanced-sql) | 4h | Not started |
 
-### After Kaggle Learn
+### Phase 4 - Machine Learning
 
-| Course | Platform |
-|--------|:--------:|
-| [Practical Deep Learning for Coders](https://course.fast.ai) | fast.ai |
+| # | Course | Hours | Status |
+|:-:|--------|:-----:|:------:|
+| 8 | [Intro to Machine Learning](https://www.kaggle.com/learn/intro-to-machine-learning) | 3h | Not started |
+| 9 | [Intermediate Machine Learning](https://www.kaggle.com/learn/intermediate-machine-learning) | 4h | Not started |
+| 10 | [Machine Learning Explainability](https://www.kaggle.com/learn/machine-learning-explainability) | 4h | Not started |
+| 11 | [Feature Engineering](https://www.kaggle.com/learn/feature-engineering) | 5h | Not started |
 
-> **Total: ~72 hours of Kaggle Learn coursework + fast.ai**
+### Phase 5 - Specialized Topics
 
----
+| # | Course | Hours | Status |
+|:-:|--------|:-----:|:------:|
+| 12 | [Time Series](https://www.kaggle.com/learn/time-series) | 5h | Not started |
+| 13 | [Intro to Deep Learning](https://www.kaggle.com/learn/intro-to-deep-learning) | 4h | Not started |
+| 14 | [Computer Vision](https://www.kaggle.com/learn/computer-vision) | 4h | Not started |
+| 15 | [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) | 4h | Not started |
+| 16 | [Intro to Game AI and Reinforcement Learning](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning) | 4h | Not started |
+| 17 | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) | 4h | Not started |
 
-## What is Kaggle Learn?
+## Repository Layout
 
-[Kaggle Learn](https://www.kaggle.com/learn) is a free, hands-on platform for learning data science, machine learning, and AI. Every course is built around interactive Python notebooks that run directly in the browser — no setup required. Courses are short, practical, and project-focused.
-
----
-
-## Repository Structure
-
-```
+```text
 kaggle/
 ├── README.md
 ├── LICENSE
-├── IntroToProgramming/
-├── Python/
-├── Pandas/
-├── DataVisualization/
-├── DataCleaning/
-└── ...
+├── 1_IntroToProgramming/
+├── 2_Python/
+├── 3_Pandas/
+├── 4_DataVisualization/
+└── 5_DataCleaning/
 ```
 
-Each course directory follows the same pattern:
+Each completed course directory follows this pattern:
 
-```
+```text
 CourseName/
-├── README.md                  # Overview, lesson tracker, notes
-└── *Exercise.py               # One file per completed lesson
+├── README.md                  # Course overview, lesson tracker, core skills
+├── *Exercise.py               # Exported Kaggle exercise solution cells
+└── Cux Prada - Course.png     # Certificate when available
 ```
+
+## Notes For Readers
+
+The `*Exercise.py` files preserve the solved cells from Kaggle notebooks. They are useful as study references, but they are not always standalone scripts because Kaggle injects datasets, starter variables, and answer-checking helpers inside the notebook environment.
+
+When reviewing a course, start with its `README.md`, then open the exercise file for the specific lesson.
 
 ---
 
 <div align="center">
 
-**[MIT License](./LICENSE)** — CUX "INDIO" PRADA, 2026
+**[MIT License](./LICENSE)** - CUX "INDIO" PRADA, 2026
 
 </div>
