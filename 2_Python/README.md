@@ -38,7 +38,7 @@
 - Function design, help utilities, and documentation lookup
 - Booleans, comparisons, and conditional control flow
 - Lists, indexing, slicing, and mutation
-- Loops, list comprehensions, strings, and dictionaries
+- Loops, list comprehensions, strings, and dictionaries :)
 - Imports, external libraries, and operator overloading
 
 ## Artifacts
