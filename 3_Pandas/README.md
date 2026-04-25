@@ -42,7 +42,7 @@
 
 ## Artifacts
 
-- Exercise solutions are exported as Python files for quick review.
+- Exercise solutions are exported as Python files for quick review ;)
 - The course certificate is included below.
 
 <div align="center">
