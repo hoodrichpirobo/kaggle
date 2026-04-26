@@ -10,7 +10,7 @@
 
 ---
 
-`██████░░░░░░░░░░░░░░ 5 / 17 complete | next: Intro to SQL`
+`██████░░░░░░░░░░░░░░ 5 / 17 complete | in progress: Intro to SQL`
 
 </div>
 
@@ -27,7 +27,7 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 | Kaggle Learn courses completed | 5 / 17 |
 | Current milestone | SQL foundations |
 | Last completed course | [Data Cleaning](./5_DataCleaning/) |
-| Next course | [Intro to SQL](https://www.kaggle.com/learn/intro-to-sql) |
+| Currently working on | [Intro to SQL](./6_IntroToSQL/) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Roadmap
@@ -51,7 +51,7 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 6 | [Intro to SQL](https://www.kaggle.com/learn/intro-to-sql) | 3h | Next |
+| 6 | [Intro to SQL](./6_IntroToSQL/) | 3h | In progress |
 | 7 | [Advanced SQL](https://www.kaggle.com/learn/advanced-sql) | 4h | Not started |
 
 ### Phase 4 - Machine Learning
@@ -84,7 +84,8 @@ kaggle/
 ├── 2_Python/
 ├── 3_Pandas/
 ├── 4_DataVisualization/
-└── 5_DataCleaning/
+├── 5_DataCleaning/
+└── 6_IntroToSQL/
 ```
 
 Each completed course directory follows this pattern:

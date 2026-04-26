@@ -39,7 +39,7 @@
 - Visualizing distributions with histograms and density plots
 - Choosing chart types based on the question being asked
 - Applying custom styles for clearer communication
-- Creating a final visualization from a real dataset
+- Creating a final visualization from a real dataset :O
 
 ## Artifacts
 
