@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20SQL-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-sql)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-yellow.svg)
 
 </div>
 
@@ -26,7 +26,7 @@
 |:-:|--------|:--------:|
 | 1 | Getting Started With SQL and BigQuery | [Done](./GettingStartedWithSQLAndBigQueryExercise.py) |
 | 2 | Select, From & Where | [Done](./SelectFromNWhereExercise.py) |
-| 3 | Group By, Having & Count | Pending |
+| 3 | Group By, Having & Count | [Done](./GroupByHavingNCountExercise.py) |
 | 4 | Order By | Pending |
 | 5 | As & With | Pending |
 | 6 | Joining Data | Pending |
