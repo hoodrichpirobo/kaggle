@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20SQL-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-sql)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
 
 </div>
 
@@ -28,7 +28,7 @@
 | 2 | Select, From & Where | [Done](./SelectFromNWhereExercise.py) |
 | 3 | Group By, Having & Count | [Done](./GroupByHavingNCountExercise.py) |
 | 4 | Order By | [Done](./OrderByExercise.py) |
-| 5 | As & With | Pending |
+| 5 | As & With | [Done](./AsNWithExercise.py) |
 | 6 | Joining Data | Pending |
 
 ## Core Skills
