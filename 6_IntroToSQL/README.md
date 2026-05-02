@@ -5,8 +5,8 @@
 **Course 6 of 17 - querying large datasets with SQL on Google BigQuery.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20SQL-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-sql)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-6%20of%206-brightgreen.svg)
 
 </div>
 
@@ -16,8 +16,9 @@
 |-------|--------|
 | Position | Course 6 of 17 |
 | Estimated time | 3 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | April 2026 |
+| Completed | May 2026 |
 | Course page | [Kaggle Learn: Intro to SQL](https://www.kaggle.com/learn/intro-to-sql) |
 
 ## Lesson Tracker
@@ -29,7 +30,7 @@
 | 3 | Group By, Having & Count | [Done](./GroupByHavingNCountExercise.py) |
 | 4 | Order By | [Done](./OrderByExercise.py) |
 | 5 | As & With | [Done](./AsNWithExercise.py) |
-| 6 | Joining Data | Pending |
+| 6 | Joining Data | [Done](./JoiningDataExercise.py) |
 
 ## Core Skills
 
@@ -39,14 +40,20 @@
 - Aggregating data with `GROUP BY`, `HAVING`, and `COUNT`
 - Sorting results with `ORDER BY`
 - Aliasing and structuring queries with `AS` and common table expressions (`WITH`)
-- Combining tables with `JOIN`
+- Combining tables with `INNER JOIN` across BigQuery public datasets
 
 ## Artifacts
 
 - Exercise solutions are exported as Python files for quick review.
-- The course certificate will be added here once the course is complete.
+- Certificate of completion is included below.
 
 <div align="center">
+
+## Certificate of Completion
+
+<img src="./Cux%20Prada%20-%20Intro%20to%20SQL.png" width="600" alt="Intro to SQL certificate" />
+
+*Completed May 2026*
 
 [Back to Roadmap](../README.md)
 
