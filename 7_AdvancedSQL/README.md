@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Advanced%20SQL-20BEFF.svg)](https://www.kaggle.com/learn/advanced-sql)
 ![Status](https://img.shields.io/badge/Status-In%20progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-1%20of%204-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-2%20of%204-yellow.svg)
 
 </div>
 
@@ -25,7 +25,7 @@
 | # | Lesson | Exercise |
 |:-:|--------|:--------:|
 | 1 | JOINs and UNIONs | [Done](./JOINsAndUNIONsExercise.py) |
-| 2 | Analytic Functions | Pending |
+| 2 | Analytic Functions | [Done](./AnalyticFunctionsExercise.py) |
 | 3 | Nested and Repeated Data | Pending |
 | 4 | Writing Efficient Queries | Pending |
 
@@ -47,7 +47,7 @@
 
 ## Progress
 
-**1 / 4 lessons completed**
+**2 / 4 lessons completed**
 
 [Back to Roadmap](../README.md)
 
