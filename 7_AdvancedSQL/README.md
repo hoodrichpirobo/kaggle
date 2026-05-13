@@ -5,8 +5,8 @@
 **Course 7 of 17 - advanced querying patterns for analysis on Google BigQuery.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Advanced%20SQL-20BEFF.svg)](https://www.kaggle.com/learn/advanced-sql)
-![Status](https://img.shields.io/badge/Status-In%20progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%204-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%204-brightgreen.svg)
 
 </div>
 
@@ -16,8 +16,9 @@
 |-------|--------|
 | Position | Course 7 of 17 |
 | Estimated time | 4 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | May 2026 |
+| Completed | May 2026 |
 | Course page | [Kaggle Learn: Advanced SQL](https://www.kaggle.com/learn/advanced-sql) |
 
 ## Lesson Tracker
@@ -27,7 +28,7 @@
 | 1 | JOINs and UNIONs | [Done](./JOINsAndUNIONsExercise.py) |
 | 2 | Analytic Functions | [Done](./AnalyticFunctionsExercise.py) |
 | 3 | Nested and Repeated Data | [Done](./NestedAndRepeatedDataExercise.py) |
-| 4 | Writing Efficient Queries | Pending |
+| 4 | Writing Efficient Queries | [Done](./WritingEfficientQueriesExercise.py) |
 
 ## Core Skills
 
@@ -40,14 +41,14 @@
 
 ## Artifacts
 
-- Completed exercise solutions are exported as Python files for quick review.
-- The course certificate will be added after all lessons are complete.
+- Exercise solutions are exported as Python files for quick review.
+- The course certificate is included below.
 
 <div align="center">
 
-## Progress
+## Certificate
 
-**3 / 4 lessons completed**
+<img src="./Cux%20Prada%20-%20Advanced%20SQL.png" width="600" alt="Kaggle Certificate - Advanced SQL">
 
 [Back to Roadmap](../README.md)
 

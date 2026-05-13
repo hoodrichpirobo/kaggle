@@ -10,7 +10,7 @@
 
 ---
 
-`███████░░░░░░░░░░░░░ 6 / 17 complete | in progress: Advanced SQL`
+`████████░░░░░░░░░░░░ 7 / 17 complete | next: Intro to Machine Learning`
 
 </div>
 
@@ -24,10 +24,10 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 
 | Metric | Value |
 |--------|-------|
-| Kaggle Learn courses completed | 6 / 17 |
-| Current milestone | SQL foundations |
-| Last completed course | [Intro to SQL](./6_IntroToSQL/) |
-| Currently working on | [Advanced SQL](./7_AdvancedSQL/) |
+| Kaggle Learn courses completed | 7 / 17 |
+| Current milestone | Machine learning foundations |
+| Last completed course | [Advanced SQL](./7_AdvancedSQL/) |
+| Next course | [Intro to Machine Learning](https://www.kaggle.com/learn/intro-to-machine-learning) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Roadmap
@@ -52,7 +52,7 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
 | 6 | [Intro to SQL](./6_IntroToSQL/) | 3h | [Complete](./6_IntroToSQL/Cux%20Prada%20-%20Intro%20to%20SQL.png) |
-| 7 | [Advanced SQL](./7_AdvancedSQL/) | 4h | In progress |
+| 7 | [Advanced SQL](./7_AdvancedSQL/) | 4h | [Complete](./7_AdvancedSQL/Cux%20Prada%20-%20Advanced%20SQL.png) |
 
 ### Phase 4 - Machine Learning
 
