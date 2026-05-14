@@ -10,13 +10,13 @@
 
 ---
 
-`████████░░░░░░░░░░░░ 7 / 17 complete | next: Intro to Machine Learning`
+`███████░░░░░░░░░░ 7 / 17 complete | current: Intro to Machine Learning`
 
 </div>
 
 ## Purpose
 
-This repository tracks my progress through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each completed course has its own directory with exported exercise solutions, supplemental practice work where relevant, lesson notes, and completion evidence where available.
+This repository tracks my progress through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each active or completed course has its own directory with exported exercise solutions, supplemental practice work where relevant, lesson notes, and completion evidence where available.
 
 The goal is simple: keep the full learning path auditable, easy to navigate, and ready to revisit when later courses build on earlier work.
 
@@ -26,8 +26,9 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 |--------|-------|
 | Kaggle Learn courses completed | 7 / 17 |
 | Current milestone | Machine learning foundations |
+| Current course | [Intro to Machine Learning](./8_IntroToMachineLearning/) |
 | Last completed course | [Advanced SQL](./7_AdvancedSQL/) |
-| Next course | [Intro to Machine Learning](https://www.kaggle.com/learn/intro-to-machine-learning) |
+| Next completion target | [Intro to Machine Learning](./8_IntroToMachineLearning/) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Roadmap
@@ -58,7 +59,7 @@ The goal is simple: keep the full learning path auditable, easy to navigate, and
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 8 | [Intro to Machine Learning](https://www.kaggle.com/learn/intro-to-machine-learning) | 3h | Not started |
+| 8 | [Intro to Machine Learning](./8_IntroToMachineLearning/) | 3h | In progress |
 | 9 | [Intermediate Machine Learning](https://www.kaggle.com/learn/intermediate-machine-learning) | 4h | Not started |
 | 10 | [Machine Learning Explainability](https://www.kaggle.com/learn/machine-learning-explainability) | 4h | Not started |
 | 11 | [Feature Engineering](https://www.kaggle.com/learn/feature-engineering) | 5h | Not started |
@@ -86,16 +87,17 @@ kaggle/
 ├── 4_DataVisualization/
 ├── 5_DataCleaning/
 ├── 6_IntroToSQL/
-└── 7_AdvancedSQL/
+├── 7_AdvancedSQL/
+└── 8_IntroToMachineLearning/
 ```
 
-Each completed course directory follows this pattern:
+Each completed or in-progress course directory follows this pattern:
 
 ```text
 CourseName/
 ├── README.md                  # Course overview, lesson tracker, core skills
 ├── *Exercise.py               # Exported Kaggle exercise solution cells and supplemental practice
-└── Cux Prada - Course.png     # Certificate when available
+└── Cux Prada - Course.png     # Certificate after completion, when available
 ```
 
 ## Notes For Readers
