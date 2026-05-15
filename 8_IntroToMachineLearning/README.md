@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Machine%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-machine-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Exercises](https://img.shields.io/badge/Exercises-1%20of%206-yellow.svg)
+![Exercises](https://img.shields.io/badge/Exercises-2%20of%206-yellow.svg)
 
 </div>
 
@@ -27,7 +27,7 @@
 |:-:|--------|:--------:|
 | 1 | How Models Work | Tutorial |
 | 2 | Basic Data Exploration | [Done](./BasicDataExplorationExercise.py) |
-| 3 | Your First Machine Learning Model | Pending |
+| 3 | Your First Machine Learning Model | [Done](./YourFirstMachineLearningModelExercise.py) |
 | 4 | Model Validation | Pending |
 | 5 | Underfitting and Overfitting | Pending |
 | 6 | Random Forests | Pending |
@@ -38,9 +38,10 @@
 - Loading the Iowa home-price training data with pandas
 - Inspecting tabular data with `describe()` and summary statistics
 - Identifying useful dataset fields before model building
-- Connecting raw data exploration to supervised prediction problems
-- Preparing to train and compare baseline machine learning models
-- Keeping model conclusions grounded in the age and scope of the available data
+- Defining the prediction target `y` and feature matrix `X`
+- Training a baseline `DecisionTreeRegressor` with scikit-learn
+- Generating in-sample predictions from selected home features
+- Recognizing why model validation is needed before trusting apparent accuracy
 
 ## Artifacts
 
