@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Machine%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-machine-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Exercises](https://img.shields.io/badge/Exercises-2%20of%206-yellow.svg)
+![Exercises](https://img.shields.io/badge/Exercises-3%20of%206-yellow.svg)
 
 </div>
 
@@ -28,7 +28,7 @@
 | 1 | How Models Work | Tutorial |
 | 2 | Basic Data Exploration | [Done](./BasicDataExplorationExercise.py) |
 | 3 | Your First Machine Learning Model | [Done](./YourFirstMachineLearningModelExercise.py) |
-| 4 | Model Validation | Pending |
+| 4 | Model Validation | [Done](./ModelValidationExercise.py) |
 | 5 | Underfitting and Overfitting | Pending |
 | 6 | Random Forests | Pending |
 | 7 | Machine Learning Competitions | Pending |
@@ -41,11 +41,16 @@
 - Defining the prediction target `y` and feature matrix `X`
 - Training a baseline `DecisionTreeRegressor` with scikit-learn
 - Generating in-sample predictions from selected home features
-- Recognizing why model validation is needed before trusting apparent accuracy
+- Splitting data into training and validation sets with `train_test_split`
+- Evaluating validation predictions with mean absolute error (`MAE`)
+- Distinguishing in-sample fit from out-of-sample model performance
 
 ## Artifacts
 
-- Exercise solutions are exported as Python files for quick review.
+- Exercise solutions are exported as Python files for quick review:
+  - [BasicDataExplorationExercise.py](./BasicDataExplorationExercise.py)
+  - [YourFirstMachineLearningModelExercise.py](./YourFirstMachineLearningModelExercise.py)
+  - [ModelValidationExercise.py](./ModelValidationExercise.py)
 - This course is still in progress, so the certificate will be added after completion.
 
 <div align="center">
