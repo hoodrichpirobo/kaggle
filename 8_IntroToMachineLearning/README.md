@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Machine%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-machine-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Exercises](https://img.shields.io/badge/Exercises-4%20of%206-yellow.svg)
+![Exercises](https://img.shields.io/badge/Exercises-5%20of%206-yellow.svg)
 
 </div>
 
@@ -30,7 +30,7 @@
 | 3 | Your First Machine Learning Model | [Done](./YourFirstMachineLearningModelExercise.py) |
 | 4 | Model Validation | [Done](./ModelValidationExercise.py) |
 | 5 | Underfitting and Overfitting | [Done](./UnderfittingAndOverfittingExercise.py) |
-| 6 | Random Forests | Pending |
+| 6 | Random Forests | [Done](./RandomForestsExercise.py) |
 | 7 | Machine Learning Competitions | Pending |
 
 ## Core Skills
@@ -46,6 +46,8 @@
 - Distinguishing in-sample fit from out-of-sample model performance
 - Comparing tree sizes with `max_leaf_nodes` to balance underfitting and overfitting
 - Selecting a final model configuration from validation-set performance
+- Training a `RandomForestRegressor` ensemble for stronger validation performance
+- Comparing decision-tree and random-forest models with consistent `MAE` scoring
 
 ## Artifacts
 
@@ -54,6 +56,7 @@
   - [YourFirstMachineLearningModelExercise.py](./YourFirstMachineLearningModelExercise.py)
   - [ModelValidationExercise.py](./ModelValidationExercise.py)
   - [UnderfittingAndOverfittingExercise.py](./UnderfittingAndOverfittingExercise.py)
+  - [RandomForestsExercise.py](./RandomForestsExercise.py)
 - This course is still in progress, so the certificate will be added after completion.
 
 <div align="center">
