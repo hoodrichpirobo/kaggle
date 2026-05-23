@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intermediate%20Machine%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intermediate-machine-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-2%20of%207-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-3%20of%207-yellow.svg)
 
 </div>
 
@@ -33,7 +33,7 @@ The focus is not just getting a lower error score. The focus is building a model
 |:-:|--------|:------:|:--------:|
 | 1 | Introduction | Complete | [IntroductionExercise.py](./IntroductionExercise.py) |
 | 2 | Missing Values | Complete | [MissingValuesExercise.py](./MissingValuesExercise.py) |
-| 3 | Categorical Variables | Planned | - |
+| 3 | Categorical Variables | Complete | [CategoricalVariablesExercise.py](./CategoricalVariablesExercise.py) |
 | 4 | Pipelines | Planned | - |
 | 5 | Cross-Validation | Planned | - |
 | 6 | XGBoost | Planned | - |
@@ -61,7 +61,12 @@ The course is being used to build a reusable approach for Kaggle-style structure
 - Applying `SimpleImputer` with consistent fit-on-train, transform-on-valid behavior
 - Restoring DataFrame column names after scikit-learn transformations
 - Preparing validation and test features with the same preprocessing contract
+- Separating numeric-only baselines from categorical-feature experiments
+- Identifying categorical columns that are safe for ordinal encoding across train and validation data
 - Encoding categorical variables for scikit-learn estimators
+- Comparing ordinal encoding with one-hot encoding for low-cardinality features
+- Using `OneHotEncoder(handle_unknown="ignore")` to protect validation transforms from unseen categories
+- Preserving row indexes and string column names after one-hot encoding
 - Separating numerical and categorical preprocessing paths with `ColumnTransformer`
 - Combining preprocessing and modeling into reproducible `Pipeline` objects
 - Evaluating model quality with cross-validation instead of one holdout split
@@ -74,6 +79,7 @@ The course is being used to build a reusable approach for Kaggle-style structure
 - Exercise solutions are exported as Python files for quick review:
   - [IntroductionExercise.py](./IntroductionExercise.py)
   - [MissingValuesExercise.py](./MissingValuesExercise.py)
+  - [CategoricalVariablesExercise.py](./CategoricalVariablesExercise.py)
 - Future lesson exports will be added here as the course progresses.
 - No completion certificate is included yet because the course is still in progress.
 
@@ -81,8 +87,9 @@ The course is being used to build a reusable approach for Kaggle-style structure
 
 - The introduction exercise records the selected best model and carries it forward as `my_model`.
 - The missing-values exercise compares dropping missing columns with imputation, then prepares validation and test features with median imputation.
+- The categorical-variables exercise compares dropping object columns, ordinal encoding safe categorical columns, and one-hot encoding low-cardinality categorical columns.
 - The exported `*Exercise.py` files preserve the solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, and answer-checking helpers inside the notebook environment.
-- The next README update should move lesson 3 into the completed set once the categorical-variables exercise is exported.
+- The next README update should move lesson 4 into the completed set once the pipelines exercise is exported.
 
 ## Notes
 
