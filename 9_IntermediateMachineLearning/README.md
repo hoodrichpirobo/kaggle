@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intermediate%20Machine%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intermediate-machine-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%207-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%207-yellow.svg)
 
 </div>
 
@@ -35,7 +35,7 @@ The focus is not just getting a lower error score. The focus is building a model
 | 2 | Missing Values | Complete | [MissingValuesExercise.py](./MissingValuesExercise.py) |
 | 3 | Categorical Variables | Complete | [CategoricalVariablesExercise.py](./CategoricalVariablesExercise.py) |
 | 4 | Pipelines | Complete | [PipelinesExercise.py](./PipelinesExercise.py) |
-| 5 | Cross-Validation | Planned | - |
+| 5 | Cross-Validation | Complete | [CrossValidationExercise.py](./CrossValidationExercise.py) |
 | 6 | XGBoost | Planned | - |
 | 7 | Data Leakage | Planned | - |
 
@@ -69,10 +69,13 @@ The course is being used to build a reusable approach for Kaggle-style structure
 - Preserving row indexes and string column names after one-hot encoding
 - Separating numerical and categorical preprocessing paths with `ColumnTransformer`
 - Combining preprocessing and modeling into reproducible `Pipeline` objects
+- Replacing a single validation split with `cross_val_score` for a more stable model-quality estimate
+- Scoring a full preprocessing-and-model pipeline across multiple folds without leaking validation data into fitted preprocessing steps
+- Comparing `RandomForestRegressor` tree counts by average cross-validated `MAE`
+- Selecting `n_estimators=200` from a structured cross-validation sweep
 
 ## Upcoming Course Skills
 
-- Evaluating model quality with cross-validation instead of one holdout split
 - Training boosted tree models with XGBoost for stronger structured-data performance
 - Tuning model capacity and learning behavior with validation feedback
 - Recognizing target leakage and train-test contamination before they inflate scores
@@ -84,6 +87,7 @@ The course is being used to build a reusable approach for Kaggle-style structure
   - [MissingValuesExercise.py](./MissingValuesExercise.py)
   - [CategoricalVariablesExercise.py](./CategoricalVariablesExercise.py)
   - [PipelinesExercise.py](./PipelinesExercise.py)
+  - [CrossValidationExercise.py](./CrossValidationExercise.py)
 - Future lesson exports will be added here as the course progresses.
 - No completion certificate is included yet because the course is still in progress.
 
@@ -94,8 +98,9 @@ The course is being used to build a reusable approach for Kaggle-style structure
 - The categorical-variables exercise compares dropping object columns, ordinal encoding safe categorical columns, and one-hot encoding low-cardinality categorical columns.
 - The pipelines exercise wraps numerical imputation, categorical imputation plus one-hot encoding, and a `RandomForestRegressor` inside one reusable scikit-learn pipeline.
 - The pipeline now owns the train, validation, and test preprocessing path, which keeps feature transformations consistent when scoring validation data and generating test predictions.
+- The cross-validation exercise turns that pipeline into a reusable scoring function, evaluates eight forest sizes from 50 to 400 trees, and selects 200 trees from the average 3-fold `MAE`.
 - The exported `*Exercise.py` files preserve the solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, and answer-checking helpers inside the notebook environment.
-- The next README update should move lesson 5 into the completed set once the cross-validation exercise is exported.
+- The next README update should move lesson 6 into the completed set once the XGBoost exercise is exported.
 
 ## Notes
 

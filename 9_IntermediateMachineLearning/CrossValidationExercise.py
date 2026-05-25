@@ -1,0 +1,44 @@
+def get_score(n_estimators):
+    """Return the average MAE over 3 CV folds of random forest model.
+    
+    Keyword argument:
+    n_estimators -- the number of trees in the forest
+    """
+    my_pipeline = Pipeline(steps = [("preprocessor", SimpleImputer()),
+                                    ("model", RandomForestRegressor(n_estimators = n_estimators,
+                                                                   random_state = 0))
+    ])
+    scores = -1 * cross_val_score(my_pipeline, X, y,
+                                 cv = 3,
+                                 scoring = "neg_mean_absolute_error")
+    
+    # Replace this body with your own code
+    return scores.mean()
+
+# Check your answer
+step_1.check()
+
+keys = []
+i = 50
+while i <= 400:
+    keys.append(i)
+    i += 50
+    
+results = {each : get_score(each) for each in keys} # Your code here
+# print(len(results)) <=== 8
+
+# this could have been better using this python approach
+
+"""
+results = {}
+
+for i in range(1,9):
+    results[50*i] = get_score(50*i)
+"""
+
+n_estimators_best = 200 # min(results, key = results.get)
+
+# Check your answer
+step_3.check()
+
+
