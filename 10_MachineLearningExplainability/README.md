@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Machine%20Learning%20Explainability-20BEFF.svg)](https://www.kaggle.com/learn/machine-learning-explainability)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%205-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%205-yellow.svg)
 
 </div>
 
@@ -34,7 +34,7 @@ The goal is not to decorate a model with charts after the fact. The goal is to u
 | 1 | Use Cases for Model Insights | Complete | Tutorial |
 | 2 | Permutation Importance | Complete | [PermutationImportanceExercise.py](./PermutationImportanceExercise.py) |
 | 3 | Partial Plots | Complete | [PartialPlotsExercise.py](./PartialPlotsExercise.py) |
-| 4 | SHAP Values | Not started | Pending |
+| 4 | SHAP Values | Complete | [SHAPValuesExercise.py](./SHAPValuesExercise.py) |
 | 5 | Advanced Uses of SHAP Values | Not started | Pending |
 
 ## Explainability Playbook
@@ -73,12 +73,20 @@ The course builds a practical sequence for interrogating trained models:
 - Estimating the practical fare impact of shorter taxi trips from partial dependence plots
 - Building synthetic feature-response datasets to verify expected partial dependence shapes
 - Recognizing when flat partial dependence can hide interaction effects
+- Reusing permutation importance and partial dependence on a patient-readmission model
+- Plotting `number_inpatient` and `time_in_hospital` partial dependence for readmission risk
+- Checking observed readmission rates with grouped training data before trusting a model explanation
+- Creating SHAP explanations with `shap.TreeExplainer`
+- Converting a single validation row to float-safe patient data for SHAP visualization
+- Returning a `shap.force_plot` from a reusable `patient_risk_factors` helper
+- Interpreting local feature contributions against the model's expected value
 
 ## Artifacts
 
 - Exercise solutions exported as Python files for quick review:
   - [PermutationImportanceExercise.py](./PermutationImportanceExercise.py)
   - [PartialPlotsExercise.py](./PartialPlotsExercise.py)
+  - [SHAPValuesExercise.py](./SHAPValuesExercise.py)
 - Completion certificate will be added here after the course is finished.
 
 ## Course Notes
@@ -92,6 +100,9 @@ The course builds a practical sequence for interrogating trained models:
 - Two-dimensional partial dependence is used to compare pickup and dropoff longitude together, making short-trip structure visible in the model response surface.
 - After adding `abs_lon_change` and `abs_lat_change`, the repeated pickup-longitude plot checks whether the engineered distance features make the raw coordinate effect less misleading.
 - The synthetic-data sections test partial dependence against known formulas, including a piecewise effect and a pure interaction where permutation importance sees signal but one-way partial dependence can look flat.
+- The SHAP values exercise moves to a hospital readmission model, first checking global signals with permutation importance and partial dependence before explaining one patient-level prediction.
+- `number_inpatient` and `time_in_hospital` are inspected with partial dependence, while grouped observed readmission rates provide a reality check against the model's learned relationship.
+- `patient_risk_factors` wraps `shap.TreeExplainer`, `explainer.shap_values`, `shap.initjs`, and `shap.force_plot` so one validation patient can be explained relative to the model baseline.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, and answer-checking helpers inside the notebook environment.
 
 ## Notes
