@@ -5,8 +5,8 @@
 **Course 10 of 17 - interpreting trained models with feature importance, partial dependence, and local attribution.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Machine%20Learning%20Explainability-20BEFF.svg)](https://www.kaggle.com/learn/machine-learning-explainability)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%205-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%205-brightgreen.svg)
 
 </div>
 
@@ -16,9 +16,9 @@
 |-------|--------|
 | Position | Course 10 of 17 |
 | Estimated time | 4 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | May 28, 2026 |
-| Completed | In progress |
+| Completed | May 31, 2026 |
 | Course page | [Kaggle Learn: Machine Learning Explainability](https://www.kaggle.com/learn/machine-learning-explainability) |
 
 ## What This Course Adds
@@ -35,7 +35,7 @@ The goal is not to decorate a model with charts after the fact. The goal is to u
 | 2 | Permutation Importance | Complete | [PermutationImportanceExercise.py](./PermutationImportanceExercise.py) |
 | 3 | Partial Plots | Complete | [PartialPlotsExercise.py](./PartialPlotsExercise.py) |
 | 4 | SHAP Values | Complete | [SHAPValuesExercise.py](./SHAPValuesExercise.py) |
-| 5 | Advanced Uses of SHAP Values | Not started | Pending |
+| 5 | Advanced Uses of SHAP Values | Complete | [AdvancedUsesOfSHAPValuesExercise.py](./AdvancedUsesOfSHAPValuesExercise.py) |
 
 ## Explainability Playbook
 
@@ -80,6 +80,12 @@ The course builds a practical sequence for interrogating trained models:
 - Converting a single validation row to float-safe patient data for SHAP visualization
 - Returning a `shap.force_plot` from a reusable `patient_risk_factors` helper
 - Interpreting local feature contributions against the model's expected value
+- Reading SHAP summary plots to compare each feature's range of effects across many patients
+- Relating the spread of SHAP values to permutation importance when ranking feature influence
+- Reasoning about why a wide effect range and a high importance rank do not always coincide
+- Building SHAP dependence plots with `shap.dependence_plot` for `num_medications` and `num_lab_procedures`
+- Spotting feature interactions where one feature's SHAP effect bends with the value of another
+- Recognizing that a consistent or centered SHAP effect can itself be a signal of an interaction
 
 ## Artifacts
 
@@ -87,7 +93,8 @@ The course builds a practical sequence for interrogating trained models:
   - [PermutationImportanceExercise.py](./PermutationImportanceExercise.py)
   - [PartialPlotsExercise.py](./PartialPlotsExercise.py)
   - [SHAPValuesExercise.py](./SHAPValuesExercise.py)
-- Completion certificate will be added here after the course is finished.
+  - [AdvancedUsesOfSHAPValuesExercise.py](./AdvancedUsesOfSHAPValuesExercise.py)
+- Completion certificate: [Cux Prada - Machine Learning Explainability.png](./Cux%20Prada%20-%20Machine%20Learning%20Explainability.png)
 
 ## Course Notes
 
@@ -103,6 +110,8 @@ The course builds a practical sequence for interrogating trained models:
 - The SHAP values exercise moves to a hospital readmission model, first checking global signals with permutation importance and partial dependence before explaining one patient-level prediction.
 - `number_inpatient` and `time_in_hospital` are inspected with partial dependence, while grouped observed readmission rates provide a reality check against the model's learned relationship.
 - `patient_risk_factors` wraps `shap.TreeExplainer`, `explainer.shap_values`, `shap.initjs`, and `shap.force_plot` so one validation patient can be explained relative to the model baseline.
+- The advanced-SHAP exercise stays on the readmission model and moves from single predictions to dataset-wide views: SHAP summary plots compare each feature's range of effects, and the written answers reason about why a wide effect range does not have to line up with the top permutation-importance rank.
+- `shap.dependence_plot` is used on `num_medications` and `num_lab_procedures` to expose interaction effects, where a feature's contribution bends depending on the value of another feature rather than staying constant.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, and answer-checking helpers inside the notebook environment.
 
 ## Notes
@@ -111,7 +120,13 @@ This course is the handoff from model building to model interrogation. A strong 
 
 ## Certificate of Completion
 
-Certificate pending until all lessons are complete.
+<div align="center">
+
+<a href="./Cux%20Prada%20-%20Machine%20Learning%20Explainability.png"><img src="./Cux%20Prada%20-%20Machine%20Learning%20Explainability.png" width="600" alt="Machine Learning Explainability certificate" /></a>
+
+*Completed May 31, 2026.*
+
+</div>
 
 <div align="center">
 
