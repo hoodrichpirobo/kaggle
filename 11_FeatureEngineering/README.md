@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Feature%20Engineering-20BEFF.svg)](https://www.kaggle.com/learn/feature-engineering)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-yellow.svg)
 
 </div>
 
@@ -33,7 +33,7 @@ The central idea is that useful models rarely depend only on raw fields as colle
 |:-:|--------|:------:|:--------:|
 | 1 | What Is Feature Engineering | Complete | Tutorial |
 | 2 | Mutual Information | Complete | [MutualInformationExercise.py](./MutualInformationExercise.py) |
-| 3 | Creating Features | Not started | Pending |
+| 3 | Creating Features | Complete | [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py) |
 | 4 | Clustering With K-Means | Not started | Pending |
 | 5 | Principal Component Analysis | Not started | Pending |
 | 6 | Target Encoding | Not started | Pending |
@@ -63,6 +63,12 @@ The course builds a practical workflow for finding and creating better tabular f
 - Comparing candidate features across `BldgType` facets with `sns.lmplot`
 - Identifying `YearBuilt` as a strong signal in the housing data
 - Testing whether `GrLivArea` and `MoSold` interact with building type
+- Creating ratio features such as living-area-to-lot-area and square-feet-per-room
+- Combining related porch and deck columns into aggregate exterior-space features
+- Building one-hot interaction features by multiplying building-type indicators by `GrLivArea`
+- Counting active porch types with boolean comparisons and row-wise sums
+- Splitting mixed categorical codes such as `MSSubClass` into cleaner class features
+- Using grouped `transform("median")` to add neighborhood-level living-area context
 - Preserving written reasoning alongside solved Kaggle answer checks
 - Keeping leakage risk in view while preparing for target-based encodings later in the course
 
@@ -70,8 +76,8 @@ The course builds a practical workflow for finding and creating better tabular f
 
 - Exercise solutions exported as Python files for quick review:
   - [MutualInformationExercise.py](./MutualInformationExercise.py)
+  - [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py)
 - Upcoming exercise exports will be added as the course progresses:
-  - `CreatingFeaturesExercise.py`
   - `ClusteringWithKMeansExercise.py`
   - `PrincipalComponentAnalysisExercise.py`
   - `TargetEncodingExercise.py`
@@ -87,6 +93,11 @@ The course builds a practical workflow for finding and creating better tabular f
 - `GrLivArea` is inspected as a size signal with a clear relationship to `SalePrice`.
 - `MoSold` is inspected as a calendar feature whose signal depends more on interaction and context than on a simple linear trend.
 - The written answer notes that `GrLivArea` has a linear relationship with sale price and interacts with `BldgType`.
+- The creating-features exercise adds direct transformations: `LivLotRatio`, `Spaciousness`, and `TotalOutsideSF` make existing housing measurements easier for a model to use.
+- Building-type interactions are encoded by one-hot encoding `BldgType` with `pd.get_dummies(..., prefix="Bldg")`, then multiplying each indicator by `GrLivArea`.
+- Porch structure is summarized with `PorchTypes`, a row-wise count of positive porch/deck component columns.
+- `MSClass` is extracted from `MSSubClass` by splitting the mixed code string before the first underscore.
+- `MedNhbdArea` uses `groupby("Neighborhood")["GrLivArea"].transform("median")` so every row carries neighborhood-scale size context.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
 
 ## Notes
