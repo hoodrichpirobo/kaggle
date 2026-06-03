@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Feature%20Engineering-20BEFF.svg)](https://www.kaggle.com/learn/feature-engineering)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-yellow.svg)
 
 </div>
 
@@ -34,7 +34,7 @@ The central idea is that useful models rarely depend only on raw fields as colle
 | 1 | What Is Feature Engineering | Complete | Tutorial |
 | 2 | Mutual Information | Complete | [MutualInformationExercise.py](./MutualInformationExercise.py) |
 | 3 | Creating Features | Complete | [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py) |
-| 4 | Clustering With K-Means | Not started | Pending |
+| 4 | Clustering With K-Means | Complete | [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py) |
 | 5 | Principal Component Analysis | Not started | Pending |
 | 6 | Target Encoding | Not started | Pending |
 
@@ -69,6 +69,12 @@ The course builds a practical workflow for finding and creating better tabular f
 - Counting active porch types with boolean comparisons and row-wise sums
 - Splitting mixed categorical codes such as `MSSubClass` into cleaner class features
 - Using grouped `transform("median")` to add neighborhood-level living-area context
+- Choosing which features need scaling before distance-based clustering
+- Building standardized clustering inputs from housing-area features
+- Fitting `KMeans` with reproducible cluster assignments
+- Adding unsupervised cluster labels as categorical model features
+- Creating cluster-distance features with `fit_transform`
+- Labeling centroid-distance columns and joining them back to the training matrix
 - Preserving written reasoning alongside solved Kaggle answer checks
 - Keeping leakage risk in view while preparing for target-based encodings later in the course
 
@@ -77,8 +83,8 @@ The course builds a practical workflow for finding and creating better tabular f
 - Exercise solutions exported as Python files for quick review:
   - [MutualInformationExercise.py](./MutualInformationExercise.py)
   - [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py)
+  - [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py)
 - Upcoming exercise exports will be added as the course progresses:
-  - `ClusteringWithKMeansExercise.py`
   - `PrincipalComponentAnalysisExercise.py`
   - `TargetEncodingExercise.py`
 - Completion certificate will be added after the course is finished.
@@ -98,6 +104,13 @@ The course builds a practical workflow for finding and creating better tabular f
 - Porch structure is summarized with `PorchTypes`, a row-wise count of positive porch/deck component columns.
 - `MSClass` is extracted from `MSSubClass` by splitting the mixed code string before the first underscore.
 - `MedNhbdArea` uses `groupby("Neighborhood")["GrLivArea"].transform("median")` so every row carries neighborhood-scale size context.
+- The K-Means exercise starts by reasoning about distance scales: latitude and longitude should not be rescaled together, lot area and living area can be treated either way depending on the feature set, and mixed units such as number of doors and horsepower need rescaling.
+- The housing clustering pass uses `LotArea`, `TotalBsmtSF`, `FirstFlrSF`, `SecondFlrSF`, and `GrLivArea` as the feature set for row segmentation.
+- The selected clustering inputs are standardized with column-wise means and standard deviations before fitting K-Means, because Euclidean distance would otherwise be dominated by the largest-scale measurements.
+- `KMeans(n_clusters=10, n_init=10, random_state=0)` is used to create reproducible cluster labels.
+- Cluster labels are stored in `X["Cluster"]` and cast to `category`, making them explicit segment identifiers rather than ordinal numeric values.
+- A second K-Means pass uses `fit_transform` to create centroid-distance features, which lets the model learn from how close a row is to each housing-size segment instead of only using the nearest cluster label.
+- The centroid-distance matrix is converted to a DataFrame with `Centroid_0` through `Centroid_9` column names before joining it back to the feature matrix.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
 
 ## Notes
