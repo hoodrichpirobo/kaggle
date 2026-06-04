@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Feature%20Engineering-20BEFF.svg)](https://www.kaggle.com/learn/feature-engineering)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
 
 </div>
 
@@ -35,7 +35,7 @@ The central idea is that useful models rarely depend only on raw fields as colle
 | 2 | Mutual Information | Complete | [MutualInformationExercise.py](./MutualInformationExercise.py) |
 | 3 | Creating Features | Complete | [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py) |
 | 4 | Clustering With K-Means | Complete | [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py) |
-| 5 | Principal Component Analysis | Not started | Pending |
+| 5 | Principal Component Analysis | Complete | [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py) |
 | 6 | Target Encoding | Not started | Pending |
 
 ## Feature Engineering Playbook
@@ -75,6 +75,10 @@ The course builds a practical workflow for finding and creating better tabular f
 - Adding unsupervised cluster labels as categorical model features
 - Creating cluster-distance features with `fit_transform`
 - Labeling centroid-distance columns and joining them back to the training matrix
+- Interpreting principal-component loadings as weighted combinations of the original features
+- Reading same-sign loadings as shared variation and opposite-sign loadings as feature contrasts
+- Joining PCA components to the original feature matrix and measuring their effect on validation RMSLE
+- Using unusual positions in component space to identify and investigate outliers
 - Preserving written reasoning alongside solved Kaggle answer checks
 - Keeping leakage risk in view while preparing for target-based encodings later in the course
 
@@ -84,8 +88,8 @@ The course builds a practical workflow for finding and creating better tabular f
   - [MutualInformationExercise.py](./MutualInformationExercise.py)
   - [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py)
   - [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py)
-- Upcoming exercise exports will be added as the course progresses:
-  - `PrincipalComponentAnalysisExercise.py`
+  - [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py)
+- The final exercise export will be added when the course is completed:
   - `TargetEncodingExercise.py`
 - Completion certificate will be added after the course is finished.
 
@@ -111,6 +115,9 @@ The course builds a practical workflow for finding and creating better tabular f
 - Cluster labels are stored in `X["Cluster"]` and cast to `category`, making them explicit segment identifiers rather than ordinal numeric values.
 - A second K-Means pass uses `fit_transform` to create centroid-distance features, which lets the model learn from how close a row is to each housing-size segment instead of only using the nearest cluster label.
 - The centroid-distance matrix is converted to a DataFrame with `Centroid_0` through `Centroid_9` column names before joining it back to the feature matrix.
+- The PCA exercise interprets component loadings before using them: `PC1` captures a shared large-house-versus-small-house direction because its source features have the same sign, while `PC3` contrasts above-ground living area with basement area.
+- The generated `X_pca` components are joined to the original housing features, then evaluated with `score_dataset(X, y)` to test whether the compressed directions improve validation RMSLE.
+- PCA is also used as an outlier-investigation tool: unusual observations in component space are traced back to partial sales in the Edwards neighborhood instead of being treated as anonymous extreme points.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
 
 ## Notes
