@@ -5,8 +5,8 @@
 **Course 11 of 17 - turning raw columns into model-ready signal with mutual information, feature creation, clustering, PCA, and target encoding.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Feature%20Engineering-20BEFF.svg)](https://www.kaggle.com/learn/feature-engineering)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-6%20of%206-brightgreen.svg)
 
 </div>
 
@@ -16,9 +16,9 @@
 |-------|--------|
 | Position | Course 11 of 17 |
 | Estimated time | 5 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | June 1, 2026 |
-| Completed | In progress |
+| Completed | June 5, 2026 |
 | Course page | [Kaggle Learn: Feature Engineering](https://www.kaggle.com/learn/feature-engineering) |
 
 ## What This Course Adds
@@ -36,7 +36,7 @@ The central idea is that useful models rarely depend only on raw fields as colle
 | 3 | Creating Features | Complete | [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py) |
 | 4 | Clustering With K-Means | Complete | [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py) |
 | 5 | Principal Component Analysis | Complete | [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py) |
-| 6 | Target Encoding | Not started | Pending |
+| 6 | Target Encoding | Complete | [TargetEncodingExercise.py](./TargetEncodingExercise.py) |
 
 ## Feature Engineering Playbook
 
@@ -79,8 +79,13 @@ The course builds a practical workflow for finding and creating better tabular f
 - Reading same-sign loadings as shared variation and opposite-sign loadings as feature contrasts
 - Joining PCA components to the original feature matrix and measuring their effect on validation RMSLE
 - Using unusual positions in component space to identify and investigate outliers
+- Selecting high-cardinality categoricals (`Neighborhood`, `SaleType`, `MSSubClass`, `Exterior1st`, `Exterior2nd`) as target-encoding candidates
+- Applying smoothed target encoding with `MEstimateEncoder` and an `m` smoothing weight
+- Splitting the data into a dedicated encoding fold and a training fold to keep the target out of the model's features
+- Fitting the encoder on the encoding fold and transforming only the held-out training fold
+- Diagnosing target leakage by overlaying encoded-feature and target distributions with `sns.distplot`
+- Recognizing that encoding and training on the same rows reproduces the target almost exactly - the signature of leakage
 - Preserving written reasoning alongside solved Kaggle answer checks
-- Keeping leakage risk in view while preparing for target-based encodings later in the course
 
 ## Artifacts
 
@@ -89,9 +94,8 @@ The course builds a practical workflow for finding and creating better tabular f
   - [CreatingFeaturesExercise.py](./CreatingFeaturesExercise.py)
   - [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py)
   - [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py)
-- The final exercise export will be added when the course is completed:
-  - `TargetEncodingExercise.py`
-- Completion certificate will be added after the course is finished.
+  - [TargetEncodingExercise.py](./TargetEncodingExercise.py)
+- Completion certificate: [Cux Prada - Feature Engineering.png](./Cux%20Prada%20-%20Feature%20Engineering.png)
 
 ## Course Notes
 
@@ -118,6 +122,10 @@ The course builds a practical workflow for finding and creating better tabular f
 - The PCA exercise interprets component loadings before using them: `PC1` captures a shared large-house-versus-small-house direction because its source features have the same sign, while `PC3` contrasts above-ground living area with basement area.
 - The generated `X_pca` components are joined to the original housing features, then evaluated with `score_dataset(X, y)` to test whether the compressed directions improve validation RMSLE.
 - PCA is also used as an outlier-investigation tool: unusual observations in component space are traced back to partial sales in the Edwards neighborhood instead of being treated as anonymous extreme points.
+- The target-encoding exercise picks `Neighborhood` as a natural candidate because its many categories make plain one-hot encoding unwieldy while each category still carries price signal.
+- Encoding uses `MEstimateEncoder(cols=["Neighborhood", "SaleType", "MSSubClass", "Exterior1st", "Exterior2nd"], m=5)`, where `m` smooths each category mean toward the global mean in proportion to how few samples that category has.
+- The data is split into an encoding fold (`X_encode`, `y_encode`) and a training fold (`X_pretrain`, `y_train`); the encoder is fit on the encoding fold and then applied to the training fold, so category means are never learned from the rows the model trains on.
+- The final cell is a deliberate leakage demonstration: when the encoder is fit and applied to the same rows, the encoded feature becomes an almost exact copy of `SalePrice` - the `sns.distplot` overlay lines up - which is why encoder fitting and model training must use separate splits.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
 
 ## Notes
@@ -126,7 +134,13 @@ This course is the bridge between trustworthy modeling workflows and stronger le
 
 ## Certificate of Completion
 
-Certificate pending course completion.
+<div align="center">
+
+<a href="./Cux%20Prada%20-%20Feature%20Engineering.png"><img src="./Cux%20Prada%20-%20Feature%20Engineering.png" width="600" alt="Feature Engineering certificate" /></a>
+
+*Completed June 5, 2026.*
+
+</div>
 
 <div align="center">
 
