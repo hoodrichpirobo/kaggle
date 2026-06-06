@@ -37,6 +37,9 @@ The central idea is that useful models rarely depend only on raw fields as colle
 | 4 | Clustering With K-Means | Complete | [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py) |
 | 5 | Principal Component Analysis | Complete | [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py) |
 | 6 | Target Encoding | Complete | [TargetEncodingExercise.py](./TargetEncodingExercise.py) |
+| ★ | Capstone: Feature Engineering for House Prices | Complete | [FeatureEngineeringForHousePrices.py](./FeatureEngineeringForHousePrices.py) |
+
+The capstone pulls the six lessons into one pipeline: inspect the data, engineer features, then tune an XGBoost regressor with [Optuna](https://optuna.org/) to turn the new signal into leaderboard score.
 
 ## Feature Engineering Playbook
 
@@ -85,6 +88,11 @@ The course builds a practical workflow for finding and creating better tabular f
 - Fitting the encoder on the encoding fold and transforming only the held-out training fold
 - Diagnosing target leakage by overlaying encoded-feature and target distributions with `sns.distplot`
 - Recognizing that encoding and training on the same rows reproduces the target almost exactly - the signature of leakage
+- Assembling mutual information, feature creation, clustering, PCA, and target encoding into a single end-to-end housing pipeline
+- Inspecting `df_train`/`df_test` with `display` and `.info()` to audit dtypes and missing values before engineering
+- Defining an Optuna `objective` that samples XGBoost hyperparameters and returns the cross-validated `score_dataset` RMSLE
+- Searching `max_depth`, `learning_rate`, `n_estimators`, `min_child_weight`, `colsample_bytree`, `subsample`, `reg_alpha`, and `reg_lambda` over sensible log/linear ranges
+- Running `study.optimize(objective, n_trials=20)` and reading `study.best_params` back into the final model
 - Preserving written reasoning alongside solved Kaggle answer checks
 
 ## Artifacts
@@ -95,6 +103,7 @@ The course builds a practical workflow for finding and creating better tabular f
   - [ClusteringWithKMeansExercise.py](./ClusteringWithKMeansExercise.py)
   - [PrincipalComponentAnalysisExercise.py](./PrincipalComponentAnalysisExercise.py)
   - [TargetEncodingExercise.py](./TargetEncodingExercise.py)
+- Capstone pipeline: [FeatureEngineeringForHousePrices.py](./FeatureEngineeringForHousePrices.py) - data audit, engineered features, and Optuna-tuned XGBoost
 - Completion certificate: [Cux Prada - Feature Engineering.png](./Cux%20Prada%20-%20Feature%20Engineering.png)
 
 ## Course Notes
@@ -126,7 +135,11 @@ The course builds a practical workflow for finding and creating better tabular f
 - Encoding uses `MEstimateEncoder(cols=["Neighborhood", "SaleType", "MSSubClass", "Exterior1st", "Exterior2nd"], m=5)`, where `m` smooths each category mean toward the global mean in proportion to how few samples that category has.
 - The data is split into an encoding fold (`X_encode`, `y_encode`) and a training fold (`X_pretrain`, `y_train`); the encoder is fit on the encoding fold and then applied to the training fold, so category means are never learned from the rows the model trains on.
 - The final cell is a deliberate leakage demonstration: when the encoder is fit and applied to the same rows, the encoded feature becomes an almost exact copy of `SalePrice` - the `sns.distplot` overlay lines up - which is why encoder fitting and model training must use separate splits.
-- The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
+- The capstone (`FeatureEngineeringForHousePrices.py`) opens by peeking at `df_train`/`df_test` and calling `.info()` on each to confirm dtypes and missing-value coverage before any feature is built.
+- Its modeling step wraps `XGBRegressor` in an Optuna `objective` that suggests eight hyperparameters - `max_depth`, `learning_rate`, `n_estimators`, `min_child_weight`, `colsample_bytree`, `subsample`, `reg_alpha`, and `reg_lambda` - using log-scale sampling for the learning rate and the two regularization terms.
+- `optuna.create_study(direction="minimize")` and `study.optimize(objective, n_trials=20)` minimize the `score_dataset` RMSLE, and `study.best_params` is captured to rebuild the tuned model.
+- The capstone is where the course's separate techniques become one workflow: engineered features feed a tuned model, and validation score - not intuition - decides whether the engineering paid off.
+- The exported `*Exercise.py` files (and the capstone script) preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, plotting helpers, and answer-checking helpers inside the notebook environment.
 
 ## Notes
 
