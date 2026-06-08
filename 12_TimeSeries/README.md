@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Time%20Series-20BEFF.svg)](https://www.kaggle.com/learn/time-series)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-1%20of%206-blue.svg)
+![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-blue.svg)
 
 </div>
 
@@ -34,13 +34,13 @@ The course reframes forecasting as a regression problem on two new feature famil
 | # | Lesson | Status | Exercise |
 |:-:|--------|:------:|:--------:|
 | 1 | Linear Regression With Time Series | Complete | [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) |
-| 2 | Trend | Not started | `TrendExercise.py` |
+| 2 | Trend | Complete | [TrendExercise.py](./TrendExercise.py) |
 | 3 | Seasonality | Not started | `SeasonalityExercise.py` |
 | 4 | Time Series as Features | Not started | `TimeSeriesAsFeaturesExercise.py` |
 | 5 | Hybrid Models | Not started | `HybridModelsExercise.py` |
 | 6 | Forecasting With Machine Learning | Not started | `ForecastingWithMachineLearningExercise.py` |
 
-Filenames for lessons 2-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
+Filenames for lessons 3-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
 
 ## Forecasting Playbook
 
@@ -56,7 +56,7 @@ The course builds a practical sequence for going from a raw series to a defensib
 
 ## Skills Practiced So Far
 
-From the solved lesson 1 exercise:
+From the solved lessons 1-2 exercises:
 
 - Framing a forecast as ordinary regression on features derived from the time index
 - Distinguishing the two time-series feature families: time-step features (for trend) and lag features (for serial dependence)
@@ -67,13 +67,21 @@ From the solved lesson 1 exercise:
 - Reading serial correlation from a lag plot: a smooth, consistent series implies a strong positive lag coefficient (≈ 0.95), an alternating one a strong negative coefficient (≈ -0.95)
 - Reasoning about the sign and magnitude of serial dependence directly from a time plot
 - Working with the Store Sales `average_sales` series as the course's running dataset
+- Estimating slow-moving trend with centered rolling averages
+- Choosing moving-average parameters with `rolling(window=12, center=True, min_periods=6).mean()`
+- Reading trend shape from a smoothed series before committing to a model order
+- Recognizing a quadratic-looking bend in the food-sales trend
+- Creating polynomial trend features with `statsmodels.tsa.deterministic.DeterministicProcess`
+- Building a cubic trend design matrix with `DeterministicProcess(index=average_sales.index, order=3)`
+- Generating in-sample trend features with `dp.in_sample()`
+- Generating a 90-day future trend feature matrix with `dp.out_of_sample(steps=90)`
+- Treating long-horizon polynomial extrapolation with caution because the forecast can deviate sharply when the assumed trend order is wrong
 - Preserving written reasoning alongside solved Kaggle answer checks
 
-The granular, course-wide skill list will be backfilled here as lessons 2-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
+The granular, course-wide skill list will be backfilled here as lessons 3-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
 
 ## On Deck - Remaining Lessons
 
-- **Trend** - model the slow-moving level of a series with moving averages and a time-dummy regression.
 - **Seasonality** - capture repeating patterns with seasonal indicators and Fourier features, reading candidate frequencies off a periodogram.
 - **Time Series as Features** - predict the future from the past with a lag embedding, choosing lags with the partial autocorrelation function.
 - **Hybrid Models** - combine the strengths of two forecasters by fitting one model to trend/season and another to the residuals.
@@ -83,7 +91,8 @@ The granular, course-wide skill list will be backfilled here as lessons 2-6 are 
 
 - Exercise solutions exported as Python files for quick review:
   - [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) - time-step and lag features fit with `LinearRegression`
-- Lessons 2-6 exercises: pending.
+  - [TrendExercise.py](./TrendExercise.py) - centered moving averages and polynomial trend features with `DeterministicProcess`
+- Lessons 3-6 exercises: pending.
 - Completion certificate: pending - this course is still in progress.
 
 ## Course Notes
@@ -93,6 +102,10 @@ The granular, course-wide skill list will be backfilled here as lessons 2-6 are 
 - The time-step task builds a trend feature with `time = np.arange(len(df.index))`, fits `LinearRegression` on `X = df[["time"]]` against `y = df["sales"]`, and stores predictions as `pd.Series(model.predict(X), index=X.index)` so the fit stays aligned to the time index.
 - The lag task builds `lag_1 = df["sales"].shift(1)`, drops the now-empty first row with `dropna()`, realigns the target with `y, X = y.align(X, join="inner")`, then fits the same `LinearRegression` - the difference is only *which* feature the model sees, not the modeling code.
 - Together the two tasks make the core lesson concrete: the exact same regression machinery becomes a trend model or a serial-dependence model purely through the feature you hand it.
+- The trend exercise starts with a centered 12-period moving average on `food_sales`, using `min_periods=6` so the smoothed trend remains defined near the edges of the series.
+- The saved trend-reading answer identifies an upward bend in the smoothed food-sales line, making a quadratic trend the natural visual fit for that series.
+- The polynomial-trend task uses `DeterministicProcess(index=average_sales.index, order=3)` to create a cubic time basis, then calls `dp.in_sample()` for the training rows and `dp.out_of_sample(steps=90)` for a 90-day forecast horizon.
+- The final trend note records the main risk of polynomial extrapolation: if the chosen trend shape is wrong, the forecast can move far away from the real series very quickly.
 - The exported `*Exercise.py` file preserves solved Kaggle notebook cells. It is reference material, not a guaranteed standalone script, because Kaggle provides the dataset, starter variables, plotting helpers, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
