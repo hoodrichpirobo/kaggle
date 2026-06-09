@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Time%20Series-20BEFF.svg)](https://www.kaggle.com/learn/time-series)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-blue.svg)
+![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-blue.svg)
 
 </div>
 
@@ -35,12 +35,12 @@ The course reframes forecasting as a regression problem on two new feature famil
 |:-:|--------|:------:|:--------:|
 | 1 | Linear Regression With Time Series | Complete | [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) |
 | 2 | Trend | Complete | [TrendExercise.py](./TrendExercise.py) |
-| 3 | Seasonality | Not started | `SeasonalityExercise.py` |
+| 3 | Seasonality | Complete | [SeasonalityExercise.py](./SeasonalityExercise.py) |
 | 4 | Time Series as Features | Not started | `TimeSeriesAsFeaturesExercise.py` |
 | 5 | Hybrid Models | Not started | `HybridModelsExercise.py` |
 | 6 | Forecasting With Machine Learning | Not started | `ForecastingWithMachineLearningExercise.py` |
 
-Filenames for lessons 3-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
+Filenames for lessons 4-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
 
 ## Forecasting Playbook
 
@@ -56,7 +56,7 @@ The course builds a practical sequence for going from a raw series to a defensib
 
 ## Skills Practiced So Far
 
-From the solved lessons 1-2 exercises:
+From the solved lessons 1-3 exercises:
 
 - Framing a forecast as ordinary regression on features derived from the time index
 - Distinguishing the two time-series feature families: time-step features (for trend) and lag features (for serial dependence)
@@ -76,13 +76,23 @@ From the solved lessons 1-2 exercises:
 - Generating in-sample trend features with `dp.in_sample()`
 - Generating a 90-day future trend feature matrix with `dp.out_of_sample(steps=90)`
 - Treating long-horizon polynomial extrapolation with caution because the forecast can deviate sharply when the assumed trend order is wrong
+- Reading a periodogram to identify strong seasonal frequencies before choosing seasonal features
+- Recognizing weekly seasonality as the dominant repeating pattern in the Store Sales average-sales series, with additional monthly and biweekly signal
+- Building a combined deterministic feature matrix with `DeterministicProcess`
+- Adding a constant, linear trend, seasonal indicators, and Fourier terms in one design matrix
+- Creating monthly Fourier features with `CalendarFourier(freq="M", order=4)`
+- Using `seasonal=True` for calendar-seasonal indicators alongside Fourier features
+- Calling `dp.in_sample()` to generate the training feature matrix for the full observed date index
+- Checking a deseasonalized periodogram to confirm that the chosen seasonal model absorbed the main repeating variation
+- One-hot encoding holiday/event labels with `pd.get_dummies(holidays)`
+- Joining holiday indicators onto the deterministic feature matrix by date with `X.join(X_holidays, on="date").fillna(0.0)`
+- Treating holidays and special events as calendar regressors separate from trend and recurring seasonality
 - Preserving written reasoning alongside solved Kaggle answer checks
 
-The granular, course-wide skill list will be backfilled here as lessons 3-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
+The granular, course-wide skill list will be backfilled here as lessons 4-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
 
 ## On Deck - Remaining Lessons
 
-- **Seasonality** - capture repeating patterns with seasonal indicators and Fourier features, reading candidate frequencies off a periodogram.
 - **Time Series as Features** - predict the future from the past with a lag embedding, choosing lags with the partial autocorrelation function.
 - **Hybrid Models** - combine the strengths of two forecasters by fitting one model to trend/season and another to the residuals.
 - **Forecasting With Machine Learning** - apply ML to any forecasting task with four multistep strategies: multioutput, direct, recursive, and DirRec.
@@ -92,7 +102,8 @@ The granular, course-wide skill list will be backfilled here as lessons 3-6 are 
 - Exercise solutions exported as Python files for quick review:
   - [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) - time-step and lag features fit with `LinearRegression`
   - [TrendExercise.py](./TrendExercise.py) - centered moving averages and polynomial trend features with `DeterministicProcess`
-- Lessons 3-6 exercises: pending.
+  - [SeasonalityExercise.py](./SeasonalityExercise.py) - seasonal indicators, Fourier features, and holiday regressors
+- Lessons 4-6 exercises: pending.
 - Completion certificate: pending - this course is still in progress.
 
 ## Course Notes
@@ -106,6 +117,10 @@ The granular, course-wide skill list will be backfilled here as lessons 3-6 are 
 - The saved trend-reading answer identifies an upward bend in the smoothed food-sales line, making a quadratic trend the natural visual fit for that series.
 - The polynomial-trend task uses `DeterministicProcess(index=average_sales.index, order=3)` to create a cubic time basis, then calls `dp.in_sample()` for the training rows and `dp.out_of_sample(steps=90)` for a 90-day forecast horizon.
 - The final trend note records the main risk of polynomial extrapolation: if the chosen trend shape is wrong, the forecast can move far away from the real series very quickly.
+- The seasonality exercise starts from the periodogram: the strongest recurring pattern is weekly, with monthly and biweekly components also visible enough to model.
+- Its deterministic seasonal design combines `constant=True`, `order=1`, `seasonal=True`, and `CalendarFourier(freq="M", order=4)` inside one `DeterministicProcess`, then calls `dp.in_sample()` to build `X`.
+- The deseasonalized periodogram check records that no large seasonal spikes remain, which is the evidence that the model captured the major seasonal variation.
+- Holiday and event effects are added as one-hot regressors with `pd.get_dummies(holidays)`, then joined to the seasonal feature matrix on `date` and filled with `0.0` so non-holiday rows stay explicit.
 - The exported `*Exercise.py` file preserves solved Kaggle notebook cells. It is reference material, not a guaranteed standalone script, because Kaggle provides the dataset, starter variables, plotting helpers, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
