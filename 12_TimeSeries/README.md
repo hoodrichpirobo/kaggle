@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Time%20Series-20BEFF.svg)](https://www.kaggle.com/learn/time-series)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-blue.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-blue.svg)
 
 </div>
 
@@ -36,11 +36,11 @@ The course reframes forecasting as a regression problem on two new feature famil
 | 1 | Linear Regression With Time Series | Complete | [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) |
 | 2 | Trend | Complete | [TrendExercise.py](./TrendExercise.py) |
 | 3 | Seasonality | Complete | [SeasonalityExercise.py](./SeasonalityExercise.py) |
-| 4 | Time Series as Features | Not started | `TimeSeriesAsFeaturesExercise.py` |
+| 4 | Time Series as Features | Complete | [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) |
 | 5 | Hybrid Models | Not started | `HybridModelsExercise.py` |
 | 6 | Forecasting With Machine Learning | Not started | `ForecastingWithMachineLearningExercise.py` |
 
-Filenames for lessons 4-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
+Filenames for lessons 5-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
 
 ## Forecasting Playbook
 
@@ -56,7 +56,7 @@ The course builds a practical sequence for going from a raw series to a defensib
 
 ## Skills Practiced So Far
 
-From the solved lessons 1-3 exercises:
+From the solved lessons 1-4 exercises:
 
 - Framing a forecast as ordinary regression on features derived from the time index
 - Distinguishing the two time-series feature families: time-step features (for trend) and lag features (for serial dependence)
@@ -87,13 +87,23 @@ From the solved lessons 1-3 exercises:
 - One-hot encoding holiday/event labels with `pd.get_dummies(holidays)`
 - Joining holiday indicators onto the deterministic feature matrix by date with `X.join(X_holidays, on="date").fillna(0.0)`
 - Treating holidays and special events as calendar regressors separate from trend and recurring seasonality
+- Smoothing a target series with `y.rolling(window=7, center=True).mean()` before reading short-term dependence
+- Using lag plots and partial autocorrelation to choose useful target lags instead of blindly adding every recent value
+- Reading the exercise's lag evidence as strongest around lags 8 and 1, with a mostly linear effect
+- Separating autoregressive target signal from known external drivers such as promotion schedules
+- Building lagged target features from a deseasonalized series with `make_lags(y_deseason, lags=1)`
+- Combining lagged, current, and leading promotion features with `pd.concat`
+- Using `make_leads(onpromotion, leads=1)` only because planned promotions are known ahead of the forecast date
+- Dropping incomplete rows after lead/lag construction with `.dropna()` and realigning target/features with `y.align(X, join="inner")`
+- Building rolling-window summaries from a shifted target, including a 7-day mean, 14-day median, and 7-day standard deviation
+- Creating centered rolling promotion counts with `onpromo.rolling(7, center=True).sum()` for known-in-advance covariates
+- Guarding against leakage by rolling lagged target values, while allowing future-looking features only when they would truly be available at prediction time
 - Preserving written reasoning alongside solved Kaggle answer checks
 
-The granular, course-wide skill list will be backfilled here as lessons 4-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
+The granular, course-wide skill list will be backfilled here as lessons 5-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
 
 ## On Deck - Remaining Lessons
 
-- **Time Series as Features** - predict the future from the past with a lag embedding, choosing lags with the partial autocorrelation function.
 - **Hybrid Models** - combine the strengths of two forecasters by fitting one model to trend/season and another to the residuals.
 - **Forecasting With Machine Learning** - apply ML to any forecasting task with four multistep strategies: multioutput, direct, recursive, and DirRec.
 
@@ -103,7 +113,8 @@ The granular, course-wide skill list will be backfilled here as lessons 4-6 are 
   - [LinearRegressionWithTimeSeriesExercise.py](./LinearRegressionWithTimeSeriesExercise.py) - time-step and lag features fit with `LinearRegression`
   - [TrendExercise.py](./TrendExercise.py) - centered moving averages and polynomial trend features with `DeterministicProcess`
   - [SeasonalityExercise.py](./SeasonalityExercise.py) - seasonal indicators, Fourier features, and holiday regressors
-- Lessons 4-6 exercises: pending.
+  - [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) - lag/lead embeddings, rolling summaries, and known-in-advance promotion features
+- Lessons 5-6 exercises: pending.
 - Completion certificate: pending - this course is still in progress.
 
 ## Course Notes
@@ -121,6 +132,12 @@ The granular, course-wide skill list will be backfilled here as lessons 4-6 are 
 - Its deterministic seasonal design combines `constant=True`, `order=1`, `seasonal=True`, and `CalendarFourier(freq="M", order=4)` inside one `DeterministicProcess`, then calls `dp.in_sample()` to build `X`.
 - The deseasonalized periodogram check records that no large seasonal spikes remain, which is the evidence that the model captured the major seasonal variation.
 - Holiday and event effects are added as one-hot regressors with `pd.get_dummies(holidays)`, then joined to the seasonal feature matrix on `date` and filled with `0.0` so non-holiday rows stay explicit.
+- The time-series-as-features exercise opens by smoothing `y` with a centered seven-day moving average, making weekly local structure easier to see before building predictors.
+- Its written lag-reading answer records lags 8 and 1 as useful candidates and notes that the relationship looks mostly linear.
+- The promotion-feature answer keeps both lagged and leading values in play: lagged promotions can capture after-effects, while leading promotions are legitimate only because promotion schedules are known before the forecast date.
+- The main feature matrix combines `make_lags(y_deseason, lags=1)` with lagged, current, and one-step-leading `onpromotion` values, then uses `.dropna()` and `y.align(X, join="inner")` to keep rows consistent.
+- The rolling-feature task shifts `supply_sales["sales"]` before summarizing it, then derives a seven-day mean, fourteen-day median, and seven-day standard deviation so the model sees recent level and volatility without peeking at the current target.
+- Promotion intensity is summarized separately with a centered seven-day rolling sum on `onpromotion`, which is safe here because planned promotions are a future-known covariate rather than an observed target value.
 - The exported `*Exercise.py` file preserves solved Kaggle notebook cells. It is reference material, not a guaranteed standalone script, because Kaggle provides the dataset, starter variables, plotting helpers, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
