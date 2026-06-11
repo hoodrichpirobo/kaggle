@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Time%20Series-20BEFF.svg)](https://www.kaggle.com/learn/time-series)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-blue.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-blue.svg)
 
 </div>
 
@@ -37,10 +37,10 @@ The course reframes forecasting as a regression problem on two new feature famil
 | 2 | Trend | Complete | [TrendExercise.py](./TrendExercise.py) |
 | 3 | Seasonality | Complete | [SeasonalityExercise.py](./SeasonalityExercise.py) |
 | 4 | Time Series as Features | Complete | [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) |
-| 5 | Hybrid Models | Not started | `HybridModelsExercise.py` |
+| 5 | Hybrid Models | Complete | [HybridModelsExercise.py](./HybridModelsExercise.py) |
 | 6 | Forecasting With Machine Learning | Not started | `ForecastingWithMachineLearningExercise.py` |
 
-Filenames for lessons 5-6 are shown as plain text because those exercises are not solved yet; they follow the repo's `<LessonName>Exercise.py` convention and will become links as each one lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
+The lesson 6 filename is shown as plain text because that exercise is not solved yet; it follows the repo's `<LessonName>Exercise.py` convention and will become a link once it lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
 
 ## Forecasting Playbook
 
@@ -56,7 +56,7 @@ The course builds a practical sequence for going from a raw series to a defensib
 
 ## Skills Practiced So Far
 
-From the solved lessons 1-4 exercises:
+From the solved lessons 1-5 exercises:
 
 - Framing a forecast as ordinary regression on features derived from the time index
 - Distinguishing the two time-series feature families: time-step features (for trend) and lag features (for serial dependence)
@@ -98,13 +98,20 @@ From the solved lessons 1-4 exercises:
 - Building rolling-window summaries from a shifted target, including a 7-day mean, 14-day median, and 7-day standard deviation
 - Creating centered rolling promotion counts with `onpromo.rolling(7, center=True).sum()` for known-in-advance covariates
 - Guarding against leakage by rolling lagged target values, while allowing future-looking features only when they would truly be available at prediction time
+- Implementing a boosted hybrid forecaster that trains one model on baseline forecasting features and a second model on the first model's residuals
+- Fitting `model_1` on `X_1` and the wide target matrix `y`, then storing its fitted values as a DataFrame aligned to `X_1.index` and `y.columns`
+- Computing residual targets with `y - y_fit` before handing unexplained structure to the second-stage model
+- Converting wide residuals to long form with `.stack().squeeze()` so the residual model can learn row-level corrections
+- Saving `y_columns`, `y_fit`, and `y_resid` on the hybrid model to keep fit diagnostics and prediction reshaping consistent
+- Building hybrid predictions by stacking the first-stage forecast, adding `model_2.predict(X_2)`, and unstacking back to the original wide target layout
+- Combining `LinearRegression` for trend/season baseline structure with `XGBRegressor` for nonlinear residual structure
+- Clipping final Store Sales forecasts at `0.0` so predicted sales respect the nonnegative target domain
 - Preserving written reasoning alongside solved Kaggle answer checks
 
-The granular, course-wide skill list will be backfilled here as lessons 5-6 are completed, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
+The granular, course-wide skill list will be completed here when lesson 6 lands, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
 
-## On Deck - Remaining Lessons
+## On Deck - Remaining Lesson
 
-- **Hybrid Models** - combine the strengths of two forecasters by fitting one model to trend/season and another to the residuals.
 - **Forecasting With Machine Learning** - apply ML to any forecasting task with four multistep strategies: multioutput, direct, recursive, and DirRec.
 
 ## Artifacts
@@ -114,7 +121,8 @@ The granular, course-wide skill list will be backfilled here as lessons 5-6 are 
   - [TrendExercise.py](./TrendExercise.py) - centered moving averages and polynomial trend features with `DeterministicProcess`
   - [SeasonalityExercise.py](./SeasonalityExercise.py) - seasonal indicators, Fourier features, and holiday regressors
   - [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) - lag/lead embeddings, rolling summaries, and known-in-advance promotion features
-- Lessons 5-6 exercises: pending.
+  - [HybridModelsExercise.py](./HybridModelsExercise.py) - two-stage `LinearRegression` plus `XGBRegressor` hybrid over residuals
+- Lesson 6 exercise: pending.
 - Completion certificate: pending - this course is still in progress.
 
 ## Course Notes
@@ -138,6 +146,11 @@ The granular, course-wide skill list will be backfilled here as lessons 5-6 are 
 - The main feature matrix combines `make_lags(y_deseason, lags=1)` with lagged, current, and one-step-leading `onpromotion` values, then uses `.dropna()` and `y.align(X, join="inner")` to keep rows consistent.
 - The rolling-feature task shifts `supply_sales["sales"]` before summarizing it, then derives a seven-day mean, fourteen-day median, and seven-day standard deviation so the model sees recent level and volatility without peeking at the current target.
 - Promotion intensity is summarized separately with a centered seven-day rolling sum on `onpromotion`, which is safe here because planned promotions are a future-known covariate rather than an observed target value.
+- The hybrid-models exercise implements `BoostedHybrid.fit` as a two-stage residual workflow: `model_1.fit(X_1, y)` creates the baseline forecast, `y - y_fit` becomes the residual target, and `model_2.fit(X_2, y_resid)` learns the remaining pattern.
+- Residuals are converted from the course's wide multi-output target shape into long form with `.stack().squeeze()` before fitting the second model, which lets the residual learner operate on row-level corrections.
+- `BoostedHybrid.predict` mirrors the same shape discipline: create a wide baseline prediction, stack it to long form, add the second-stage residual prediction, then `unstack()` back to the original target columns.
+- The final hybrid combines `LinearRegression()` with `XGBRegressor()`, fits on `X_1`, `X_2`, and `y`, predicts in sample for the exercise check, and clips the result at `0.0` to keep sales forecasts physically valid.
+- The lesson's practical takeaway is model decomposition: use a simple, interpretable forecaster for broad trend/season structure, then let a more flexible learner focus only on the residual signal that remains.
 - The exported `*Exercise.py` file preserves solved Kaggle notebook cells. It is reference material, not a guaranteed standalone script, because Kaggle provides the dataset, starter variables, plotting helpers, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
