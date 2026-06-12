@@ -5,8 +5,8 @@
 **Course 12 of 17 - forecasting by turning the calendar into features: time-step, lag, trend, seasonality, and hybrid models.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Time%20Series-20BEFF.svg)](https://www.kaggle.com/learn/time-series)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-blue.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-6%20of%206-brightgreen.svg)
 
 </div>
 
@@ -16,9 +16,9 @@
 |-------|--------|
 | Position | Course 12 of 17 |
 | Estimated time | 5 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | June 7, 2026 |
-| Completed | — (in progress) |
+| Completed | June 12, 2026 |
 | Course page | [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series) |
 
 This is the first course of **Phase 5 - Specialized Topics** and the first one in the repo where row order carries information.
@@ -38,9 +38,9 @@ The course reframes forecasting as a regression problem on two new feature famil
 | 3 | Seasonality | Complete | [SeasonalityExercise.py](./SeasonalityExercise.py) |
 | 4 | Time Series as Features | Complete | [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) |
 | 5 | Hybrid Models | Complete | [HybridModelsExercise.py](./HybridModelsExercise.py) |
-| 6 | Forecasting With Machine Learning | Not started | `ForecastingWithMachineLearningExercise.py` |
+| 6 | Forecasting With Machine Learning | Complete | [ForecastingWithMachineLearningExercise.py](./ForecastingWithMachineLearningExercise.py) |
 
-The lesson 6 filename is shown as plain text because that exercise is not solved yet; it follows the repo's `<LessonName>Exercise.py` convention and will become a link once it lands. Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
+Every exercise in this course runs on the [Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) competition data (Corporación Favorita grocery sales, Ecuador).
 
 ## Forecasting Playbook
 
@@ -54,9 +54,9 @@ The course builds a practical sequence for going from a raw series to a defensib
 6. Combine forecasters into a **hybrid**: a simple model for trend and season, a second model (e.g. boosted trees) on the residuals it leaves behind.
 7. Pick a **multistep strategy** - multioutput, direct, recursive, or DirRec - to forecast a whole horizon rather than a single step.
 
-## Skills Practiced So Far
+## Skills Practiced
 
-From the solved lessons 1-5 exercises:
+From the six solved exercises:
 
 - Framing a forecast as ordinary regression on features derived from the time index
 - Distinguishing the two time-series feature families: time-step features (for trend) and lag features (for serial dependence)
@@ -106,13 +106,20 @@ From the solved lessons 1-5 exercises:
 - Building hybrid predictions by stacking the first-stage forecast, adding `model_2.predict(X_2)`, and unstacking back to the original wide target layout
 - Combining `LinearRegression` for trend/season baseline structure with `XGBRegressor` for nonlinear residual structure
 - Clipping final Store Sales forecasts at `0.0` so predicted sales respect the nonnegative target domain
+- Defining forecast origin, forecast horizon, lead time, and forecast steps for a competition test window
+- Matching forecasting strategy to task shape: single-step, multistep sequence, and multiseries forecasting
+- Selecting `family_sales.loc[:, "sales"]` as a wide multi-family target matrix for supervised forecasting
+- Creating four target-lag features with `make_lags(y, lags=4).dropna()`
+- Creating a 16-step multistep target matrix with `make_multistep_target(y, steps=16).dropna()`
+- Aligning lagged features and multistep targets with `y.align(X, join="inner", axis=0)`
+- Using `RegressorChain(XGBRegressor())` as a DirRec-style forecaster that feeds earlier predicted steps into later ones
+- Reading the Store Sales test dates to derive `forecast_start` and `n_steps` from the actual submission horizon
+- Extending the observed target index with a one-day future period so the first forecast row can be lagged from the final training observations
+- Building the submission feature row from lagged wide targets, stacking by product family, and label-encoding the `family` feature
+- Predicting all 16 forecast steps, clipping negative sales to zero, and reshaping the wide forecast back to long `date` / `family` rows
+- Joining predicted sales back to Kaggle test `id` values and writing `submission.csv`
+- Treating Store Sales forecasting as a full competition workflow, not just an in-sample model check
 - Preserving written reasoning alongside solved Kaggle answer checks
-
-The granular, course-wide skill list will be completed here when lesson 6 lands, in the same style as the [Feature Engineering](../11_FeatureEngineering/#skills-practiced) and [Machine Learning Explainability](../10_MachineLearningExplainability/#skills-practiced) pages.
-
-## On Deck - Remaining Lesson
-
-- **Forecasting With Machine Learning** - apply ML to any forecasting task with four multistep strategies: multioutput, direct, recursive, and DirRec.
 
 ## Artifacts
 
@@ -122,8 +129,8 @@ The granular, course-wide skill list will be completed here when lesson 6 lands,
   - [SeasonalityExercise.py](./SeasonalityExercise.py) - seasonal indicators, Fourier features, and holiday regressors
   - [TimeSeriesAsFeaturesExercise.py](./TimeSeriesAsFeaturesExercise.py) - lag/lead embeddings, rolling summaries, and known-in-advance promotion features
   - [HybridModelsExercise.py](./HybridModelsExercise.py) - two-stage `LinearRegression` plus `XGBRegressor` hybrid over residuals
-- Lesson 6 exercise: pending.
-- Completion certificate: pending - this course is still in progress.
+  - [ForecastingWithMachineLearningExercise.py](./ForecastingWithMachineLearningExercise.py) - lagged wide targets, 16-step multistep forecasting, `RegressorChain`, and Kaggle submission formatting
+- Completion certificate: [Cux Prada - Time Series.png](./Cux%20Prada%20-%20Time%20Series.png)
 
 ## Course Notes
 
@@ -151,17 +158,27 @@ The granular, course-wide skill list will be completed here when lesson 6 lands,
 - `BoostedHybrid.predict` mirrors the same shape discipline: create a wide baseline prediction, stack it to long form, add the second-stage residual prediction, then `unstack()` back to the original target columns.
 - The final hybrid combines `LinearRegression()` with `XGBRegressor()`, fits on `X_1`, `X_2`, and `y`, predicts in sample for the exercise check, and clips the result at `0.0` to keep sales forecasts physically valid.
 - The lesson's practical takeaway is model decomposition: use a simple, interpretable forecaster for broad trend/season structure, then let a more flexible learner focus only on the residual signal that remains.
+- The forecasting-with-machine-learning exercise starts by distinguishing forecast origin, forecast horizon, lead time, and forecast steps against the Store Sales split: the origin is August 15, 2017, and the test horizon runs from August 16 through August 31, 2017.
+- The strategy-matching answer maps different forecasting tasks to the appropriate setup, separating single-step forecasting, multi-step forecasting, and multi-series forecasting.
+- The main supervised setup selects the wide `family_sales["sales"]` matrix, creates four lag features with `make_lags`, creates a 16-step target with `make_multistep_target`, then aligns both objects on the same dates before fitting.
+- `RegressorChain(XGBRegressor())` is used for the final multistep model, giving a DirRec-style chain where each predicted step can become context for later predicted steps.
+- The submission section reads the real test dates, builds the first forecast feature row from the final observed lags, stacks product families into rows, label-encodes `family`, predicts all 16 days, clips negative values, reshapes back to long format, merges with Kaggle test IDs, and writes `submission.csv`.
+- The final lesson's practical takeaway is that forecasting strategy is part of the model design: the target shape, horizon length, and known-at-prediction features determine whether a simple one-step model is enough or a multistep strategy is required.
 - The exported `*Exercise.py` file preserves solved Kaggle notebook cells. It is reference material, not a guaranteed standalone script, because Kaggle provides the dataset, starter variables, plotting helpers, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
 
 This course is where the modeling mindset shifts from "rows are independent samples" to "the series is one object that unfolds in order." The discipline to carry forward: a forecast is only honest if every feature it uses would have been available at the moment the prediction is made, which makes the time-ordered train/validation boundary as important here as leakage control was in the tabular courses.
 
+The other carry-forward habit is choosing the forecasting strategy from the horizon itself. One-step, direct, recursive, DirRec, and multioutput forecasts are not interchangeable wrappers; they encode different assumptions about how predictions depend on one another across future dates.
+
 ## Certificate of Completion
 
 <div align="center">
 
-*In progress - the completion certificate will be added here once all six lessons are finished, matching the layout used across the completed courses.*
+<a href="./Cux%20Prada%20-%20Time%20Series.png"><img src="./Cux%20Prada%20-%20Time%20Series.png" width="600" alt="Time Series certificate" /></a>
+
+*Completed June 12, 2026.*
 
 </div>
 

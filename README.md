@@ -11,7 +11,7 @@
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![BigQuery](https://img.shields.io/badge/Google%20BigQuery-4285F4.svg?logo=googlecloud&logoColor=white)](https://cloud.google.com/bigquery)
 
-`███████████░░░░░░  11 / 17 complete  ·  phase 4 complete  ·  next: Time Series`
+`████████████░░░░░  12 / 17 complete  ·  phase 5 in progress  ·  next: Intro to Deep Learning`
 
 [Why](#why-this-repository-exists) · [At a Glance](#at-a-glance) · [Progress](#progress-by-phase) · [Roadmap](#roadmap) · [Certificates](#certificates) · [Featured Work](#featured-work) · [Skills](#skills-snapshot) · [Layout](#repository-layout) · [Reading Guide](#reading-guide) · [What's Next](#after-kaggle-learn)
 
@@ -29,13 +29,13 @@ The goal is simple: keep the full path **auditable, navigable, and revisitable**
 
 | Metric | Value |
 |--------|-------|
-| Courses completed | **11 / 17** |
-| Hours logged across completed courses | **45** |
-| Exercise files archived | **64** |
-| Certificates earned | **11** |
-| Current milestone | Feature engineering - mutual information, feature creation, K-Means clustering, PCA, target encoding |
-| Last completed course | [Feature Engineering](./11_FeatureEngineering/) - June 5, 2026 |
-| Up next | [Time Series](https://www.kaggle.com/learn/time-series) |
+| Courses completed | **12 / 17** |
+| Hours logged across completed courses | **50** |
+| Exercise files archived | **70** |
+| Certificates earned | **12** |
+| Current milestone | Time-series forecasting - trend, seasonality, lag features, hybrid models, and multistep ML forecasts |
+| Last completed course | [Time Series](./12_TimeSeries/) - June 12, 2026 |
+| Up next | [Intro to Deep Learning](https://www.kaggle.com/learn/intro-to-deep-learning) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Progress by Phase
@@ -45,7 +45,7 @@ Phase 1  ·  Foundations            ██████████████  
 Phase 2  ·  Data                   ██████████████  100%   3 / 3
 Phase 3  ·  SQL                    ██████████████  100%   2 / 2
 Phase 4  ·  Machine Learning       ██████████████  100%   4 / 4
-Phase 5  ·  Specialized Topics     ░░░░░░░░░░░░░░    0%   0 / 6
+Phase 5  ·  Specialized Topics     ██░░░░░░░░░░░░   17%   1 / 6
 ```
 
 ## Roadmap
@@ -85,8 +85,8 @@ Phase 5  ·  Specialized Topics     ░░░░░░░░░░░░░░  
 
 | # | Course | Hours | Status |
 |:-:|--------|:-----:|:------:|
-| 12 | [Time Series](https://www.kaggle.com/learn/time-series) | 5h | Up next |
-| 13 | [Intro to Deep Learning](https://www.kaggle.com/learn/intro-to-deep-learning) | 4h | Not started |
+| 12 | [Time Series](./12_TimeSeries/) | 5h | [Complete](./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png) |
+| 13 | [Intro to Deep Learning](https://www.kaggle.com/learn/intro-to-deep-learning) | 4h | Up next |
 | 14 | [Computer Vision](https://www.kaggle.com/learn/computer-vision) | 4h | Not started |
 | 15 | [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) | 4h | Not started |
 | 16 | [Intro to Game AI and Reinforcement Learning](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning) | 4h | Not started |
@@ -113,6 +113,7 @@ Phase 5  ·  Specialized Topics     ░░░░░░░░░░░░░░  
 <td align="center" width="200"><a href="./9_IntermediateMachineLearning/Cux%20Prada%20-%20Intermediate%20Machine%20Learning.png"><img src="./9_IntermediateMachineLearning/Cux%20Prada%20-%20Intermediate%20Machine%20Learning.png" width="180" alt="Intermediate Machine Learning certificate" /></a><br/><sub><b>Intermediate Machine Learning</b></sub></td>
 <td align="center" width="200"><a href="./10_MachineLearningExplainability/Cux%20Prada%20-%20Machine%20Learning%20Explainability.png"><img src="./10_MachineLearningExplainability/Cux%20Prada%20-%20Machine%20Learning%20Explainability.png" width="180" alt="Machine Learning Explainability certificate" /></a><br/><sub><b>Machine Learning Explainability</b></sub></td>
 <td align="center" width="200"><a href="./11_FeatureEngineering/Cux%20Prada%20-%20Feature%20Engineering.png"><img src="./11_FeatureEngineering/Cux%20Prada%20-%20Feature%20Engineering.png" width="180" alt="Feature Engineering certificate" /></a><br/><sub><b>Feature Engineering</b></sub></td>
+<td align="center" width="200"><a href="./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png"><img src="./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png" width="180" alt="Time Series certificate" /></a><br/><sub><b>Time Series</b></sub></td>
 </tr>
 </table>
 
@@ -124,6 +125,8 @@ Phase 5  ·  Specialized Topics     ░░░░░░░░░░░░░░  
 
 A few items worth a second look - they go past the base course prompts:
 
+- **Time-series forecasting as supervised learning, with leakage-aware horizons.** The Time Series track turns dates into model inputs: time-step features for trend, Fourier and seasonal indicators for calendar cycles, lagged targets for serial dependence, rolling summaries from shifted values, and known-in-advance promotion features. It closes by decomposing forecasts with a `LinearRegression` + `XGBRegressor` hybrid and by building a 16-step Store Sales submission with `RegressorChain`, lag features, multioutput targets, and nonnegative clipped predictions.
+  → [`12_TimeSeries/`](./12_TimeSeries/)
 - **A full feature-engineering pass on Ames Housing, leakage-aware end to end.** The Feature Engineering track ranks raw columns by mutual information - then uses faceted `sns.lmplot`s to catch interactions a single MI score misses - before *building* signal: ratio and count features, one-hot `× GrLivArea` interaction terms, neighborhood-median context via grouped `transform`, K-Means segment labels plus `fit_transform` centroid-distance features, and PCA components read by their loadings (and reused to trace outliers back to partial sales in the Edwards neighborhood). It closes with target encoding done right - an `MEstimateEncoder` fit on a held-out split so category means never leak into the data the model trains on.
   → [`11_FeatureEngineering/`](./11_FeatureEngineering/)
 - **Model explainability used as a debugging tool, end to end.** The Machine Learning Explainability track ranks the features a fitted model leans on with permutation importance, reads average feature effects with one- and two-way partial dependence plots, and attributes individual predictions with SHAP. It then *stress-tests* those stories: grouped observed readmission rates sanity-check the partial dependence curves, and synthetic datasets with known response formulas prove that a flat partial-dependence plot can still hide a strong feature interaction.
@@ -139,7 +142,7 @@ A few items worth a second look - they go past the base course prompts:
 
 ## Skills Snapshot
 
-Aggregated from the eleven completed courses. Each skill is exercised in at least one solved notebook.
+Aggregated from the twelve completed courses. Each skill is exercised in at least one solved notebook.
 
 | Domain | Core skills |
 |--------|-------------|
@@ -152,6 +155,7 @@ Aggregated from the eleven completed courses. Each skill is exercised in at leas
 | **Tabular Modeling Workflow** | missing-value strategies with `SimpleImputer`, ordinal vs one-hot encoding, `OneHotEncoder(handle_unknown="ignore")`, `ColumnTransformer`, reusable `Pipeline` objects, `cross_val_score` for stable estimates, `XGBRegressor` with `learning_rate` / `n_estimators` / `early_stopping_rounds`, target leakage vs train-test contamination |
 | **Model Explainability** | permutation importance with `eli5` / `PermutationImportance`, one- and two-way partial dependence with `PartialDependenceDisplay`, SHAP values via `shap.TreeExplainer`, `force_plot` for single predictions, summary and dependence plots for global behavior, spotting feature interactions, validating explanations against observed rates and synthetic data |
 | **Feature Engineering** | mutual information scoring and ranking, reading MI as investigation prompts, interaction discovery with faceted `sns.lmplot`, ratio / count / combination features, one-hot interaction features, neighborhood context via grouped `transform("median")`, standardizing inputs for distance-based methods, `KMeans` cluster labels and `fit_transform` centroid-distance features, interpreting PCA loadings, PCA for variance summary and outlier detection, leakage-safe target encoding with `MEstimateEncoder` on a held-out split |
+| **Time Series** | time-step features, lag features, time-indexed train/validation discipline, centered moving averages, polynomial trends with `DeterministicProcess`, seasonal indicators, Fourier features with `CalendarFourier`, holiday regressors, partial autocorrelation, lag/lead feature alignment, rolling summaries from shifted targets, future-known covariates, hybrid residual models, multioutput/direct/recursive/DirRec forecasting strategies, `RegressorChain` multistep prediction, Store Sales submission formatting |
 
 ## Repository Layout
 
@@ -169,8 +173,8 @@ kaggle/
 ├── 8_IntroToMachineLearning/       ✓ complete
 ├── 9_IntermediateMachineLearning/  ✓ complete
 ├── 10_MachineLearningExplainability/  ✓ complete
-├── 11_FeatureEngineering/          ✓ complete - latest
-└── 12_TimeSeries/                  · up next
+├── 11_FeatureEngineering/          ✓ complete
+└── 12_TimeSeries/                  ✓ complete - latest
 ```
 
 Each completed or in-progress course directory follows the same shape:
@@ -205,6 +209,6 @@ Once the Kaggle AI track is complete, the plan is to continue with [fast.ai - Pr
 
 **[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
 
-*Last updated: June 5, 2026*
+*Last updated: June 12, 2026*
 
 </div>
