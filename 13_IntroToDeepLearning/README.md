@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Deep%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-deep-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-1%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-yellow.svg)
 
 </div>
 
@@ -34,7 +34,7 @@ The course begins with the smallest possible Keras model - one dense neuron with
 | # | Lesson | Status | Exercise |
 |:-:|--------|:------:|:--------:|
 | 1 | A Single Neuron | Complete | [ASingleNeuronExercise.py](./ASingleNeuronExercise.py) |
-| 2 | Deep Neural Networks | Not started | TBD |
+| 2 | Deep Neural Networks | Complete | [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) |
 | 3 | Stochastic Gradient Descent | Not started | TBD |
 | 4 | Overfitting and Underfitting | Not started | TBD |
 | 5 | Dropout and Batch Normalization | Not started | TBD |
@@ -55,7 +55,7 @@ The course builds a practical sequence for moving from linear models to neural n
 
 ## Skills Practiced
 
-From the solved exercise so far:
+From the solved exercises so far:
 
 - Defining a neural-network input shape from a tabular training matrix
 - Computing the number of input features as `red_wine.shape[1] - 1`
@@ -64,11 +64,17 @@ From the solved exercise so far:
 - Understanding that a one-unit dense layer on tabular inputs is a learned weighted sum plus bias
 - Reading model parameters through `model.weights`
 - Separating the learned weight vector from the bias scalar with `w, b = model.weights`
+- Deriving a second tabular model input width from the concrete dataset with `concrete.shape[1] - 1`
+- Expanding from a single dense neuron to a multilayer network with three 512-unit hidden layers
+- Using `relu` activations in hidden layers so stacked dense layers can learn nonlinear relationships
+- Keeping the final regression output as `layers.Dense(units=1)` with no activation
+- Rewriting inline activations as explicit `layers.Activation("relu")` layers
+- Treating activation layers as callable transformations on tensors
+- Plotting `relu`, `elu`, `selu`, and `swish` over a fixed input range to compare activation behavior
 - Preserving Kaggle answer checks alongside the solved notebook cells
 
 Expected next skills as the remaining lessons are completed:
 
-- Building multilayer dense networks with hidden layers and activation functions
 - Compiling Keras models with optimizers, losses, and metrics
 - Training models with `fit`, batches, epochs, and validation data
 - Reading learning curves for underfitting, overfitting, and convergence behavior
@@ -79,6 +85,7 @@ Expected next skills as the remaining lessons are completed:
 
 - Exercise solutions exported as Python files for quick review:
   - [ASingleNeuronExercise.py](./ASingleNeuronExercise.py) - first Keras model: tabular input shape, one dense output neuron, and direct inspection of weights and bias
+  - [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) - multilayer dense regression network with ReLU hidden layers, explicit activation-layer rewrite, and activation-function plots
 - Completion certificate: pending course completion
 
 ## Course Notes
@@ -88,6 +95,10 @@ Expected next skills as the remaining lessons are completed:
 - The model is intentionally minimal: `keras.Sequential([layers.Dense(units=1, input_shape=input_shape)])`.
 - With one dense unit and no activation, the network is equivalent to a linear model. That makes it a clean starting point for understanding how neural networks store coefficients.
 - `model.weights` exposes the two learned parameter groups: the feature weights and the bias.
+- The deep-network exercise moves to the concrete dataset and again derives `input_shape` from the feature matrix width instead of hard-coding the number of inputs.
+- The main regression model stacks three hidden `Dense(512, activation="relu")` layers before a one-unit output layer, making the hidden layers responsible for learned nonlinear representations and the output layer responsible for the final numeric prediction.
+- The activation rewrite shows that `activation="relu"` inside a `Dense` layer can also be expressed as a separate `layers.Activation("relu")` layer after the dense transformation.
+- The activation comparison plots `relu`, `elu`, `selu`, and `swish` on values from `-3.0` to `3.0`, making the shape of each nonlinear transformation visible before using it inside a model.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, TensorFlow/Keras setup, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
