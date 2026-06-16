@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Deep%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-deep-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-yellow.svg)
 
 </div>
 
@@ -36,7 +36,7 @@ The course begins with the smallest possible Keras model - one dense neuron with
 | 1 | A Single Neuron | Complete | [ASingleNeuronExercise.py](./ASingleNeuronExercise.py) |
 | 2 | Deep Neural Networks | Complete | [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) |
 | 3 | Stochastic Gradient Descent | Complete | [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) |
-| 4 | Overfitting and Underfitting | Not started | TBD |
+| 4 | Overfitting and Underfitting | Complete | [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) |
 | 5 | Dropout and Batch Normalization | Not started | TBD |
 | 6 | Binary Classification | Not started | TBD |
 
@@ -79,13 +79,17 @@ From the solved exercises so far:
 - Comparing small, medium, and very large batch sizes in the SGD animation
 - Recognizing that very large learning rates can prevent convergence entirely
 - Treating smaller or medium-sized update steps as a practical default before reaching for extreme settings
+- Reading training and validation curves as separate signals instead of trusting training loss alone
+- Diagnosing underfitting when validation loss stays high without a meaningful train-validation gap
+- Diagnosing overfitting when validation loss turns upward while training loss keeps improving
+- Using Keras callbacks through `tensorflow.keras.callbacks`
+- Configuring `callbacks.EarlyStopping(min_delta=0.001, patience=5, restore_best_weights=True)`
+- Treating the best validation loss as the model-selection target, even when a later overfit model has lower training loss
 - Preserving Kaggle answer checks alongside the solved notebook cells
 
 Expected next skills as the remaining lessons are completed:
 
-- Training with validation data and using validation curves to diagnose generalization
-- Reading learning curves for underfitting, overfitting, and convergence behavior across train/validation splits
-- Applying early stopping, dropout, and batch normalization
+- Applying dropout and batch normalization to improve generalization and training stability
 - Designing binary classifiers with sigmoid outputs and cross-entropy loss
 
 ## Artifacts
@@ -94,6 +98,7 @@ Expected next skills as the remaining lessons are completed:
   - [ASingleNeuronExercise.py](./ASingleNeuronExercise.py) - first Keras model: tabular input shape, one dense output neuron, and direct inspection of weights and bias
   - [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) - multilayer dense regression network with ReLU hidden layers, explicit activation-layer rewrite, and activation-function plots
   - [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) - compiling with Adam/MAE, fitting over mini-batches and epochs, and experimenting with learning-rate and batch-size behavior
+  - [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) - learning-curve diagnosis for underfitting and overfitting, plus early stopping with restored best weights
 - Completion certificate: pending course completion
 
 ## Course Notes
@@ -112,6 +117,11 @@ Expected next skills as the remaining lessons are completed:
 - The returned `history` object is the record to inspect after training; in the saved answer, the learning curves had mostly leveled off.
 - The SGD animation experiments isolate three knobs: learning rate, batch size, and number of training examples. The saved trials include very small batches, medium batches, and an intentionally extreme learning rate / batch-size combination.
 - The practical lesson from those trials is that smaller batches can help optimization move through the loss surface, while an overly large learning rate can make training fail instead of merely speeding it up.
+- The overfitting/underfitting exercise makes validation loss the main accountability signal: a model can be underfit even without a train-validation gap if both curves remain poor, and it can be overfit when validation loss rises after training loss continues to fall.
+- The saved underfitting diagnosis records that the first model does not show much train-validation separation and the validation loss does not improve enough.
+- The saved overfitting diagnosis records the opposite failure mode: validation loss starts climbing again while the model keeps optimizing the training data.
+- Early stopping is configured with `min_delta=0.001`, `patience=5`, and `restore_best_weights=True`, so training stops after five epochs without a meaningful validation improvement and rolls the model back to the best validation checkpoint.
+- The final model-selection note favors the early-stopped model because it produces the best validation loss, even though the overfit run achieved lower training loss.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, TensorFlow/Keras setup, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
