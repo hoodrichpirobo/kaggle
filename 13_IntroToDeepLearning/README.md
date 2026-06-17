@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Deep%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-deep-learning)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-yellow.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
 
 </div>
 
@@ -37,7 +37,7 @@ The course begins with the smallest possible Keras model - one dense neuron with
 | 2 | Deep Neural Networks | Complete | [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) |
 | 3 | Stochastic Gradient Descent | Complete | [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) |
 | 4 | Overfitting and Underfitting | Complete | [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) |
-| 5 | Dropout and Batch Normalization | Not started | TBD |
+| 5 | Dropout and Batch Normalization | Complete | [DroupoutAndBatchNormalizationExercise.py](./DroupoutAndBatchNormalizationExercise.py) |
 | 6 | Binary Classification | Not started | TBD |
 
 ## Deep Learning Playbook
@@ -55,7 +55,7 @@ The course builds a practical sequence for moving from linear models to neural n
 
 ## Skills Practiced
 
-From the solved exercises so far:
+From the five solved exercises so far:
 
 - Defining a neural-network input shape from a tabular training matrix
 - Computing the number of input features as `red_wine.shape[1] - 1`
@@ -85,11 +85,17 @@ From the solved exercises so far:
 - Using Keras callbacks through `tensorflow.keras.callbacks`
 - Configuring `callbacks.EarlyStopping(min_delta=0.001, patience=5, restore_best_weights=True)`
 - Treating the best validation loss as the model-selection target, even when a later overfit model has lower training loss
+- Adding `layers.Dropout(0.3)` after hidden layers to randomly silence activations during training
+- Using dropout as regularization pressure so the model cannot depend too heavily on any one learned path
+- Comparing training and validation curves after dropout to decide whether regularization improved generalization
+- Adding `layers.BatchNormalization()` before dense layers to normalize intermediate network inputs
+- Including `layers.BatchNormalization(input_shape=input_shape)` as the first normalization layer when it owns the model input shape
+- Stacking batch normalization with large `Dense(512, activation="relu")` hidden layers to stabilize deeper regression training
+- Reading the batch-normalization result as a stronger improvement than dropout alone in the saved exercise notes
 - Preserving Kaggle answer checks alongside the solved notebook cells
 
-Expected next skills as the remaining lessons are completed:
+Expected next skills as the final lesson is completed:
 
-- Applying dropout and batch normalization to improve generalization and training stability
 - Designing binary classifiers with sigmoid outputs and cross-entropy loss
 
 ## Artifacts
@@ -99,6 +105,7 @@ Expected next skills as the remaining lessons are completed:
   - [DeepNeuralNetworksExercise.py](./DeepNeuralNetworksExercise.py) - multilayer dense regression network with ReLU hidden layers, explicit activation-layer rewrite, and activation-function plots
   - [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) - compiling with Adam/MAE, fitting over mini-batches and epochs, and experimenting with learning-rate and batch-size behavior
   - [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) - learning-curve diagnosis for underfitting and overfitting, plus early stopping with restored best weights
+  - [DroupoutAndBatchNormalizationExercise.py](./DroupoutAndBatchNormalizationExercise.py) - dropout regularization after hidden layers, validation-curve reasoning, and batch normalization before dense layers
 - Completion certificate: pending course completion
 
 ## Course Notes
@@ -122,11 +129,16 @@ Expected next skills as the remaining lessons are completed:
 - The saved overfitting diagnosis records the opposite failure mode: validation loss starts climbing again while the model keeps optimizing the training data.
 - Early stopping is configured with `min_delta=0.001`, `patience=5`, and `restore_best_weights=True`, so training stops after five epochs without a meaningful validation improvement and rolls the model back to the best validation checkpoint.
 - The final model-selection note favors the early-stopped model because it produces the best validation loss, even though the overfit run achieved lower training loss.
+- The dropout exercise starts from a 128-unit hidden layer followed by a 64-unit hidden layer, then inserts `layers.Dropout(0.3)` after each one so 30% of the activations are randomly dropped during training.
+- The saved dropout reflection notes that the resulting training and validation losses look very similar, which is the desired sign that the regularizer is reducing the train-validation gap.
+- The batch-normalization model places normalization before each dense layer: one `BatchNormalization(input_shape=input_shape)` layer for the input and additional normalization layers before the subsequent hidden and output transformations.
+- The batch-normalized architecture uses three 512-unit ReLU hidden layers before the one-unit regression output, keeping the same dense-capacity pattern while making each layer's inputs easier to optimize.
+- The saved batch-normalization reflection records a clear improvement and notes that combining batch normalization with dropout could be a reasonable next experiment.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, TensorFlow/Keras setup, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
 
-This course is the handoff from manually shaped model inputs to learned representations. The important habit to carry forward is training accountability: know the input shape, know what each layer changes, know which loss is being optimized, know how the optimizer updates weights, and read validation behavior before trusting a trained network.
+This course is the handoff from manually shaped model inputs to learned representations. The important habit to carry forward is training accountability: know the input shape, know what each layer changes, know which loss is being optimized, know how the optimizer updates weights, read validation behavior before trusting a trained network, and use regularization only when the curves show that it is solving the actual failure mode.
 
 ## Certificate of Completion
 
