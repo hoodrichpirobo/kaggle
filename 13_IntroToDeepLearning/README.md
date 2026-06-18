@@ -5,8 +5,8 @@
 **Course 13 of 17 - building neural networks with TensorFlow/Keras, from a single dense neuron to regularized classifiers.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Intro%20to%20Deep%20Learning-20BEFF.svg)](https://www.kaggle.com/learn/intro-to-deep-learning)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
-![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-6%20of%206-brightgreen.svg)
 
 </div>
 
@@ -16,9 +16,9 @@
 |-------|--------|
 | Position | Course 13 of 17 |
 | Estimated time | 4 hours |
-| Status | In progress |
+| Status | Complete |
 | Started | June 13, 2026 |
-| Completed | TBD |
+| Completed | June 18, 2026 |
 | Course page | [Kaggle Learn: Intro to Deep Learning](https://www.kaggle.com/learn/intro-to-deep-learning) |
 
 This course starts the deep-learning section of the track after the repository's classical machine-learning, feature-engineering, explainability, and forecasting work.
@@ -38,7 +38,7 @@ The course begins with the smallest possible Keras model - one dense neuron with
 | 3 | Stochastic Gradient Descent | Complete | [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) |
 | 4 | Overfitting and Underfitting | Complete | [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) |
 | 5 | Dropout and Batch Normalization | Complete | [DroupoutAndBatchNormalizationExercise.py](./DroupoutAndBatchNormalizationExercise.py) |
-| 6 | Binary Classification | Not started | TBD |
+| 6 | Binary Classification | Complete | [BinaryClassificationExercise.py](./BinaryClassificationExercise.py) |
 
 ## Deep Learning Playbook
 
@@ -55,7 +55,7 @@ The course builds a practical sequence for moving from linear models to neural n
 
 ## Skills Practiced
 
-From the five solved exercises so far:
+From the six solved exercises:
 
 - Defining a neural-network input shape from a tabular training matrix
 - Computing the number of input features as `red_wine.shape[1] - 1`
@@ -93,10 +93,12 @@ From the five solved exercises so far:
 - Stacking batch normalization with large `Dense(512, activation="relu")` hidden layers to stabilize deeper regression training
 - Reading the batch-normalization result as a stronger improvement than dropout alone in the saved exercise notes
 - Preserving Kaggle answer checks alongside the solved notebook cells
-
-Expected next skills as the final lesson is completed:
-
-- Designing binary classifiers with sigmoid outputs and cross-entropy loss
+- Switching the output layer to a single `sigmoid` unit so the model emits a class probability instead of a regression value
+- Compiling a classifier with `loss="binary_crossentropy"` and `metrics=["binary_accuracy"]` instead of a regression loss
+- Assembling a fully regularized classifier from stacked `BatchNormalization` → `Dense(256, activation="relu")` → `BatchNormalization` → `Dropout(0.3)` blocks
+- Leading the network with `layers.BatchNormalization(input_shape=input_shape)` so the raw inputs are normalized before the first dense layer
+- Reading classification learning curves to confirm a good fit and to spot where early stopping would kick in (around epochs 20-25 in the saved run)
+- Reasoning about cross-entropy loss as a smooth, trainable stand-in for the discrete accuracy metric
 
 ## Artifacts
 
@@ -106,7 +108,8 @@ Expected next skills as the final lesson is completed:
   - [StochasticGradientDescentExercise.py](./StochasticGradientDescentExercise.py) - compiling with Adam/MAE, fitting over mini-batches and epochs, and experimenting with learning-rate and batch-size behavior
   - [OverfittingAndUnderfittingExercise.py](./OverfittingAndUnderfittingExercise.py) - learning-curve diagnosis for underfitting and overfitting, plus early stopping with restored best weights
   - [DroupoutAndBatchNormalizationExercise.py](./DroupoutAndBatchNormalizationExercise.py) - dropout regularization after hidden layers, validation-curve reasoning, and batch normalization before dense layers
-- Completion certificate: pending course completion
+  - [BinaryClassificationExercise.py](./BinaryClassificationExercise.py) - binary classifier with a `sigmoid` output, `binary_crossentropy` loss and `binary_accuracy` metric, built from stacked batch-normalization / dense / dropout blocks
+- Completion certificate: [Cux Prada - Intro to Deep Learning.png](./Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png)
 
 ## Course Notes
 
@@ -134,15 +137,24 @@ Expected next skills as the final lesson is completed:
 - The batch-normalization model places normalization before each dense layer: one `BatchNormalization(input_shape=input_shape)` layer for the input and additional normalization layers before the subsequent hidden and output transformations.
 - The batch-normalized architecture uses three 512-unit ReLU hidden layers before the one-unit regression output, keeping the same dense-capacity pattern while making each layer's inputs easier to optimize.
 - The saved batch-normalization reflection records a clear improvement and notes that combining batch normalization with dropout could be a reasonable next experiment.
+- The binary-classification exercise is where the output layer, loss, and metric all change together for a classification task: the model ends in `layers.Dense(1, activation="sigmoid")` and compiles with `loss="binary_crossentropy"` and `metrics=["binary_accuracy"]`.
+- That final model is also the most heavily regularized in the course, and it is essentially the experiment the batch-normalization note suggested: a leading `BatchNormalization(input_shape=input_shape)` followed by two `Dense(256, "relu")` blocks that each pair batch normalization with `Dropout(0.3)` before the sigmoid output.
+- The saved reflection reads the learning curves as a good fit, points to a natural early-stopping window around epochs 20-25, and treats cross-entropy loss as a reasonable stand-in for accuracy.
 - The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, starter variables, TensorFlow/Keras setup, and answer-checking helpers (`q_1.check()`, etc.) inside the notebook environment.
 
 ## Notes
 
-This course is the handoff from manually shaped model inputs to learned representations. The important habit to carry forward is training accountability: know the input shape, know what each layer changes, know which loss is being optimized, know how the optimizer updates weights, read validation behavior before trusting a trained network, and use regularization only when the curves show that it is solving the actual failure mode.
+This course is the handoff from manually shaped model inputs to learned representations. The important habit to carry forward is training accountability: know the input shape, know what each layer changes, know which loss is being optimized, know how the optimizer updates weights, read validation behavior before trusting a trained network, and use regularization only when the curves show that it is solving the actual failure mode. With all six lessons complete, the next course - [Computer Vision](https://www.kaggle.com/learn/computer-vision) - reuses this same Keras foundation for image data, where convolutional layers take over the representation work done here by flat dense stacks.
 
 ## Certificate of Completion
 
-Pending. Add the certificate image here after all six lessons are complete.
+<div align="center">
+
+<a href="./Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png"><img src="./Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png" width="600" alt="Intro to Deep Learning certificate" /></a>
+
+*Completed June 18, 2026.*
+
+</div>
 
 <div align="center">
 
