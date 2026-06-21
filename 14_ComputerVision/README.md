@@ -6,12 +6,12 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-F5A623.svg)
-![Lessons](https://img.shields.io/badge/Lessons-1%20of%206-F5A623.svg)
+![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-F5A623.svg)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/guide/keras)
 
 `IMAGE → FEATURES → EVIDENCE → CLASS`
 
-[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Implemented Model](#implemented-model) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifact](#artifact-guide)
+[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Model](#implemented-model) · [Feature Extraction](#implemented-feature-extraction) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
 
 </div>
 
@@ -23,22 +23,22 @@
 |-------|--------|
 | Position | Course 14 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress — 1 of 6 lessons complete** |
+| Status | **In progress — 2 of 6 lessons complete** |
 | Started | June 20, 2026 |
-| Latest completed lesson | The Convolutional Classifier |
+| Latest completed lesson | Convolution and ReLU |
 | Framework | TensorFlow / Keras |
 | Task introduced | Binary image classification with transfer learning |
 | Running dataset | Cars versus trucks |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory currently contains one completed exercise. The model and conclusions below are implemented; later topics are explicitly marked as the course roadmap.
+> **Repository truth:** this directory currently contains two completed exercise exports. Transfer learning, convolution, and ReLU are backed by saved solutions; the remaining topics are explicitly marked as the course roadmap.
 
 ## What This Course Adds
 
 [Intro to Deep Learning](../13_IntroToDeepLearning/) learned from rows of already prepared features. Computer Vision moves feature engineering *inside* the network. Instead of manually describing an image with edges, textures, shapes, and parts, a convolutional base learns a hierarchy of visual features directly from pixels.
 
-The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The result separates the problem into two clean responsibilities:
+The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The second exercise opens that feature extractor conceptually: a kernel creates a feature map through convolution, and ReLU keeps the positive evidence. Together, the exercises separate the problem into two clean responsibilities:
 
 - **Base:** convert an image into useful feature maps.
 - **Head:** convert those learned features into a class probability.
@@ -70,14 +70,14 @@ RGB image
  P(class = truck) ∈ [0, 1]
 ```
 
-The important distinction is not “convolutional layers versus dense layers.” It is **representation versus decision**. The base learns what visual evidence looks like; the head learns how that evidence maps to the labels in this dataset.
+The important distinction is not “convolutional layers versus dense layers.” It is **representation versus decision**. Inside the base, convolution detects local patterns and ReLU shapes their responses. The head then learns how those feature maps correspond to the labels in this dataset.
 
 ## Lesson Tracker
 
 | # | Lesson | Status | Evidence |
 |:-:|--------|:------:|----------|
 | 1 | The Convolutional Classifier | **Complete** | [TheConvolutionalClassifierExercise.py](./TheConvolutionalClassifierExercise.py) |
-| 2 | Convolution and ReLU | Not started | — |
+| 2 | Convolution and ReLU | **Complete** | [ConvolutionAndReLUExercise.py](./ConvolutionAndReLUExercise.py) |
 | 3 | Maximum Pooling | Not started | — |
 | 4 | The Sliding Window | Not started | — |
 | 5 | Custom ConvNets | Not started | — |
@@ -101,7 +101,7 @@ Data augmentation and generalization
 
 ## Implemented Model
 
-The completed exercise builds a transfer-learning classifier in four decisions.
+The first exercise builds a transfer-learning classifier in four decisions.
 
 ### 1. Preserve the pretrained representation
 
@@ -147,10 +147,57 @@ The saved exercise reflection reaches a nuanced diagnosis:
 
 That is the correct way to read learning curves: a smaller train/validation gap is useful, but it does not automatically mean the model is better. **Generalization gap and absolute validation performance are separate questions.**
 
+## Implemented Feature Extraction
+
+The second exercise makes the base's first two operations concrete:
+
+```text
+image patch × kernel → weighted sum → feature-map value → ReLU → positive evidence
+```
+
+### 1. Define a local feature detector
+
+```python
+kernel = tf.constant([
+    [ 0, -1,  0],
+    [-1,  5, -1],
+    [ 0, -1,  0],
+])
+```
+
+This sharpening kernel compares each center pixel with its four direct neighbors. Uniform regions change little, while local intensity differences are amplified. The kernel is fixed in this exercise; in a trained convolutional layer, the kernel values are learned from data.
+
+### 2. Apply the kernel across the image
+
+```python
+conv_fn = tf.nn.conv2d
+```
+
+Convolution reuses the same kernel at every valid location. That **local connectivity** finds small patterns, while **weight sharing** lets one detector recognize its feature anywhere in the image without learning separate weights for every pixel position.
+
+For one input channel and one kernel, each pre-activation is:
+
+```text
+feature[i, j] = Σ image_patch[i, j] × kernel
+```
+
+Real `Conv2D` layers repeat this operation across input channels and learn many kernels, producing one output feature map per filter.
+
+### 3. Keep positive activations
+
+```python
+relu_fn = tf.nn.relu
+```
+
+ReLU applies `max(0, x)` elementwise. It clips negative responses to zero, preserves positive matches, and adds the nonlinearity required for stacked convolutional layers to learn more than one linear transformation. The exercise also interprets a supplied directional kernel as a detector for vertical-line features, connecting the arrangement of kernel weights to the pattern highlighted in the output.
+
 ## Why Each Choice Matters
 
 | Choice | Role | If it is wrong |
 |--------|------|----------------|
+| Kernel shape and weights | Define the local pattern a convolution responds to | The feature map highlights the wrong structure |
+| Shared convolution | Apply one detector consistently across spatial positions | Parameter count grows and translation reuse is lost |
+| ReLU | Keep positive responses and introduce nonlinearity | Stacked linear operations collapse into one linear mapping |
 | Freeze the base | Protect pretrained visual features during initial head training | Early gradients can damage the reusable representation |
 | `Flatten()` | Convert spatial feature maps into the vector expected by dense layers | The head receives an incompatible tensor rank |
 | Hidden ReLU layer | Learn a nonlinear combination of extracted features | A purely linear head may lack task-specific capacity |
@@ -170,7 +217,7 @@ Transfer learning is not just “use a large model.” It is a staged optimizati
 5. Only then consider unfreezing a small number of late base layers.
 6. Fine-tune with a much smaller learning rate and stop when validation performance stops improving.
 
-The exercise implements steps 1–4. Fine-tuning is a possible later experiment, not part of the saved solution.
+The first exercise implements steps 1–4. Fine-tuning is a possible later experiment, not part of the saved solution.
 
 ### Why freezing comes first
 
@@ -201,7 +248,7 @@ Never diagnose from the final epoch alone. The *direction and separation* of the
 
 ## Computer Vision Playbook
 
-This is the workflow the course is building toward. Only the transfer-learning stage is implemented so far.
+This is the workflow the course is building toward. The saved work currently implements the transfer-learning baseline and isolates the convolution/ReLU feature-extraction steps.
 
 1. **Define the prediction contract.** Decide the label meaning, output shape, and metric before choosing the final layer.
 2. **Audit the images.** Inspect class balance, duplicates, corrupt files, resolution, aspect ratio, and label quality.
@@ -241,11 +288,7 @@ Shape checks catch architectural mistakes early; parameter counts catch unexpect
 
 ## Concepts Ahead
 
-These topics belong to the remaining five lessons and are not yet claimed as completed work.
-
-### Convolution and ReLU
-
-A convolutional kernel slides across an image and computes the same local pattern detector at every position. ReLU then discards negative responses, leaving a feature map that highlights where the learned pattern appears.
+These topics belong to the remaining four lessons and are not yet claimed as completed work.
 
 ### Maximum pooling
 
@@ -265,7 +308,7 @@ Augmentation creates varied training views without changing the underlying label
 
 ## Skills Demonstrated
 
-Evidence from the completed exercise:
+Evidence from the two completed exercises:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -279,12 +322,21 @@ Evidence from the completed exercise:
 - Comparing training and validation loss as separate signals
 - Distinguishing reduced overfitting from unresolved underfitting
 - Proposing more capacity from validation evidence rather than training accuracy alone
+- Defining a `3 × 3` sharpening kernel with `tf.constant`
+- Explaining a kernel as a local weighted pattern detector
+- Applying convolution with `tf.nn.conv2d`
+- Connecting weight sharing to feature detection across spatial positions
+- Applying the rectified linear unit with `tf.nn.relu`
+- Explaining ReLU as both negative-response clipping and a source of nonlinearity
+- Reading the sign and arrangement of kernel weights to identify a directional feature detector
 - Preserving Kaggle's answer checks and written model diagnosis with the solution
 
 ## Common Failure Modes
 
 | Symptom | Likely cause | Check first |
 |---------|--------------|-------------|
+| Feature map is empty after ReLU | Kernel responses are negative or preprocessing changed their scale | Inspect values before and after ReLU |
+| Feature appears shifted or output size is unexpected | Padding, stride, or kernel dimensions are wrong | Verify the convolution shape formula |
 | Validation accuracy is suspiciously high | Duplicate or related images leaked across splits | Group images by source before splitting |
 | Loss will not decrease | Wrong labels, output/loss mismatch, or preprocessing mismatch | Inspect one batch and confirm ranges, shapes, and class mapping |
 | Training is good; validation degrades | Overfitting | Augmentation validity, head size, early stopping |
@@ -295,7 +347,7 @@ Evidence from the completed exercise:
 
 ## Artifact Guide
 
-### Completed exercise
+### Completed exercises
 
 [TheConvolutionalClassifierExercise.py](./TheConvolutionalClassifierExercise.py) contains the solved Kaggle cells for:
 
@@ -304,23 +356,30 @@ Evidence from the completed exercise:
 - compiling the model for binary classification;
 - recording the learning-curve diagnosis.
 
+[ConvolutionAndReLUExercise.py](./ConvolutionAndReLUExercise.py) contains the solved Kaggle cells for:
+
+- defining a `3 × 3` sharpening kernel;
+- selecting `tf.nn.conv2d` as the convolution operation;
+- selecting `tf.nn.relu` as the activation operation;
+- interpreting a directional kernel's extracted feature.
+
 ### Execution context
 
-The exported file is **study evidence, not a standalone training script**. Kaggle supplies objects and infrastructure that are intentionally absent from the export, including:
+The exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the exports, including:
 
 - `pretrained_base`;
-- `tf` and the prepared image datasets;
+- `tf`, `visiontools`, images, and the prepared image datasets;
 - training/history cells surrounding the exercise prompts;
 - `q_1` through `q_4` from Kaggle's answer-checking system.
 
-To reproduce the exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run the lesson notebook in order, and use the exported file as the solved-cell reference.
+To reproduce an exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference.
 
 ## Completion Standard
 
 This course will be marked complete only when all six exercise exports and the certificate are present.
 
 - [x] The Convolutional Classifier
-- [ ] Convolution and ReLU
+- [x] Convolution and ReLU
 - [ ] Maximum Pooling
 - [ ] The Sliding Window
 - [ ] Custom ConvNets
@@ -330,9 +389,9 @@ This course will be marked complete only when all six exercise exports and the c
 
 ## Takeaway
 
-The first lesson's durable idea is architectural separation: **a vision classifier is a learned feature extractor plus a decision head**. Transfer learning works because a representation learned from many images can already encode useful visual structure; the new task often needs only a small classifier to reinterpret that structure.
+The first two lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors followed by nonlinear activations. Transfer learning reuses those already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence.
 
-The engineering discipline is equally important: freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
+The engineering discipline is equally important: reason from kernel to feature map, verify tensor shapes, freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
 ---
 
