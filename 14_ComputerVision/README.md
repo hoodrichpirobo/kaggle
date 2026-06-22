@@ -6,7 +6,7 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-F5A623.svg)
-![Lessons](https://img.shields.io/badge/Lessons-2%20of%206-F5A623.svg)
+![Lessons](https://img.shields.io/badge/Lessons-3%20of%206-F5A623.svg)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/guide/keras)
 
 `IMAGE → FEATURES → EVIDENCE → CLASS`
@@ -23,22 +23,22 @@
 |-------|--------|
 | Position | Course 14 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress — 2 of 6 lessons complete** |
+| Status | **In progress — 3 of 6 lessons complete** |
 | Started | June 20, 2026 |
-| Latest completed lesson | Convolution and ReLU |
+| Latest completed lesson | Maximum Pooling |
 | Framework | TensorFlow / Keras |
 | Task introduced | Binary image classification with transfer learning |
 | Running dataset | Cars versus trucks |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory currently contains two completed exercise exports. Transfer learning, convolution, and ReLU are backed by saved solutions; the remaining topics are explicitly marked as the course roadmap.
+> **Repository truth:** this directory currently contains three completed exercise exports. Transfer learning, convolution, ReLU, and maximum pooling are backed by saved solutions; the remaining topics are explicitly marked as the course roadmap.
 
 ## What This Course Adds
 
 [Intro to Deep Learning](../13_IntroToDeepLearning/) learned from rows of already prepared features. Computer Vision moves feature engineering *inside* the network. Instead of manually describing an image with edges, textures, shapes, and parts, a convolutional base learns a hierarchy of visual features directly from pixels.
 
-The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The second exercise opens that feature extractor conceptually: a kernel creates a feature map through convolution, and ReLU keeps the positive evidence. Together, the exercises separate the problem into two clean responsibilities:
+The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The next two exercises open that feature extractor conceptually: a kernel creates a feature map through convolution, ReLU keeps its positive responses, and maximum pooling condenses nearby activations. Together, the exercises separate the problem into two clean responsibilities:
 
 - **Base:** convert an image into useful feature maps.
 - **Head:** convert those learned features into a class probability.
@@ -53,10 +53,10 @@ RGB image
           │
           ▼
 ┌──────────────────────────────┐
-│ Pretrained convolutional base│  edges → textures → parts → objects
+│ Pretrained convolutional base│  convolution → ReLU → pooling
 │          frozen              │  reusable visual feature extractor
 └──────────────────────────────┘
-          │ feature maps [h × w × channels]
+          │ compact feature maps [h × w × channels]
           ▼
       Flatten()
           │ feature vector
@@ -70,7 +70,7 @@ RGB image
  P(class = truck) ∈ [0, 1]
 ```
 
-The important distinction is not “convolutional layers versus dense layers.” It is **representation versus decision**. Inside the base, convolution detects local patterns and ReLU shapes their responses. The head then learns how those feature maps correspond to the labels in this dataset.
+The important distinction is not “convolutional layers versus dense layers.” It is **representation versus decision**. Inside the base, convolution detects local patterns, ReLU shapes their responses, and pooling compresses the spatial evidence. The head then learns how those feature maps correspond to the labels in this dataset.
 
 ## Lesson Tracker
 
@@ -78,7 +78,7 @@ The important distinction is not “convolutional layers versus dense layers.”
 |:-:|--------|:------:|----------|
 | 1 | The Convolutional Classifier | **Complete** | [TheConvolutionalClassifierExercise.py](./TheConvolutionalClassifierExercise.py) |
 | 2 | Convolution and ReLU | **Complete** | [ConvolutionAndReLUExercise.py](./ConvolutionAndReLUExercise.py) |
-| 3 | Maximum Pooling | Not started | — |
+| 3 | Maximum Pooling | **Complete** | [MaximumPoolingExercise.py](./MaximumPoolingExercise.py) |
 | 4 | The Sliding Window | Not started | — |
 | 5 | Custom ConvNets | Not started | — |
 | 6 | Data Augmentation | Not started | — |
@@ -149,10 +149,10 @@ That is the correct way to read learning curves: a smaller train/validation gap 
 
 ## Implemented Feature Extraction
 
-The second exercise makes the base's first two operations concrete:
+The second and third exercises make the base's core operations concrete:
 
 ```text
-image patch × kernel → weighted sum → feature-map value → ReLU → positive evidence
+image patch × kernel → weighted sum → feature-map value → ReLU → local maximum
 ```
 
 ### 1. Define a local feature detector
@@ -191,6 +191,32 @@ relu_fn = tf.nn.relu
 
 ReLU applies `max(0, x)` elementwise. It clips negative responses to zero, preserves positive matches, and adds the nonlinearity required for stacked convolutional layers to learn more than one linear transformation. The exercise also interprets a supplied directional kernel as a detector for vertical-line features, connecting the arrangement of kernel weights to the pattern highlighted in the output.
 
+### 4. Condense nearby responses
+
+```python
+image_condense = tf.nn.pool(
+    input=image_detect,
+    window_shape=(2, 2),
+    pooling_type="MAX",
+    strides=(2, 2),
+    padding="SAME",
+)
+```
+
+This operation divides the activated feature map into overlapping or adjacent local windows and keeps the strongest response in each one. With a `2 × 2` window and stride `2`, the spatial dimensions are approximately halved while the channel count is unchanged. `padding="SAME"` retains a final partial window when a dimension is odd, so each output dimension is `ceil(input / 2)`.
+
+Maximum pooling does not learn weights. Its job is to preserve whether a strong local match exists while becoming less sensitive to its exact pixel location. That gives later layers a smaller representation and a modest amount of local translation tolerance, at the deliberate cost of precise spatial detail.
+
+### Local pooling versus global pooling
+
+The exercise also compares local maximum pooling with `GlobalAveragePooling2D` conceptually:
+
+- **Local max pooling** keeps one strong response per neighborhood and preserves a reduced spatial grid.
+- **Global average pooling** reduces each complete feature map to one mean value, producing one number per channel.
+- **Flattening** keeps every activation and every location, but can create a much larger classification head.
+
+These operations answer different questions. Max pooling asks, “was this feature strong nearby?” Global average pooling asks, “how strongly was this feature present across the image?” Flattening lets the head learn location-specific combinations.
+
 ## Why Each Choice Matters
 
 | Choice | Role | If it is wrong |
@@ -198,8 +224,10 @@ ReLU applies `max(0, x)` elementwise. It clips negative responses to zero, prese
 | Kernel shape and weights | Define the local pattern a convolution responds to | The feature map highlights the wrong structure |
 | Shared convolution | Apply one detector consistently across spatial positions | Parameter count grows and translation reuse is lost |
 | ReLU | Keep positive responses and introduce nonlinearity | Stacked linear operations collapse into one linear mapping |
+| `2 × 2` max pooling | Retain strong local responses while reducing height and width | Too much pooling discards useful spatial detail; too little leaves later layers expensive |
 | Freeze the base | Protect pretrained visual features during initial head training | Early gradients can damage the reusable representation |
-| `Flatten()` | Convert spatial feature maps into the vector expected by dense layers | The head receives an incompatible tensor rank |
+| `Flatten()` | Preserve every spatial activation in one image-level vector | The dense head can become unnecessarily large and location-sensitive |
+| Global average pooling | Summarize each channel with one value | Fine spatial layout is intentionally discarded |
 | Hidden ReLU layer | Learn a nonlinear combination of extracted features | A purely linear head may lack task-specific capacity |
 | One sigmoid output | Emit one probability for a binary target | Output shape and label meaning no longer align |
 | Binary cross-entropy | Penalize incorrect binary probabilities smoothly | Optimization no longer matches the probabilistic task |
@@ -248,7 +276,7 @@ Never diagnose from the final epoch alone. The *direction and separation* of the
 
 ## Computer Vision Playbook
 
-This is the workflow the course is building toward. The saved work currently implements the transfer-learning baseline and isolates the convolution/ReLU feature-extraction steps.
+This is the workflow the course is building toward. The saved work currently implements the transfer-learning baseline and isolates convolution, ReLU, and maximum pooling as feature-extraction steps.
 
 1. **Define the prediction contract.** Decide the label meaning, output shape, and metric before choosing the final layer.
 2. **Audit the images.** Inspect class balance, duplicates, corrupt files, resolution, aspect ratio, and label quality.
@@ -273,7 +301,7 @@ Image models are easier to debug when every tensor shape has a meaning.
 | `Conv2D(F, K)` | `(B, H′, W′, F)` | Yes | Detect `F` learned local patterns with `K×K` kernels |
 | `ReLU` | unchanged | No | Keep positive evidence and add nonlinearity |
 | `MaxPool2D(P)` | smaller `H`, `W` | No | Compress spatial dimensions and retain strong activations |
-| `Flatten` | `(B, H·W·C)` | No | Preserve every activation in one vector |
+| `Flatten` | `(B, H·W·C)` | No | Preserve every activation in one image-level vector |
 | `GlobalAveragePooling2D` | `(B, C)` | No | Summarize each feature map with far fewer head parameters |
 | `Dense(U)` | `(B, U)` | Yes | Combine extracted evidence for the task |
 | `Dense(1, sigmoid)` | `(B, 1)` | Yes | Return a binary class probability |
@@ -288,11 +316,7 @@ Shape checks catch architectural mistakes early; parameter counts catch unexpect
 
 ## Concepts Ahead
 
-These topics belong to the remaining four lessons and are not yet claimed as completed work.
-
-### Maximum pooling
-
-Pooling summarizes small neighborhoods, reduces spatial size, and makes later features less sensitive to small translations. It trades precise location for a more compact representation.
+These topics belong to the remaining three lessons and are not yet claimed as completed work.
 
 ### The sliding window
 
@@ -308,7 +332,7 @@ Augmentation creates varied training views without changing the underlying label
 
 ## Skills Demonstrated
 
-Evidence from the two completed exercises:
+Evidence from the three completed exercises:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -329,6 +353,11 @@ Evidence from the two completed exercises:
 - Applying the rectified linear unit with `tf.nn.relu`
 - Explaining ReLU as both negative-response clipping and a source of nonlinearity
 - Reading the sign and arrangement of kernel weights to identify a directional feature detector
+- Applying `2 × 2` maximum pooling with `tf.nn.pool`
+- Configuring pooling type, stride, and padding explicitly
+- Deriving the spatial output size of stride-2 `SAME` pooling
+- Explaining the compression/detail tradeoff introduced by maximum pooling
+- Distinguishing local maximum pooling, global average pooling, and flattening
 - Preserving Kaggle's answer checks and written model diagnosis with the solution
 
 ## Common Failure Modes
@@ -337,6 +366,7 @@ Evidence from the two completed exercises:
 |---------|--------------|-------------|
 | Feature map is empty after ReLU | Kernel responses are negative or preprocessing changed their scale | Inspect values before and after ReLU |
 | Feature appears shifted or output size is unexpected | Padding, stride, or kernel dimensions are wrong | Verify the convolution shape formula |
+| Small features disappear after pooling | Pooling is too aggressive for the feature-map resolution | Inspect maps before and after pooling; reduce window or stride |
 | Validation accuracy is suspiciously high | Duplicate or related images leaked across splits | Group images by source before splitting |
 | Loss will not decrease | Wrong labels, output/loss mismatch, or preprocessing mismatch | Inspect one batch and confirm ranges, shapes, and class mapping |
 | Training is good; validation degrades | Overfitting | Augmentation validity, head size, early stopping |
@@ -363,6 +393,12 @@ Evidence from the two completed exercises:
 - selecting `tf.nn.relu` as the activation operation;
 - interpreting a directional kernel's extracted feature.
 
+[MaximumPoolingExercise.py](./MaximumPoolingExercise.py) contains the solved Kaggle cells for:
+
+- applying `2 × 2` max pooling with stride `2` and `SAME` padding;
+- recording the exercise reflections on pooling behavior;
+- comparing the role of global average pooling with location-preserving features.
+
 ### Execution context
 
 The exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the exports, including:
@@ -380,7 +416,7 @@ This course will be marked complete only when all six exercise exports and the c
 
 - [x] The Convolutional Classifier
 - [x] Convolution and ReLU
-- [ ] Maximum Pooling
+- [x] Maximum Pooling
 - [ ] The Sliding Window
 - [ ] Custom ConvNets
 - [ ] Data Augmentation
@@ -389,9 +425,9 @@ This course will be marked complete only when all six exercise exports and the c
 
 ## Takeaway
 
-The first two lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors followed by nonlinear activations. Transfer learning reuses those already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence.
+The first three lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, and spatial compression. Transfer learning reuses those already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost.
 
-The engineering discipline is equally important: reason from kernel to feature map, verify tensor shapes, freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
+The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
 ---
 
