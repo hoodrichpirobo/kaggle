@@ -6,12 +6,12 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-F5A623.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%206-F5A623.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-F5A623.svg)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/guide/keras)
 
 `IMAGE → FEATURES → EVIDENCE → CLASS`
 
-[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Model](#implemented-model) · [Feature Extraction](#implemented-feature-extraction) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
+[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Transfer Model](#implemented-transfer-learning-model) · [Feature Extraction](#implemented-feature-extraction) · [Custom ConvNet](#implemented-custom-convnet) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
 
 </div>
 
@@ -23,22 +23,22 @@
 |-------|--------|
 | Position | Course 14 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress — 4 of 6 lessons complete** |
+| Status | **In progress — 5 of 6 lessons complete** |
 | Started | June 20, 2026 |
-| Latest completed lesson | The Sliding Window |
+| Latest completed lesson | Custom ConvNets |
 | Framework | TensorFlow / Keras |
-| Task introduced | Binary image classification with transfer learning |
+| Task introduced | Binary image classification with transfer learning and custom ConvNets |
 | Running dataset | Cars versus trucks |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory currently contains four completed exercise exports. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, and 1D convolutional filtering are backed by saved solutions; the remaining topics are explicitly marked as the course roadmap.
+> **Repository truth:** this directory currently contains five completed exercise exports. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, and dropout are backed by saved solutions. Data augmentation remains roadmap material until its exercise is archived.
 
 ## What This Course Adds
 
 [Intro to Deep Learning](../13_IntroToDeepLearning/) learned from rows of already prepared features. Computer Vision moves feature engineering *inside* the network. Instead of manually describing an image with edges, textures, shapes, and parts, a convolutional base learns a hierarchy of visual features directly from pixels.
 
-The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The next two exercises open that feature extractor conceptually: a kernel creates a feature map through convolution, ReLU keeps its positive responses, and maximum pooling condenses nearby activations. Together, the exercises separate the problem into two clean responsibilities:
+The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The next three exercises open that feature extractor conceptually: a kernel creates a feature map through convolution, ReLU keeps its positive responses, maximum pooling condenses nearby activations, and the sliding-window exercise makes stride and padding explicit. The fifth exercise then assembles those operations into a trainable convolutional hierarchy and adds dropout to the classification head. Together, the exercises separate the problem into two clean responsibilities:
 
 - **Base:** convert an image into useful feature maps.
 - **Head:** convert those learned features into a class probability.
@@ -80,7 +80,7 @@ The important distinction is not “convolutional layers versus dense layers.”
 | 2 | Convolution and ReLU | **Complete** | [ConvolutionAndReLUExercise.py](./ConvolutionAndReLUExercise.py) |
 | 3 | Maximum Pooling | **Complete** | [MaximumPoolingExercise.py](./MaximumPoolingExercise.py) |
 | 4 | The Sliding Window | **Complete** | [TheSlidingWindowExercise.py](./TheSlidingWindowExercise.py) |
-| 5 | Custom ConvNets | Not started | — |
+| 5 | Custom ConvNets | **Complete** | [CustomConvnetsExercise.py](./CustomConvnetsExercise.py) |
 | 6 | Data Augmentation | Not started | — |
 
 ### Course trajectory
@@ -99,7 +99,7 @@ Custom convolutional blocks
 Data augmentation and generalization
 ```
 
-## Implemented Model
+## Implemented Transfer-Learning Model
 
 The first exercise builds a transfer-learning classifier in four decisions.
 
@@ -255,6 +255,58 @@ ts_filter = tf.nn.conv1d(
 
 The `detrend`, `average`, and `spencer` kernels each scan across neighboring time steps and replace every local window with one weighted response. In images, the response becomes a spatial feature map. In a time series, it becomes a filtered signal. The same core operation is doing both jobs: a shared kernel slides across local neighborhoods and exposes a pattern.
 
+## Implemented Custom ConvNet
+
+The fifth exercise replaces the frozen pretrained base with a feature extractor learned entirely from the cars-versus-trucks training data:
+
+```python
+model = keras.Sequential([
+    layers.Conv2D(32, 3, activation="relu", padding="same",
+                  input_shape=[128, 128, 3]),
+    layers.MaxPool2D(),
+
+    layers.Conv2D(64, 3, activation="relu", padding="same"),
+    layers.MaxPool2D(),
+
+    layers.Conv2D(128, 3, activation="relu", padding="same"),
+    layers.Conv2D(128, 3, activation="relu", padding="same"),
+    layers.MaxPool2D(),
+
+    layers.Flatten(),
+    layers.Dense(6, activation="relu"),
+    layers.Dropout(0.2),
+    layers.Dense(1, activation="sigmoid"),
+])
+```
+
+The architecture increases channel capacity as spatial resolution falls:
+
+| Stage | Output shape, excluding batch | What changes |
+|-------|-------------------------------|--------------|
+| Input | `128 × 128 × 3` | RGB image |
+| `Conv2D(32, 3, same)` | `128 × 128 × 32` | Learn 32 local feature detectors |
+| `MaxPool2D()` | `64 × 64 × 32` | Halve height and width |
+| `Conv2D(64, 3, same)` | `64 × 64 × 64` | Expand the feature vocabulary |
+| `MaxPool2D()` | `32 × 32 × 64` | Compress spatial evidence again |
+| Two `Conv2D(128, 3, same)` layers | `32 × 32 × 128` | Compose deeper features before discarding more location detail |
+| `MaxPool2D()` | `16 × 16 × 128` | Produce the final feature maps |
+| `Flatten()` | `32,768` | Convert spatial maps into one vector |
+| `Dense(6) → Dropout(0.2) → Dense(1)` | `1` | Regularize the head and emit a binary probability |
+
+With these input dimensions, the model has **437,453 trainable parameters**. The `Flatten → Dense(6)` transition alone contributes 196,614, which is why the head remains small and includes dropout even though the convolutional base grows deeper.
+
+```python
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(epsilon=0.01),
+    loss="binary_crossentropy",
+    metrics=["binary_accuracy"],
+)
+```
+
+The output contract is unchanged from the transfer-learning model: one sigmoid probability trained with binary cross-entropy and reported with binary accuracy. The optimization problem is different, however. The transfer model trains only a new head over fixed general-purpose features; this custom model must learn every convolutional filter and the head from the course dataset.
+
+The saved exercise reflection reports that the model still overfits, but performs somewhat better than the tutorial comparison despite adding another convolutional layer. Its explanation attributes the improved control to `Dropout(0.2)`. That is evidence for a useful experiment, not proof that dropout alone caused the improvement; a controlled comparison would keep the architecture, split, initialization, and training schedule fixed while changing only dropout.
+
 ## Why Each Choice Matters
 
 | Choice | Role | If it is wrong |
@@ -267,10 +319,14 @@ The `detrend`, `average`, and `spencer` kernels each scan across neighboring tim
 | Convolution padding | Decide whether border pixels can contribute to the output | Unexpected shape changes or border artifacts appear |
 | Pooling stride and padding | Control spatial compression after activation | Useful responses may be dropped or output dimensions may surprise later layers |
 | 1D convolution filters | Apply the same sliding-window logic to ordered sequences | The filter detrends, smooths, or emphasizes the wrong time-series behavior |
+| Increasing filter counts | Trade spatial resolution for a richer learned feature vocabulary | Too few filters bottleneck the model; too many add cost and overfitting risk |
+| `padding="same"` in custom blocks | Preserve height and width until pooling performs deliberate compression | Unplanned shrinking can erase border information and collapse maps too quickly |
+| Two convolutions before the third pool | Compose features at the same spatial resolution before downsampling | Pooling too early can remove detail before deeper combinations are learned |
 | Freeze the base | Protect pretrained visual features during initial head training | Early gradients can damage the reusable representation |
 | `Flatten()` | Preserve every spatial activation in one image-level vector | The dense head can become unnecessarily large and location-sensitive |
 | Global average pooling | Summarize each channel with one value | Fine spatial layout is intentionally discarded |
 | Hidden ReLU layer | Learn a nonlinear combination of extracted features | A purely linear head may lack task-specific capacity |
+| `Dropout(0.2)` | Reduce reliance on individual head activations during training | Too little may not regularize; too much can cause underfitting |
 | One sigmoid output | Emit one probability for a binary target | Output shape and label meaning no longer align |
 | Binary cross-entropy | Penalize incorrect binary probabilities smoothly | Optimization no longer matches the probabilistic task |
 | Binary accuracy | Report thresholded classification performance | A regression metric would be hard to interpret |
@@ -318,7 +374,7 @@ Never diagnose from the final epoch alone. The *direction and separation* of the
 
 ## Computer Vision Playbook
 
-This is the workflow the course is building toward. The saved work currently implements the transfer-learning baseline and isolates convolution, ReLU, maximum pooling, sliding windows, and 1D filters as feature-extraction steps.
+This is the workflow the course is building toward. The saved work now implements both a frozen-base transfer-learning baseline and a custom ConvNet, while also isolating convolution, ReLU, maximum pooling, sliding windows, and 1D filters as feature-extraction steps.
 
 1. **Define the prediction contract.** Decide the label meaning, output shape, and metric before choosing the final layer.
 2. **Audit the images.** Inspect class balance, duplicates, corrupt files, resolution, aspect ratio, and label quality.
@@ -356,13 +412,9 @@ output = floor((input + 2 × padding − kernel) / stride) + 1
 
 Shape checks catch architectural mistakes early; parameter counts catch unexpectedly expensive heads.
 
-## Concepts Ahead
+## Concept Ahead
 
-These topics belong to the remaining two lessons and are not yet claimed as completed work.
-
-### Custom ConvNets
-
-Reusable convolution → activation → pooling blocks build a feature hierarchy. Earlier blocks respond to simple local patterns; later blocks combine them into task-specific structures.
+One lesson remains and is not yet claimed as completed work.
 
 ### Data augmentation
 
@@ -370,7 +422,7 @@ Augmentation creates varied training views without changing the underlying label
 
 ## Skills Demonstrated
 
-Evidence from the four completed exercises:
+Evidence from the five completed exercises:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -403,6 +455,17 @@ Evidence from the four completed exercises:
 - Reformatting a 1D series into batch/channel dimensions for TensorFlow convolution
 - Applying `tf.nn.conv1d` with `VALID` padding to a time-series signal
 - Comparing detrending, averaging, and Spencer filters as sliding kernels over ordered data
+- Building a custom Keras ConvNet for `128 × 128 × 3` RGB inputs
+- Stacking `Conv2D → ReLU → MaxPool2D` stages into a learned feature hierarchy
+- Increasing learned filters from 32 to 64 to 128 as spatial dimensions shrink
+- Preserving resolution inside convolutional blocks with `padding="same"`
+- Stacking two 128-filter convolutions before the final pooling operation
+- Tracing the custom model from `128 × 128 × 3` input to `16 × 16 × 128` final feature maps
+- Flattening 32,768 learned activations into a six-unit classification head
+- Applying `Dropout(0.2)` before the sigmoid output to regularize the head
+- Compiling the custom classifier with Adam, binary cross-entropy, and binary accuracy
+- Distinguishing a fully trainable custom base from a frozen pretrained base
+- Treating the saved dropout explanation as a hypothesis that requires a controlled comparison
 - Preserving Kaggle's answer checks and written model diagnosis with the solution
 
 ## Common Failure Modes
@@ -451,6 +514,13 @@ Evidence from the four completed exercises:
 - preserving the answer-checked `7 × 7` feature-map result;
 - applying `tf.nn.conv1d` with detrend, average, and Spencer kernels over a time series.
 
+[CustomConvnetsExercise.py](./CustomConvnetsExercise.py) contains the solved Kaggle cells for:
+
+- completing the third convolutional block with two 128-filter layers and max pooling;
+- compiling the custom binary classifier with Adam, binary cross-entropy, and binary accuracy;
+- adding `Dropout(0.2)` to the dense head;
+- preserving the exercise reflection on residual overfitting and the comparison with the tutorial model.
+
 ### Execution context
 
 The exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the exports, including:
@@ -458,7 +528,7 @@ The exported files are **study evidence, not standalone scripts**. Kaggle suppli
 - `pretrained_base`;
 - `tf`, `visiontools`, images, kernels, time-series data, and the prepared image datasets;
 - training/history cells surrounding the exercise prompts;
-- `q_1` through `q_4` from Kaggle's answer-checking system.
+- `q_*` objects from Kaggle's answer-checking system.
 
 To reproduce an exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference.
 
@@ -470,14 +540,14 @@ This course will be marked complete only when all six exercise exports and the c
 - [x] Convolution and ReLU
 - [x] Maximum Pooling
 - [x] The Sliding Window
-- [ ] Custom ConvNets
+- [x] Custom ConvNets
 - [ ] Data Augmentation
 - [ ] Completion certificate archived
 - [ ] Root roadmap updated from 13/17 to 14/17
 
 ## Takeaway
 
-The first four lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals.
+The first five lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; and the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head.
 
 The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
