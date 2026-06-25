@@ -5,13 +5,13 @@
 **Course 14 of 17 — teaching neural networks to see with convolution, transfer learning, and image augmentation.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
-![Status](https://img.shields.io/badge/Status-In%20Progress-F5A623.svg)
-![Lessons](https://img.shields.io/badge/Lessons-5%20of%206-F5A623.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-6%20of%206-brightgreen.svg)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/guide/keras)
 
 `IMAGE → FEATURES → EVIDENCE → CLASS`
 
-[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Transfer Model](#implemented-transfer-learning-model) · [Feature Extraction](#implemented-feature-extraction) · [Custom ConvNet](#implemented-custom-convnet) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
+[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Transfer Model](#implemented-transfer-learning-model) · [Feature Extraction](#implemented-feature-extraction) · [Custom ConvNet](#implemented-custom-convnet) · [Augmentation](#implemented-data-augmentation) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
 
 </div>
 
@@ -23,22 +23,23 @@
 |-------|--------|
 | Position | Course 14 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress — 5 of 6 lessons complete** |
+| Status | **Complete — 6 of 6 lessons** |
 | Started | June 20, 2026 |
-| Latest completed lesson | Custom ConvNets |
+| Completed | June 25, 2026 |
+| Final lesson | Data Augmentation |
 | Framework | TensorFlow / Keras |
-| Task introduced | Binary image classification with transfer learning and custom ConvNets |
+| Task introduced | Binary image classification with transfer learning, custom ConvNets, and data augmentation |
 | Running dataset | Cars versus trucks |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory currently contains five completed exercise exports. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, and dropout are backed by saved solutions. Data augmentation remains roadmap material until its exercise is archived.
+> **Repository truth:** this directory contains all six exercise exports and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, and data augmentation are all backed by saved solutions.
 
 ## What This Course Adds
 
 [Intro to Deep Learning](../13_IntroToDeepLearning/) learned from rows of already prepared features. Computer Vision moves feature engineering *inside* the network. Instead of manually describing an image with edges, textures, shapes, and parts, a convolutional base learns a hierarchy of visual features directly from pixels.
 
-The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The next three exercises open that feature extractor conceptually: a kernel creates a feature map through convolution, ReLU keeps its positive responses, maximum pooling condenses nearby activations, and the sliding-window exercise makes stride and padding explicit. The fifth exercise then assembles those operations into a trainable convolutional hierarchy and adds dropout to the classification head. Together, the exercises separate the problem into two clean responsibilities:
+The first exercise makes that shift without discarding the earlier Keras foundation. It reuses a pretrained feature extractor, freezes its learned weights, and attaches a small dense binary-classification head. The next three exercises open that feature extractor conceptually: a kernel creates a feature map through convolution, ReLU keeps its positive responses, maximum pooling condenses nearby activations, and the sliding-window exercise makes stride and padding explicit. The fifth exercise then assembles those operations into a trainable convolutional hierarchy and adds dropout to the classification head. The final exercise introduces label-preserving augmentation and integrates it into a larger batch-normalized ConvNet. Together, the exercises separate the problem into two clean responsibilities:
 
 - **Base:** convert an image into useful feature maps.
 - **Head:** convert those learned features into a class probability.
@@ -81,7 +82,7 @@ The important distinction is not “convolutional layers versus dense layers.”
 | 3 | Maximum Pooling | **Complete** | [MaximumPoolingExercise.py](./MaximumPoolingExercise.py) |
 | 4 | The Sliding Window | **Complete** | [TheSlidingWindowExercise.py](./TheSlidingWindowExercise.py) |
 | 5 | Custom ConvNets | **Complete** | [CustomConvnetsExercise.py](./CustomConvnetsExercise.py) |
-| 6 | Data Augmentation | Not started | — |
+| 6 | Data Augmentation | **Complete** | [DataAugmentationExercise.py](./DataAugmentationExercise.py) |
 
 ### Course trajectory
 
@@ -307,6 +308,59 @@ The output contract is unchanged from the transfer-learning model: one sigmoid p
 
 The saved exercise reflection reports that the model still overfits, but performs somewhat better than the tutorial comparison despite adding another convolutional layer. Its explanation attributes the improved control to `Dropout(0.2)`. That is evidence for a useful experiment, not proof that dropout alone caused the improvement; a controlled comparison would keep the architecture, split, initialization, and training schedule fixed while changing only dropout.
 
+## Implemented Data Augmentation
+
+The final exercise treats augmentation as a modeling assumption rather than a generic switch. A transformation is valid only when it changes the pixels without changing the correct label.
+
+The saved exploration applies candidate transformations independently and repeatedly to the same training image. For example:
+
+```python
+augment = keras.Sequential([
+    preprocessing.RandomContrast(factor=0.5),
+])
+
+for i in range(16):
+    image = augment(ex, training=True)
+```
+
+The same visual check is repeated for horizontal flips, width changes, and translations. Viewing multiple randomized versions makes the decision concrete: horizontal flips and modest geometric changes are plausible for cars and trucks, while vertical flips or aggressive color changes may violate assumptions in other domains. For example, an orientation change that is harmless for a flower classifier could destroy the meaning of an aerial-image label, and a color shift could erase a class-defining flower color.
+
+The final cars-versus-trucks model keeps only conservative transformations:
+
+```python
+model = keras.Sequential([
+    layers.InputLayer(input_shape=[128, 128, 3]),
+
+    preprocessing.RandomContrast(factor=0.10),
+    preprocessing.RandomFlip(mode="horizontal"),
+    preprocessing.RandomRotation(factor=0.10),
+
+    layers.BatchNormalization(renorm=True),
+    layers.Conv2D(64, 3, activation="relu", padding="same"),
+    layers.MaxPool2D(),
+
+    layers.BatchNormalization(renorm=True),
+    layers.Conv2D(128, 3, activation="relu", padding="same"),
+    layers.MaxPool2D(),
+
+    layers.BatchNormalization(renorm=True),
+    layers.Conv2D(256, 3, activation="relu", padding="same"),
+    layers.Conv2D(256, 3, activation="relu", padding="same"),
+    layers.MaxPool2D(),
+
+    layers.BatchNormalization(renorm=True),
+    layers.Flatten(),
+    layers.Dense(8, activation="relu"),
+    layers.Dense(1, activation="sigmoid"),
+])
+```
+
+The augmentation layers run inside the model during training and leave validation or inference inputs unchanged. This keeps preprocessing attached to the saved architecture and avoids contaminating validation data with randomized training views.
+
+The network expands capacity from 64 to 128 to 256 filters while reducing the image from `128 × 128` to `16 × 16`. The final feature maps flatten to 65,536 activations before the eight-unit head; that `Flatten → Dense(8)` transition alone contributes 524,296 parameters and remains the model's largest single parameter block.
+
+The saved reflection reports a small amount of remaining overfitting but a large overall performance improvement over the earlier course models. That supports augmentation plus the larger architecture as the strongest saved configuration, while still stopping short of attributing the gain to any one change without an ablation study.
+
 ## Why Each Choice Matters
 
 | Choice | Role | If it is wrong |
@@ -327,6 +381,9 @@ The saved exercise reflection reports that the model still overfits, but perform
 | Global average pooling | Summarize each channel with one value | Fine spatial layout is intentionally discarded |
 | Hidden ReLU layer | Learn a nonlinear combination of extracted features | A purely linear head may lack task-specific capacity |
 | `Dropout(0.2)` | Reduce reliance on individual head activations during training | Too little may not regularize; too much can cause underfitting |
+| Label-preserving augmentation | Expose the model to plausible variation without collecting new labels | Invalid transformations teach the model that changed or impossible examples retain the original class |
+| In-model augmentation layers | Apply random transforms during training and preserve deterministic evaluation | Augmenting validation data makes model comparison noisy and changes the evaluation distribution |
+| Batch normalization with renormalization | Stabilize intermediate activation scales across convolutional stages | Poorly estimated statistics can destabilize training, especially with small batches |
 | One sigmoid output | Emit one probability for a binary target | Output shape and label meaning no longer align |
 | Binary cross-entropy | Penalize incorrect binary probabilities smoothly | Optimization no longer matches the probabilistic task |
 | Binary accuracy | Report thresholded classification performance | A regression metric would be hard to interpret |
@@ -374,7 +431,7 @@ Never diagnose from the final epoch alone. The *direction and separation* of the
 
 ## Computer Vision Playbook
 
-This is the workflow the course is building toward. The saved work now implements both a frozen-base transfer-learning baseline and a custom ConvNet, while also isolating convolution, ReLU, maximum pooling, sliding windows, and 1D filters as feature-extraction steps.
+This is the workflow the course builds toward. The saved work implements a frozen-base transfer-learning baseline, a custom ConvNet, and an augmented batch-normalized ConvNet, while also isolating convolution, ReLU, maximum pooling, sliding windows, and 1D filters as feature-extraction steps.
 
 1. **Define the prediction contract.** Decide the label meaning, output shape, and metric before choosing the final layer.
 2. **Audit the images.** Inspect class balance, duplicates, corrupt files, resolution, aspect ratio, and label quality.
@@ -412,17 +469,9 @@ output = floor((input + 2 × padding − kernel) / stride) + 1
 
 Shape checks catch architectural mistakes early; parameter counts catch unexpectedly expensive heads.
 
-## Concept Ahead
-
-One lesson remains and is not yet claimed as completed work.
-
-### Data augmentation
-
-Augmentation creates varied training views without changing the underlying label. It is useful only when each transformation is plausible for the real prediction domain and is applied to training data—not validation or test data.
-
 ## Skills Demonstrated
 
-Evidence from the five completed exercises:
+Evidence from the six completed exercises:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -466,6 +515,15 @@ Evidence from the five completed exercises:
 - Compiling the custom classifier with Adam, binary cross-entropy, and binary accuracy
 - Distinguishing a fully trainable custom base from a frozen pretrained base
 - Treating the saved dropout explanation as a hypothesis that requires a controlled comparison
+- Comparing randomized contrast, horizontal flip, width, and translation transformations visually
+- Judging augmentation choices against the label semantics of the target domain
+- Rejecting transformations that could alter class meaning rather than applying augmentation indiscriminately
+- Embedding `RandomContrast(0.10)`, horizontal `RandomFlip`, and `RandomRotation(0.10)` in a Keras model
+- Applying augmentation during training while preserving deterministic validation and inference behavior
+- Building a batch-normalized ConvNet with 64-, 128-, and 256-filter stages
+- Flattening `16 × 16 × 256` feature maps into an eight-unit binary-classification head
+- Reading the final learning curves as improved overall performance with slight residual overfitting
+- Treating the combined architecture and augmentation result as evidence that still requires ablation to isolate causes
 - Preserving Kaggle's answer checks and written model diagnosis with the solution
 
 ## Common Failure Modes
@@ -478,6 +536,7 @@ Evidence from the five completed exercises:
 | Validation accuracy is suspiciously high | Duplicate or related images leaked across splits | Group images by source before splitting |
 | Loss will not decrease | Wrong labels, output/loss mismatch, or preprocessing mismatch | Inspect one batch and confirm ranges, shapes, and class mapping |
 | Training is good; validation degrades | Overfitting | Augmentation validity, head size, early stopping |
+| Augmentation hurts validation performance | Transformations are too strong or do not preserve the label | Visualize repeated transformed samples and remove implausible operations |
 | Model predicts one class | Imbalance, reversed labels, or threshold issues | Class counts, inferred class order, confusion matrix |
 | Fine-tuning destroys performance | Too many layers unfrozen or learning rate too high | Restore frozen baseline; unfreeze fewer late layers |
 | GPU is underused | Input pipeline is the bottleneck | Batching, caching policy, and prefetching |
@@ -521,6 +580,14 @@ Evidence from the five completed exercises:
 - adding `Dropout(0.2)` to the dense head;
 - preserving the exercise reflection on residual overfitting and the comparison with the tutorial model.
 
+[DataAugmentationExercise.py](./DataAugmentationExercise.py) contains the solved Kaggle cells for:
+
+- visualizing randomized contrast, horizontal flips, width changes, and translations;
+- reasoning about which transformations preserve labels in different image domains;
+- adding conservative contrast, horizontal-flip, and rotation augmentation to the model;
+- building the final batch-normalized 64/128/256-filter ConvNet;
+- preserving the final reflection on improved performance and slight remaining overfitting.
+
 ### Execution context
 
 The exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the exports, including:
@@ -534,27 +601,37 @@ To reproduce an exercise, open [the course on Kaggle](https://www.kaggle.com/lea
 
 ## Completion Standard
 
-This course will be marked complete only when all six exercise exports and the certificate are present.
+The course completion standard is satisfied: all six exercise exports and the certificate are present.
 
 - [x] The Convolutional Classifier
 - [x] Convolution and ReLU
 - [x] Maximum Pooling
 - [x] The Sliding Window
 - [x] Custom ConvNets
-- [ ] Data Augmentation
-- [ ] Completion certificate archived
-- [ ] Root roadmap updated from 13/17 to 14/17
+- [x] Data Augmentation
+- [x] Completion certificate archived
+- [x] Root roadmap updated from 13/17 to 14/17
 
 ## Takeaway
 
-The first five lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; and the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head.
+The six lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head; and data augmentation adds plausible input variation as an explicit generalization strategy.
 
-The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
+The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, apply only label-preserving transformations, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
+
+## Certificate of Completion
+
+<div align="center">
+
+<a href="./Cux%20Prada%20-%20Computer%20Vision.png"><img src="./Cux%20Prada%20-%20Computer%20Vision.png" width="600" alt="Computer Vision certificate" /></a>
+
+*Completed June 25, 2026.*
+
+</div>
 
 ---
 
 <div align="center">
 
-[← Intro to Deep Learning](../13_IntroToDeepLearning/) · [Back to Roadmap](../README.md) · [Continue on Kaggle →](https://www.kaggle.com/learn/computer-vision)
+[← Intro to Deep Learning](../13_IntroToDeepLearning/) · [Back to Roadmap](../README.md) · [Geospatial Analysis →](https://www.kaggle.com/learn/geospatial-analysis)
 
 </div>
