@@ -31,9 +31,9 @@ The goal is simple: keep the full path **auditable, navigable, and revisitable**
 |--------|-------|
 | Courses completed | **14 / 17** |
 | Hours logged across completed courses | **58** |
-| Exercise files archived | **82** |
+| Exercise files archived | **83** |
 | Certificates earned | **14** |
-| Current milestone | Computer vision - transfer learning, convolutional feature extraction, custom ConvNets, and label-preserving data augmentation in Keras |
+| Current milestone | Computer vision complete - transfer learning, convolutional feature extraction, custom ConvNets, label-preserving augmentation, and a TPU/VGG16 flowers submission workflow |
 | Last completed course | [Computer Vision](./14_ComputerVision/) - June 25, 2026 |
 | Up next | [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
@@ -129,8 +129,8 @@ Phase 5  ·  Specialized Topics     ███████░░░░░░░  
 
 A few items worth a second look - they go past the base course prompts:
 
-- **Image classification from reusable features to a custom augmented ConvNet.** The Computer Vision track starts with a frozen pretrained base and a small binary-classification head, then opens the feature extractor operation by operation: convolutional kernels, ReLU, maximum pooling, stride, padding, and the same sliding-window idea applied to 1D signals. It then builds a trainable `Conv2D` hierarchy from scratch and closes with label-preserving augmentation - random contrast, horizontal flips, and small rotations - embedded directly in a batch-normalized cars-versus-trucks classifier.
-  → [`14_ComputerVision/`](./14_ComputerVision/)
+- **Image classification from reusable features to a custom augmented ConvNet.** The Computer Vision track starts with a frozen pretrained base and a small binary-classification head, then opens the feature extractor operation by operation: convolutional kernels, ReLU, maximum pooling, stride, padding, and the same sliding-window idea applied to 1D signals. It then builds a trainable `Conv2D` hierarchy from scratch and closes with label-preserving augmentation - random contrast, horizontal flips, and small rotations - embedded directly in a batch-normalized cars-versus-trucks classifier. A supplemental flowers workflow extends the course into competition practice with TFRecords, TPU strategy detection, a frozen VGG16 base, global average pooling, multiclass softmax output, scheduled learning rates, and `submission.csv` generation.
+  → [`14_ComputerVision/`](./14_ComputerVision/) · [`CreateYourFirstSubmissionExercise.py`](./14_ComputerVision/CreateYourFirstSubmissionExercise.py)
 - **Neural networks from first principles - single neuron to regularized classifier.** The Intro to Deep Learning track builds the Keras toolkit one decision at a time: a single linear `Dense` unit whose learned weights and bias are read straight off `model.weights`, then deep ReLU stacks for nonlinear representation, training by stochastic gradient descent with the Adam optimizer, and learning-curve reading to separate real learning from memorization. It closes by controlling generalization on purpose - early stopping on validation loss, dropout, and batch normalization - and retargets the output to a `sigmoid` unit with `binary_crossentropy` loss for a fully regularized binary classifier built from BatchNorm → Dense → BatchNorm → Dropout blocks.
   → [`13_IntroToDeepLearning/`](./13_IntroToDeepLearning/)
 - **Time-series forecasting as supervised learning, with leakage-aware horizons.** The Time Series track turns dates into model inputs: time-step features for trend, Fourier and seasonal indicators for calendar cycles, lagged targets for serial dependence, rolling summaries from shifted values, and known-in-advance promotion features. It closes by decomposing forecasts with a `LinearRegression` + `XGBRegressor` hybrid and by building a 16-step Store Sales submission with `RegressorChain`, lag features, multioutput targets, and nonnegative clipped predictions.
@@ -165,7 +165,7 @@ Aggregated from the fourteen completed courses. Each skill is exercised in at le
 | **Feature Engineering** | mutual information scoring and ranking, reading MI as investigation prompts, interaction discovery with faceted `sns.lmplot`, ratio / count / combination features, one-hot interaction features, neighborhood context via grouped `transform("median")`, standardizing inputs for distance-based methods, `KMeans` cluster labels and `fit_transform` centroid-distance features, interpreting PCA loadings, PCA for variance summary and outlier detection, leakage-safe target encoding with `MEstimateEncoder` on a held-out split |
 | **Time Series** | time-step features, lag features, time-indexed train/validation discipline, centered moving averages, polynomial trends with `DeterministicProcess`, seasonal indicators, Fourier features with `CalendarFourier`, holiday regressors, partial autocorrelation, lag/lead feature alignment, rolling summaries from shifted targets, future-known covariates, hybrid residual models, multioutput/direct/recursive/DirRec forecasting strategies, `RegressorChain` multistep prediction, Store Sales submission formatting |
 | **Deep Learning** | Keras `Sequential` models, `Dense` layers and `input_shape`, reading `model.weights`, ReLU / ELU / SELU / Swish activations and explicit `Activation` layers, stochastic gradient descent with the Adam optimizer, MAE regression loss, `model.fit` over mini-batches and epochs, learning-curve diagnosis of underfitting vs overfitting, `EarlyStopping` with `restore_best_weights`, `Dropout` and `BatchNormalization` regularization, `sigmoid` output with `binary_crossentropy` loss and `binary_accuracy` for classification |
-| **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification |
+| **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification, TFRecord input pipelines, TPU-aware training setup, VGG16 feature extraction, multiclass softmax classification, Kaggle vision submission formatting |
 
 ## Repository Layout
 
@@ -221,6 +221,6 @@ Once the Kaggle AI track is complete, the plan is to continue with [fast.ai - Pr
 
 **[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
 
-*Last updated: June 25, 2026*
+*Last updated: June 26, 2026*
 
 </div>

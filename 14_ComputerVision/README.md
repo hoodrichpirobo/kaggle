@@ -2,7 +2,7 @@
 
 # Computer Vision
 
-**Course 14 of 17 — teaching neural networks to see with convolution, transfer learning, and image augmentation.**
+**Course 14 of 17 — teaching neural networks to see with convolution, transfer learning, image augmentation, and competition-ready submission flow.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
@@ -11,7 +11,7 @@
 
 `IMAGE → FEATURES → EVIDENCE → CLASS`
 
-[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Transfer Model](#implemented-transfer-learning-model) · [Feature Extraction](#implemented-feature-extraction) · [Custom ConvNet](#implemented-custom-convnet) · [Augmentation](#implemented-data-augmentation) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
+[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [Transfer Model](#implemented-transfer-learning-model) · [Feature Extraction](#implemented-feature-extraction) · [Custom ConvNet](#implemented-custom-convnet) · [Augmentation](#implemented-data-augmentation) · [Supplemental](#supplemental-practice) · [Playbook](#computer-vision-playbook) · [Reference](#cnn-shape-reference) · [Artifacts](#artifact-guide)
 
 </div>
 
@@ -30,10 +30,12 @@
 | Framework | TensorFlow / Keras |
 | Task introduced | Binary image classification with transfer learning, custom ConvNets, and data augmentation |
 | Running dataset | Cars versus trucks |
+| Supplemental practice | Flowers multiclass submission workflow with TFRecords, TPU strategy detection, VGG16, and `submission.csv` output |
+| Repository artifacts | 6 lesson exports, 1 supplemental submission workflow, 1 completion certificate |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory contains all six exercise exports and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, and data augmentation are all backed by saved solutions.
+> **Repository truth:** this directory contains all six official lesson exports, one supplemental competition-submission workflow, and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, data augmentation, TPU-aware input pipelines, and Kaggle submission formatting are all backed by saved work.
 
 ## What This Course Adds
 
@@ -45,6 +47,8 @@ The first exercise makes that shift without discarding the earlier Keras foundat
 - **Head:** convert those learned features into a class probability.
 
 That base/head split is the organizing idea for the entire course.
+
+The supplemental submission file applies the same split to a larger multiclass setting. It streams flower images from TFRecords, detects whether TPU distribution is available, freezes a VGG16 convolutional base, replaces the classifier with `GlobalAveragePooling2D` plus a softmax head over the flower classes, trains with a learning-rate schedule, and writes predictions in Kaggle submission format.
 
 ## The Core Mental Model
 
@@ -361,6 +365,25 @@ The network expands capacity from 64 to 128 to 256 filters while reducing the im
 
 The saved reflection reports a small amount of remaining overfitting but a large overall performance improvement over the earlier course models. That supports augmentation plus the larger architecture as the strongest saved configuration, while still stopping short of attributing the gain to any one change without an ablation study.
 
+## Supplemental Practice
+
+[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) extends the course material from lesson evidence into an end-to-end competition-style vision workflow. It is separate from the six official Kaggle Learn lessons, but it belongs in this directory because it exercises the same representation/head pattern on a larger flowers classification task.
+
+The workflow covers:
+
+- loading Kaggle-hosted image TFRecords through `KaggleDatasets().get_gcs_path`;
+- decoding JPEG bytes into normalized `512 × 512 × 3` tensors;
+- building `tf.data` train, validation, and test pipelines with parallel reads, batching, caching or prefetching, and unordered reads where order is not semantically required;
+- detecting TPU availability and selecting the matching TensorFlow distribution strategy;
+- applying label-preserving horizontal-flip augmentation in the input pipeline;
+- reusing VGG16 as a frozen ImageNet feature extractor with `include_top=False`;
+- replacing the ImageNet head with `GlobalAveragePooling2D` and `Dense(len(CLASSES), activation="softmax")`;
+- compiling with Adam, sparse categorical cross-entropy, and sparse categorical accuracy for multiclass labels;
+- scheduling the learning rate with a ramp-up and exponential decay;
+- converting test predictions and image IDs into a Kaggle-compatible `submission.csv`.
+
+This artifact is also a useful contrast with the official lessons. The course exercises focus on cars-versus-trucks binary classification and on understanding CNN operations directly; the supplemental workflow adds the surrounding production shape of a Kaggle image competition: scalable input format, accelerator strategy, multiclass output contract, ordered test IDs, and submission-file assembly.
+
 ## Why Each Choice Matters
 
 | Choice | Role | If it is wrong |
@@ -471,7 +494,7 @@ Shape checks catch architectural mistakes early; parameter counts catch unexpect
 
 ## Skills Demonstrated
 
-Evidence from the six completed exercises:
+Evidence from the six completed exercises and supplemental workflow:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -525,6 +548,12 @@ Evidence from the six completed exercises:
 - Reading the final learning curves as improved overall performance with slight residual overfitting
 - Treating the combined architecture and augmentation result as evidence that still requires ablation to isolate causes
 - Preserving Kaggle's answer checks and written model diagnosis with the solution
+- Building `tf.data` pipelines around TFRecord image shards
+- Detecting TPU availability and training under the selected distribution strategy
+- Freezing VGG16 as a multiclass image feature extractor
+- Using global average pooling to keep the classifier head compact
+- Training a softmax classifier with sparse categorical cross-entropy
+- Writing ordered test predictions to `submission.csv`
 
 ## Common Failure Modes
 
@@ -588,20 +617,31 @@ Evidence from the six completed exercises:
 - building the final batch-normalized 64/128/256-filter ConvNet;
 - preserving the final reflection on improved performance and slight remaining overfitting.
 
+### Supplemental practice
+
+[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) contains the saved competition workflow for:
+
+- loading flower image TFRecords from Kaggle's GCS-backed dataset path;
+- preparing labeled and unlabeled `tf.data` pipelines for train, validation, and test splits;
+- configuring TPU-aware distribution strategy and batch sizing;
+- training a frozen VGG16 feature extractor with a multiclass softmax head;
+- using a scheduled learning rate during training;
+- writing image IDs and predicted flower labels to `submission.csv`.
+
 ### Execution context
 
-The exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the exports, including:
+Most exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the official lesson exports, including:
 
 - `pretrained_base`;
 - `tf`, `visiontools`, images, kernels, time-series data, and the prepared image datasets;
 - training/history cells surrounding the exercise prompts;
 - `q_*` objects from Kaggle's answer-checking system.
 
-To reproduce an exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference.
+The supplemental submission workflow also expects Kaggle notebook context, including `kaggle_datasets`, GCS dataset access, accelerator configuration, and notebook shell helpers. To reproduce an official exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference. To reproduce the supplemental workflow, run it in a Kaggle notebook attached to the relevant flowers dataset.
 
 ## Completion Standard
 
-The course completion standard is satisfied: all six exercise exports and the certificate are present.
+The course completion standard is satisfied: all six official exercise exports and the certificate are present. The supplemental submission workflow is archived as additional practice.
 
 - [x] The Convolutional Classifier
 - [x] Convolution and ReLU
@@ -609,12 +649,15 @@ The course completion standard is satisfied: all six exercise exports and the ce
 - [x] The Sliding Window
 - [x] Custom ConvNets
 - [x] Data Augmentation
+- [x] Supplemental flowers submission workflow archived
 - [x] Completion certificate archived
 - [x] Root roadmap updated from 13/17 to 14/17
 
 ## Takeaway
 
 The six lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head; and data augmentation adds plausible input variation as an explicit generalization strategy.
+
+The supplemental workflow adds the surrounding competition discipline: stream image data efficiently, keep the accelerator strategy explicit, preserve test ordering, match softmax output to sparse multiclass labels, and make the final artifact a valid submission file.
 
 The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, apply only label-preserving transformations, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
