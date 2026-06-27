@@ -30,12 +30,12 @@
 | Framework | TensorFlow / Keras |
 | Task introduced | Binary image classification with transfer learning, custom ConvNets, and data augmentation |
 | Running dataset | Cars versus trucks |
-| Supplemental practice | Flowers multiclass submission workflow with TFRecords, TPU strategy detection, VGG16, and `submission.csv` output |
-| Repository artifacts | 6 lesson exports, 1 supplemental submission workflow, 1 completion certificate |
+| Supplemental practice | Two multiclass competition workflows: flowers with VGG16 and cassava leaf disease with ResNet50, both using TFRecords, TPU-aware input pipelines, and `submission.csv` output |
+| Repository artifacts | 6 lesson exports, 2 supplemental submission workflows, 1 completion certificate |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory contains all six official lesson exports, one supplemental competition-submission workflow, and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, data augmentation, TPU-aware input pipelines, and Kaggle submission formatting are all backed by saved work.
+> **Repository truth:** this directory contains all six official lesson exports, two supplemental competition-submission workflows, and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, data augmentation, TPU-aware input pipelines, and Kaggle submission formatting are all backed by saved work.
 
 ## What This Course Adds
 
@@ -48,7 +48,7 @@ The first exercise makes that shift without discarding the earlier Keras foundat
 
 That base/head split is the organizing idea for the entire course.
 
-The supplemental submission file applies the same split to a larger multiclass setting. It streams flower images from TFRecords, detects whether TPU distribution is available, freezes a VGG16 convolutional base, replaces the classifier with `GlobalAveragePooling2D` plus a softmax head over the flower classes, trains with a learning-rate schedule, and writes predictions in Kaggle submission format.
+The supplemental submission files apply the same split to larger multiclass settings. The flowers workflow streams image TFRecords, detects whether TPU distribution is available, freezes a VGG16 convolutional base, replaces the classifier with `GlobalAveragePooling2D` plus a softmax head over the flower classes, trains with a learning-rate schedule, and writes predictions in Kaggle submission format. The cassava workflow repeats that production shape for plant-disease labels with explicit train/validation TFRecord splitting, a frozen ResNet50 base, ResNet preprocessing, an exponential learning-rate decay, and ordered test-ID submission output.
 
 ## The Core Mental Model
 
@@ -367,9 +367,11 @@ The saved reflection reports a small amount of remaining overfitting but a large
 
 ## Supplemental Practice
 
-[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) extends the course material from lesson evidence into an end-to-end competition-style vision workflow. It is separate from the six official Kaggle Learn lessons, but it belongs in this directory because it exercises the same representation/head pattern on a larger flowers classification task.
+Two supplemental workflows extend the course material from lesson evidence into end-to-end competition-style vision work. They are separate from the six official Kaggle Learn lessons, but they belong in this directory because they exercise the same representation/head pattern on larger multiclass image-classification tasks.
 
-The workflow covers:
+### Flowers submission workflow
+
+[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) covers:
 
 - loading Kaggle-hosted image TFRecords through `KaggleDatasets().get_gcs_path`;
 - decoding JPEG bytes into normalized `512 × 512 × 3` tensors;
@@ -382,7 +384,24 @@ The workflow covers:
 - scheduling the learning rate with a ramp-up and exponential decay;
 - converting test predictions and image IDs into a Kaggle-compatible `submission.csv`.
 
-This artifact is also a useful contrast with the official lessons. The course exercises focus on cars-versus-trucks binary classification and on understanding CNN operations directly; the supplemental workflow adds the surrounding production shape of a Kaggle image competition: scalable input format, accelerator strategy, multiclass output contract, ordered test IDs, and submission-file assembly.
+### Cassava leaf-disease workflow
+
+[TPUsPlusCassavaLeafDiseaseExercise.py](./TPUsPlusCassavaLeafDiseaseExercise.py) covers:
+
+- loading competition TFRecords from the active Kaggle dataset context;
+- parsing labeled records with `target` labels and unlabeled records with `image_name` IDs;
+- splitting train TFRecord shards into training and validation sets with `train_test_split`;
+- decoding images to normalized `512 × 512 × 3` tensors for TPU execution;
+- applying horizontal-flip augmentation in the input pipeline;
+- batching by `16 * strategy.num_replicas_in_sync`;
+- preserving unordered reads for training throughput and ordered reads for test IDs;
+- using `tf.keras.applications.resnet50.preprocess_input` before a frozen ResNet50 base;
+- attaching `GlobalAveragePooling2D`, a small ReLU layer, and a five-class softmax output;
+- compiling with Adam, sparse categorical cross-entropy, and sparse categorical accuracy;
+- training with an exponential learning-rate decay;
+- writing image IDs and predicted disease labels to `submission.csv`.
+
+These artifacts are also a useful contrast with the official lessons. The course exercises focus on cars-versus-trucks binary classification and on understanding CNN operations directly; the supplemental workflows add the surrounding production shape of Kaggle image competitions: scalable input formats, accelerator strategy, multiclass output contracts, ordered test IDs, and submission-file assembly.
 
 ## Why Each Choice Matters
 
@@ -404,6 +423,7 @@ This artifact is also a useful contrast with the official lessons. The course ex
 | Global average pooling | Summarize each channel with one value | Fine spatial layout is intentionally discarded |
 | Hidden ReLU layer | Learn a nonlinear combination of extracted features | A purely linear head may lack task-specific capacity |
 | `Dropout(0.2)` | Reduce reliance on individual head activations during training | Too little may not regularize; too much can cause underfitting |
+| ResNet preprocessing | Match raw image tensors to the preprocessing expected by a ResNet50 base | The pretrained representation receives inputs on the wrong scale or color convention |
 | Label-preserving augmentation | Expose the model to plausible variation without collecting new labels | Invalid transformations teach the model that changed or impossible examples retain the original class |
 | In-model augmentation layers | Apply random transforms during training and preserve deterministic evaluation | Augmenting validation data makes model comparison noisy and changes the evaluation distribution |
 | Batch normalization with renormalization | Stabilize intermediate activation scales across convolutional stages | Poorly estimated statistics can destabilize training, especially with small batches |
@@ -494,7 +514,7 @@ Shape checks catch architectural mistakes early; parameter counts catch unexpect
 
 ## Skills Demonstrated
 
-Evidence from the six completed exercises and supplemental workflow:
+Evidence from the six completed exercises and supplemental workflows:
 
 - Separating a convolutional classifier into a feature-extraction base and classification head
 - Reusing a pretrained convolutional representation for a new binary task
@@ -551,6 +571,9 @@ Evidence from the six completed exercises and supplemental workflow:
 - Building `tf.data` pipelines around TFRecord image shards
 - Detecting TPU availability and training under the selected distribution strategy
 - Freezing VGG16 as a multiclass image feature extractor
+- Freezing ResNet50 as a multiclass plant-disease feature extractor
+- Applying the application-specific ResNet50 preprocessing layer before the frozen base
+- Splitting training TFRecord shards into train and validation subsets with a fixed random state
 - Using global average pooling to keep the classifier head compact
 - Training a softmax classifier with sparse categorical cross-entropy
 - Writing ordered test predictions to `submission.csv`
@@ -619,7 +642,7 @@ Evidence from the six completed exercises and supplemental workflow:
 
 ### Supplemental practice
 
-[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) contains the saved competition workflow for:
+[CreateYourFirstSubmissionExercise.py](./CreateYourFirstSubmissionExercise.py) contains the saved flowers competition workflow for:
 
 - loading flower image TFRecords from Kaggle's GCS-backed dataset path;
 - preparing labeled and unlabeled `tf.data` pipelines for train, validation, and test splits;
@@ -627,6 +650,17 @@ Evidence from the six completed exercises and supplemental workflow:
 - training a frozen VGG16 feature extractor with a multiclass softmax head;
 - using a scheduled learning rate during training;
 - writing image IDs and predicted flower labels to `submission.csv`.
+
+[TPUsPlusCassavaLeafDiseaseExercise.py](./TPUsPlusCassavaLeafDiseaseExercise.py) contains the saved cassava leaf-disease competition workflow for:
+
+- reading train, validation, and test TFRecord shards from Kaggle storage;
+- parsing `target` labels for training examples and `image_name` IDs for test examples;
+- splitting training files into train and validation partitions with `train_test_split`;
+- preparing TPU-aware `tf.data` pipelines with repeat, shuffle, batch, cache, and prefetch steps;
+- inspecting train, validation, and test batches with Matplotlib helper functions;
+- training a frozen ResNet50 feature extractor with a compact five-class softmax head;
+- using an exponential learning-rate decay and sparse multiclass metrics;
+- writing ordered test predictions to `submission.csv`.
 
 ### Execution context
 
@@ -637,11 +671,11 @@ Most exported files are **study evidence, not standalone scripts**. Kaggle suppl
 - training/history cells surrounding the exercise prompts;
 - `q_*` objects from Kaggle's answer-checking system.
 
-The supplemental submission workflow also expects Kaggle notebook context, including `kaggle_datasets`, GCS dataset access, accelerator configuration, and notebook shell helpers. To reproduce an official exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference. To reproduce the supplemental workflow, run it in a Kaggle notebook attached to the relevant flowers dataset.
+The supplemental submission workflows also expect Kaggle notebook context, including `kaggle_datasets`, GCS dataset access, accelerator configuration, competition datasets, and notebook shell helpers. To reproduce an official exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference. To reproduce a supplemental workflow, run it in a Kaggle notebook attached to the relevant flowers or cassava competition dataset.
 
 ## Completion Standard
 
-The course completion standard is satisfied: all six official exercise exports and the certificate are present. The supplemental submission workflow is archived as additional practice.
+The course completion standard is satisfied: all six official exercise exports and the certificate are present. The supplemental submission workflows are archived as additional practice.
 
 - [x] The Convolutional Classifier
 - [x] Convolution and ReLU
@@ -650,6 +684,7 @@ The course completion standard is satisfied: all six official exercise exports a
 - [x] Custom ConvNets
 - [x] Data Augmentation
 - [x] Supplemental flowers submission workflow archived
+- [x] Supplemental cassava leaf-disease submission workflow archived
 - [x] Completion certificate archived
 - [x] Root roadmap updated from 13/17 to 14/17
 
@@ -657,7 +692,7 @@ The course completion standard is satisfied: all six official exercise exports a
 
 The six lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head; and data augmentation adds plausible input variation as an explicit generalization strategy.
 
-The supplemental workflow adds the surrounding competition discipline: stream image data efficiently, keep the accelerator strategy explicit, preserve test ordering, match softmax output to sparse multiclass labels, and make the final artifact a valid submission file.
+The supplemental workflows add the surrounding competition discipline: stream image data efficiently, keep the accelerator strategy explicit, preserve test ordering, match softmax output to sparse multiclass labels, and make the final artifact a valid submission file.
 
 The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, apply only label-preserving transformations, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
