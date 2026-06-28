@@ -2,7 +2,7 @@
 
 # Computer Vision
 
-**Course 14 of 17 — teaching neural networks to see with convolution, transfer learning, image augmentation, and competition-ready submission flow.**
+**Course 14 of 17 — teaching neural networks to see with convolution, transfer learning, image augmentation, and accelerator-ready Kaggle workflows.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Computer%20Vision-20BEFF.svg)](https://www.kaggle.com/learn/computer-vision)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
@@ -30,12 +30,12 @@
 | Framework | TensorFlow / Keras |
 | Task introduced | Binary image classification with transfer learning, custom ConvNets, and data augmentation |
 | Running dataset | Cars versus trucks |
-| Supplemental practice | Two multiclass competition workflows: flowers with VGG16 and cassava leaf disease with ResNet50, both using TFRecords, TPU-aware input pipelines, and `submission.csv` output |
-| Repository artifacts | 6 lesson exports, 2 supplemental submission workflows, 1 completion certificate |
+| Supplemental practice | Two multiclass vision submission workflows: flowers with VGG16 and cassava leaf disease with ResNet50, plus one Higgs Boson TPU workflow with a wide-and-deep binary classifier |
+| Repository artifacts | 6 lesson exports, 3 supplemental practice workflows, 1 completion certificate |
 | Course page | [Kaggle Learn: Computer Vision](https://www.kaggle.com/learn/computer-vision) |
 | Prerequisite | [Intro to Deep Learning](../13_IntroToDeepLearning/) |
 
-> **Repository truth:** this directory contains all six official lesson exports, two supplemental competition-submission workflows, and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, data augmentation, TPU-aware input pipelines, and Kaggle submission formatting are all backed by saved work.
+> **Repository truth:** this directory contains all six official lesson exports, three supplemental practice workflows, and the completion certificate. Transfer learning, convolution, ReLU, maximum pooling, sliding-window extraction, 1D convolutional filtering, custom convolutional blocks, dropout, data augmentation, TPU-aware input pipelines, Kaggle submission formatting, and wide-and-deep binary classification are all backed by saved work.
 
 ## What This Course Adds
 
@@ -48,7 +48,9 @@ The first exercise makes that shift without discarding the earlier Keras foundat
 
 That base/head split is the organizing idea for the entire course.
 
-The supplemental submission files apply the same split to larger multiclass settings. The flowers workflow streams image TFRecords, detects whether TPU distribution is available, freezes a VGG16 convolutional base, replaces the classifier with `GlobalAveragePooling2D` plus a softmax head over the flower classes, trains with a learning-rate schedule, and writes predictions in Kaggle submission format. The cassava workflow repeats that production shape for plant-disease labels with explicit train/validation TFRecord splitting, a frozen ResNet50 base, ResNet preprocessing, an exponential learning-rate decay, and ordered test-ID submission output.
+The supplemental vision submission files apply the same split to larger multiclass settings. The flowers workflow streams image TFRecords, detects whether TPU distribution is available, freezes a VGG16 convolutional base, replaces the classifier with `GlobalAveragePooling2D` plus a softmax head over the flower classes, trains with a learning-rate schedule, and writes predictions in Kaggle submission format. The cassava workflow repeats that production shape for plant-disease labels with explicit train/validation TFRecord splitting, a frozen ResNet50 base, ResNet preprocessing, an exponential learning-rate decay, and ordered test-ID submission output.
+
+The third supplemental file is adjacent accelerator practice rather than an official computer-vision lesson. It uses the Higgs Boson TFRecord dataset to train a TPU-aware wide-and-deep binary classifier over 28 tabular features, keeping the same high-throughput `tf.data`, distribution-strategy, validation-curve, and metric discipline while leaving image-specific convolution behind.
 
 ## The Core Mental Model
 
@@ -367,7 +369,7 @@ The saved reflection reports a small amount of remaining overfitting but a large
 
 ## Supplemental Practice
 
-Two supplemental workflows extend the course material from lesson evidence into end-to-end competition-style vision work. They are separate from the six official Kaggle Learn lessons, but they belong in this directory because they exercise the same representation/head pattern on larger multiclass image-classification tasks.
+Three supplemental workflows extend the course material beyond the six official Kaggle Learn lessons. Two are end-to-end competition-style vision submissions that exercise the same representation/head pattern on larger multiclass image-classification tasks. The third is a non-vision TPU benchmark that reinforces the shared deep-learning infrastructure: TFRecords, accelerator strategy, large batches, regularization, callbacks, and validation metrics.
 
 ### Flowers submission workflow
 
@@ -401,7 +403,22 @@ Two supplemental workflows extend the course material from lesson evidence into 
 - training with an exponential learning-rate decay;
 - writing image IDs and predicted disease labels to `submission.csv`.
 
-These artifacts are also a useful contrast with the official lessons. The course exercises focus on cars-versus-trucks binary classification and on understanding CNN operations directly; the supplemental workflows add the surrounding production shape of Kaggle image competitions: scalable input formats, accelerator strategy, multiclass output contracts, ordered test IDs, and submission-file assembly.
+### Higgs Boson TPU workflow
+
+[DetectingtheHiggsBosonWithTPUsExercise.py](./DetectingtheHiggsBosonWithTPUsExercise.py) covers:
+
+- loading the Kaggle-hosted Higgs Boson TFRecord dataset through `KaggleDatasets().get_gcs_path("higgs-boson")`;
+- parsing serialized 28-feature float tensors and binary labels from each record;
+- tracking 500,000 validation examples within an 11-million-example dataset;
+- detecting TPU availability and scaling batch size by `strategy.num_replicas_in_sync`;
+- streaming cached, repeated, shuffled, batched, and prefetched datasets into the training loop;
+- building repeated `Dense → BatchNormalization → Activation → Dropout` blocks with 2,048 hidden units;
+- combining a linear path and deep network through `keras.experimental.WideDeepModel`;
+- compiling with binary cross-entropy, Adam, AUC, binary accuracy, and `experimental_steps_per_execution`;
+- using `EarlyStopping` and `ReduceLROnPlateau` to stop or slow training from validation evidence;
+- plotting cross-entropy loss and AUC curves after training.
+
+These artifacts are also a useful contrast with the official lessons. The course exercises focus on cars-versus-trucks binary classification and on understanding CNN operations directly. The two vision submission workflows add the surrounding production shape of Kaggle image competitions: scalable input formats, accelerator strategy, multiclass output contracts, ordered test IDs, and submission-file assembly. The Higgs workflow keeps the accelerator and validation discipline but swaps pixels for dense feature tensors, making clear which habits are vision-specific and which generalize to high-throughput deep learning.
 
 ## Why Each Choice Matters
 
@@ -427,10 +444,14 @@ These artifacts are also a useful contrast with the official lessons. The course
 | Label-preserving augmentation | Expose the model to plausible variation without collecting new labels | Invalid transformations teach the model that changed or impossible examples retain the original class |
 | In-model augmentation layers | Apply random transforms during training and preserve deterministic evaluation | Augmenting validation data makes model comparison noisy and changes the evaluation distribution |
 | Batch normalization with renormalization | Stabilize intermediate activation scales across convolutional stages | Poorly estimated statistics can destabilize training, especially with small batches |
+| TFRecord streaming | Feed large image or tabular datasets efficiently to accelerators | Training stalls, memory use grows, or order-sensitive IDs drift |
+| Distribution strategy | Keep TPU, GPU, and CPU execution behind one training interface | Batch size, model scope, and callback behavior can stop matching the hardware |
+| Wide-and-deep modeling | Combine a linear path with nonlinear feature interactions | The model may miss either simple additive signal or deeper interactions |
 | One sigmoid output | Emit one probability for a binary target | Output shape and label meaning no longer align |
 | Binary cross-entropy | Penalize incorrect binary probabilities smoothly | Optimization no longer matches the probabilistic task |
 | Binary accuracy | Report thresholded classification performance | A regression metric would be hard to interpret |
-| Validation curves | Estimate behavior on unseen images | Training performance can hide memorization |
+| AUC | Measure binary ranking quality across thresholds | Accuracy can hide weak discrimination, especially when class balance is uneven |
+| Validation curves | Estimate behavior on unseen examples | Training performance can hide memorization |
 
 ## Transfer Learning, Precisely
 
@@ -577,6 +598,11 @@ Evidence from the six completed exercises and supplemental workflows:
 - Using global average pooling to keep the classifier head compact
 - Training a softmax classifier with sparse categorical cross-entropy
 - Writing ordered test predictions to `submission.csv`
+- Parsing serialized Higgs feature tensors and labels from TFRecords
+- Training a TPU-aware wide-and-deep binary classifier over dense tabular features
+- Combining `keras.experimental.LinearModel` with a regularized deep network
+- Monitoring binary classification with both AUC and binary accuracy
+- Controlling large-model training with early stopping and learning-rate reduction callbacks
 
 ## Common Failure Modes
 
@@ -662,6 +688,18 @@ Evidence from the six completed exercises and supplemental workflows:
 - using an exponential learning-rate decay and sparse multiclass metrics;
 - writing ordered test predictions to `submission.csv`.
 
+[DetectingtheHiggsBosonWithTPUsExercise.py](./DetectingtheHiggsBosonWithTPUsExercise.py) contains the saved Higgs Boson TPU workflow for:
+
+- reading training and validation TFRecord shards from Kaggle's GCS-backed `higgs-boson` dataset;
+- parsing serialized 28-value float feature tensors and binary labels;
+- scaling batch size, steps per epoch, and validation steps for the active distribution strategy;
+- preparing cached, repeated, shuffled, batched, and prefetched `tf.data` pipelines;
+- building a regularized deep network from repeated dense, batch-normalization, activation, and dropout blocks;
+- combining the deep network with a `keras.experimental.LinearModel` through `WideDeepModel`;
+- compiling with binary cross-entropy, Adam, AUC, binary accuracy, and large `steps_per_execution`;
+- using early stopping and plateau-based learning-rate reduction;
+- plotting cross-entropy loss and AUC curves from the saved history.
+
 ### Execution context
 
 Most exported files are **study evidence, not standalone scripts**. Kaggle supplies objects and infrastructure that are intentionally absent from the official lesson exports, including:
@@ -671,11 +709,11 @@ Most exported files are **study evidence, not standalone scripts**. Kaggle suppl
 - training/history cells surrounding the exercise prompts;
 - `q_*` objects from Kaggle's answer-checking system.
 
-The supplemental submission workflows also expect Kaggle notebook context, including `kaggle_datasets`, GCS dataset access, accelerator configuration, competition datasets, and notebook shell helpers. To reproduce an official exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference. To reproduce a supplemental workflow, run it in a Kaggle notebook attached to the relevant flowers or cassava competition dataset.
+The supplemental workflows also expect Kaggle notebook context, including `kaggle_datasets`, GCS dataset access, accelerator configuration, competition or hosted datasets, and notebook shell helpers. To reproduce an official exercise, open [the course on Kaggle](https://www.kaggle.com/learn/computer-vision), run its notebook in order, and use the corresponding export as the solved-cell reference. To reproduce a supplemental workflow, run it in a Kaggle notebook attached to the relevant flowers, cassava, or `higgs-boson` dataset.
 
 ## Completion Standard
 
-The course completion standard is satisfied: all six official exercise exports and the certificate are present. The supplemental submission workflows are archived as additional practice.
+The course completion standard is satisfied: all six official exercise exports and the certificate are present. The supplemental workflows are archived as additional practice.
 
 - [x] The Convolutional Classifier
 - [x] Convolution and ReLU
@@ -685,6 +723,7 @@ The course completion standard is satisfied: all six official exercise exports a
 - [x] Data Augmentation
 - [x] Supplemental flowers submission workflow archived
 - [x] Supplemental cassava leaf-disease submission workflow archived
+- [x] Supplemental Higgs Boson TPU workflow archived
 - [x] Completion certificate archived
 - [x] Root roadmap updated from 13/17 to 14/17
 
@@ -692,7 +731,7 @@ The course completion standard is satisfied: all six official exercise exports a
 
 The six lessons establish both levels of the same system: **a vision classifier is a learned feature extractor plus a decision head**, and the extractor is built from local pattern detectors, nonlinear activations, spatial compression, and sliding-window reuse. Transfer learning reuses already learned detectors; convolution explains how each detector scans an image; ReLU turns its responses into composable evidence; maximum pooling keeps strong local responses while reducing spatial cost; the sliding-window lesson makes stride, padding, and shared filters concrete in both 2D images and 1D signals; the custom-ConvNet lesson assembles those operations into a fully trainable hierarchy with dropout in the head; and data augmentation adds plausible input variation as an explicit generalization strategy.
 
-The supplemental workflows add the surrounding competition discipline: stream image data efficiently, keep the accelerator strategy explicit, preserve test ordering, match softmax output to sparse multiclass labels, and make the final artifact a valid submission file.
+The supplemental workflows add the surrounding competition and accelerator discipline: stream image or tabular TFRecords efficiently, keep the accelerator strategy explicit, preserve test ordering where a submission is required, match softmax output to sparse multiclass image labels, match sigmoid/AUC monitoring to binary tabular labels, and make the final artifact valid for its notebook context.
 
 The engineering discipline is equally important: reason from kernel to feature map, inspect what pooling removes, verify tensor shapes, freeze before fine-tuning, align the output with the loss, apply only label-preserving transformations, trust validation behavior over training performance, and never mistake “less overfit” for “fully fit.”
 
