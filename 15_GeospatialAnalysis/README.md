@@ -6,13 +6,13 @@
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Geospatial%20Analysis-20BEFF.svg)](https://www.kaggle.com/learn/geospatial-analysis)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-f5b642.svg)
-![Lessons](https://img.shields.io/badge/Lessons-3%20of%205-f5b642.svg)
+![Lessons](https://img.shields.io/badge/Lessons-4%20of%205-f5b642.svg)
 [![GeoPandas](https://img.shields.io/badge/GeoPandas-ready-139C5A.svg)](https://geopandas.org/)
 [![Folium](https://img.shields.io/badge/Folium-interactive%20maps-77B829.svg)](https://python-visualization.github.io/folium/)
 
 `PLACE -> GEOMETRY -> LAYER -> PATTERN -> DECISION`
 
-[Course Snapshot](#course-snapshot) . [Mental Model](#the-core-mental-model) . [Lessons](#lesson-tracker) . [First Map](#implemented-first-map) . [CRS](#implemented-coordinate-reference-systems) . [Interactive Maps](#implemented-interactive-maps) . [Skills](#skills-practiced) . [Playbook](#geospatial-analysis-playbook) . [Artifacts](#artifacts)
+[Course Snapshot](#course-snapshot) . [Mental Model](#the-core-mental-model) . [Lessons](#lesson-tracker) . [First Map](#implemented-first-map) . [CRS](#implemented-coordinate-reference-systems) . [Interactive Maps](#implemented-interactive-maps) . [Manipulation](#implemented-manipulating-geospatial-data) . [Skills](#skills-practiced) . [Playbook](#geospatial-analysis-playbook) . [Artifacts](#artifacts)
 
 </div>
 
@@ -24,23 +24,23 @@
 |-------|--------|
 | Position | Course 15 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress - 3 of 5 lessons archived** |
+| Status | **In progress - 4 of 5 lessons archived** |
 | Started | June 29, 2026 |
-| Latest archived lesson | Interactive Maps |
+| Latest archived lesson | Manipulating Geospatial Data |
 | Core libraries | GeoPandas and Folium |
-| Tasks covered | Loading vector geospatial data, building point geometry from coordinates, assigning and transforming CRS metadata, plotting layered maps, measuring projected area, building interactive heatmaps, styling point markers by attribute, and combining choropleth polygons with event overlays |
-| Running dataset | Kiva loan locations, bird migration tracks, Americas basemap geometry, South American protected areas, Japanese earthquake records, tectonic plate boundaries, and Japanese prefecture population density |
-| Repository artifacts | 3 lesson exports |
+| Tasks covered | Loading vector geospatial data, building point geometry from coordinates, assigning and transforming CRS metadata, plotting layered maps, measuring projected area, building interactive heatmaps, styling point markers by attribute, combining choropleth polygons with event overlays, geocoding missing addresses, merging polygon geometry with tabular attributes, filtering candidate regions, and spatially joining points to polygons |
+| Running dataset | Kiva loan locations, bird migration tracks, Americas basemap geometry, South American protected areas, Japanese earthquake records, tectonic plate boundaries, Japanese prefecture population density, Berkeley Starbucks stores, California county geometry, and county demographic tables |
+| Repository artifacts | 4 lesson exports |
 | Course page | [Kaggle Learn: Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) |
 | Prerequisite context | [Data Visualization](../4_DataVisualization/), [Pandas](../3_Pandas/), and general feature-engineering discipline |
 
-> **Repository truth:** this directory currently contains the first three official lesson exports: [YourFirstMapExercise.py](./YourFirstMapExercise.py), [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py), and [InteractiveMapsExercise.py](./InteractiveMapsExercise.py). The remaining two course lessons are tracked below but are not backed by saved local work yet.
+> **Repository truth:** this directory currently contains the first four official lesson exports: [YourFirstMapExercise.py](./YourFirstMapExercise.py), [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py), [InteractiveMapsExercise.py](./InteractiveMapsExercise.py), and [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py). The remaining proximity-analysis lesson is tracked below but is not backed by saved local work yet.
 
 ## What This Course Adds
 
 Earlier courses treat most rows as independent observations with ordinary scalar features. Geospatial Analysis adds a new type of feature: **place**. A row can now carry geometry - a point, line, or polygon - and that geometry changes what questions are possible.
 
-The first exercise makes the shift concrete. A shapefile is loaded into a `GeoDataFrame`, the geometry column is plotted as point data, and those points are layered over boundary polygons to make the pattern readable. The second exercise adds the rule that makes those maps trustworthy: coordinates only mean something when their coordinate reference system is explicit. The third exercise moves from static figures to exploratory, browser-native maps, where heatmaps, marker styling, choropleths, and layer composition make dense spatial patterns easier to inspect.
+The first exercise makes the shift concrete. A shapefile is loaded into a `GeoDataFrame`, the geometry column is plotted as point data, and those points are layered over boundary polygons to make the pattern readable. The second exercise adds the rule that makes those maps trustworthy: coordinates only mean something when their coordinate reference system is explicit. The third exercise moves from static figures to exploratory, browser-native maps, where heatmaps, marker styling, choropleths, and layer composition make dense spatial patterns easier to inspect. The fourth exercise starts changing the data itself: missing store coordinates are geocoded from addresses, county polygons are enriched with demographic tables, candidate counties are selected with explicit business rules, and a spatial join counts which stores fall inside the selected polygons.
 
 The important move is not just drawing a map. It is using location as a first-class analytical object:
 
@@ -51,7 +51,7 @@ The important move is not just drawing a map. It is using location as a first-cl
 - **interactive views** support zooming, panning, and density inspection;
 - **visual inspection** turns raw coordinates into a spatial hypothesis.
 
-That pattern will carry through the rest of the course. Coordinate reference systems keep spatial measurements honest. Interactive maps make dense geography easier to inspect. Geometric operations modify and combine spatial objects. Proximity analysis turns "near what?" into a model-ready feature or a decision rule.
+That pattern will carry through the rest of the course. Coordinate reference systems keep spatial measurements honest. Interactive maps make dense geography easier to inspect. Spatial joins connect points to containing regions when no ordinary key exists. Proximity analysis turns "near what?" into a model-ready feature or a decision rule.
 
 ## The Core Mental Model
 
@@ -67,7 +67,7 @@ Shapefile / GeoJSON / spatial table
    degrees, meters, projection, distance meaning
               |
               v
-   Filter, join, buffer, overlay, measure
+   Geocode, filter, join, buffer, measure
               |
               v
         Layered map
@@ -86,7 +86,7 @@ The key habit is to ask whether the operation depends on geometry. Filtering by 
 | 1 | Your First Map | **Complete** | [YourFirstMapExercise.py](./YourFirstMapExercise.py) |
 | 2 | Coordinate Reference Systems | **Complete** | [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py) |
 | 3 | Interactive Maps | **Complete** | [InteractiveMapsExercise.py](./InteractiveMapsExercise.py) |
-| 4 | Manipulating Geospatial Data | Pending | Not archived yet |
+| 4 | Manipulating Geospatial Data | **Complete** | [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py) |
 | 5 | Proximity Analysis | Pending | Not archived yet |
 
 ### Course trajectory
@@ -100,7 +100,7 @@ Respect coordinate reference systems
       |
 Inspect geography interactively
       |
-Transform and combine geometries
+Geocode, enrich, and spatially join
       |
 Measure proximity for decisions
 ```
@@ -322,14 +322,91 @@ for i in range(0, len(earthquakes)):
 
 The final interactive map layers population density with earthquake magnitude markers. That turns the map into an exposure screen: high-density prefectures and strong earthquake locations can be inspected together. The saved conclusion flags Osaka and Tokyo as likely concerns while keeping Kanagawa in view for tsunami-risk reasoning.
 
+## Implemented Manipulating Geospatial Data
+
+The fourth saved exercise turns mapped records into decision-ready spatial data. The running question is where Starbucks might expand in California. The workflow repairs missing store coordinates, maps known Berkeley stores, enriches county polygons with demographic tables, filters counties by business criteria, and uses a spatial join to count existing stores inside the selected regions.
+
+### 1. Geocode missing coordinates from addresses
+
+```python
+geolocator = Nominatim(user_agent="kaggle_learn")
+
+def my_geocoder(row):
+    point = geolocator.geocode(row).point
+    return pd.Series({"Latitude": point.latitude, "Longitude": point.longitude})
+
+berkeley_locations = rows_with_missing.apply(lambda x: my_geocoder(x["Address"]), axis=1)
+starbucks.update(berkeley_locations)
+```
+
+The exercise starts with incomplete point data. `Nominatim` converts address strings into latitude/longitude coordinates, and the helper returns a two-column `Series` so the result can be aligned back to the original table. `starbucks.update(...)` then fills the missing coordinate fields without rebuilding the whole DataFrame.
+
+### 2. Inspect repaired locations on an interactive map
+
+```python
+m_2 = folium.Map(location=[37.88, -122.26], zoom_start=13)
+
+for idx, row in starbucks[starbucks["City"] == "Berkeley"].iterrows():
+    Marker([row["Latitude"], row["Longitude"]], popup=row["Store Name"]).add_to(m_2)
+```
+
+After geocoding, the map becomes the sanity check. Each Berkeley store is added as a Folium marker with the store name as popup text. This verifies that the repaired coordinates land in the expected city before those records are trusted in later analysis.
+
+### 3. Enrich county polygons with tabular attributes
+
+```python
+CA_stats = CA_counties.merge(CA_pop, on="GEOID")
+CA_stats = CA_stats.merge(CA_high_earners, on="GEOID")
+CA_stats = CA_stats.merge(CA_median_age, on="GEOID")
+```
+
+County geometry alone can draw a map, but it cannot answer the expansion question. The saved workflow joins population density, high-earner counts, and median age onto the county polygons through the shared `GEOID` key. The result is still spatial data because the county geometry remains attached after the merges.
+
+### 4. Filter candidate counties with explicit criteria
+
+```python
+sel_counties = CA_stats[
+    ((CA_stats.high_earners > 100000) &
+     (CA_stats.median_age < 38.5) &
+     (CA_stats.density > 285) &
+     ((CA_stats.median_age < 35.5) |
+      (CA_stats.density > 1400) |
+      (CA_stats.high_earners > 500000)))
+]
+```
+
+The county filter is deliberately transparent: every retained county must meet the baseline demographic thresholds, then satisfy at least one stronger signal. This is not a model yet; it is a readable site-screening rule that can be debated, tuned, or replaced.
+
+### 5. Count stores inside selected polygons
+
+```python
+num_stores = len(gpd.sjoin(starbucks_gdf, sel_counties))
+```
+
+This is the lesson's central geospatial operation. There is no ordinary table key saying which county contains each Starbucks point. `gpd.sjoin` derives that relationship from geometry, attaching point records to polygons by spatial relationship and making a point-in-polygon count possible.
+
+### 6. Map selected stores for review
+
+```python
+m_6 = folium.Map(location=[37, -120], zoom_start=6)
+
+for idx, row in gpd.sjoin(starbucks_gdf, sel_counties).iterrows():
+    Marker([row["Latitude"], row["Longitude"]], popup=row["Store Name"]).add_to(m_6)
+```
+
+The final map displays stores that fall inside the selected counties. This closes the loop: the attribute filter identifies promising regions, the spatial join finds stores located inside them, and the Folium review map makes the result inspectable before treating it as a decision.
+
 ## Skills Practiced
 
-From the first three solved exercises:
+From the first four solved exercises:
 
 - Loading shapefile data with `gpd.read_file`
 - Treating a `GeoDataFrame` as a DataFrame plus geometry
 - Inspecting loaded spatial records with `.head()`
 - Creating point geometry from longitude and latitude with `gpd.points_from_xy`
+- Geocoding missing latitude/longitude fields from address strings with `Nominatim`
+- Returning geocoded latitude and longitude as a `pd.Series`
+- Updating existing coordinate columns with `DataFrame.update`
 - Assigning CRS metadata with `.crs`
 - Transforming geometry with `.to_crs(...)`
 - Plotting country boundary polygons with GeoPandas
@@ -349,6 +426,8 @@ From the first three solved exercises:
 - Creating interactive Folium maps with `folium.Map`
 - Choosing tile style and zoom level to make the analytical layer readable
 - Drawing line geometry with `folium.PolyLine`
+- Drawing location markers with `folium.Marker`
+- Adding popup labels to interactive point markers
 - Adding point-density heatmaps with `HeatMap`
 - Encoding numeric attributes into marker color with a helper function
 - Drawing interactive point overlays with `folium.Circle`
@@ -356,6 +435,10 @@ From the first three solved exercises:
 - Passing GeoPandas geometry into Folium with `__geo_interface__`
 - Connecting choropleth data to geometry with `key_on="feature.id"`
 - Combining density polygons and event markers in one interactive view
+- Merging polygon geometry with tabular demographic tables on `GEOID`
+- Building compound boolean filters over demographic attributes
+- Using `gpd.sjoin` to connect point records with containing polygon regions
+- Counting point-in-polygon matches with `len(...)`
 - Exporting notebook maps to HTML with `embed_map`
 - Separating data loading, filtering, visualization, and interpretation into distinct steps
 - Reading spatial concentration as evidence rather than treating the map as decoration
@@ -383,6 +466,11 @@ From the first three solved exercises:
 | `folium.Circle` styling | Encodes event attributes such as depth or magnitude on individual locations | Important differences between events disappear into one uniform marker layer |
 | `Choropleth` | Colors polygon regions by an attached numeric attribute | Regional exposure patterns stay trapped in a table |
 | Combined hazard/exposure layers | Puts event severity and population density in the same decision view | Risk reasoning has to happen across separate maps by memory |
+| Address geocoding | Recovers usable coordinates when a record only has a street address | The row cannot participate in point mapping or spatial joins |
+| `DataFrame.update` | Fills corrected coordinate values while preserving the rest of the table | Repaired coordinates can become detached from the original store records |
+| `GEOID` merges | Attaches demographic attributes to county polygons through a stable administrative key | County geometry and demographic facts can be mismatched |
+| Compound county filter | Makes the site-selection rule explicit and auditable | Candidate regions are selected by hidden judgment instead of reviewable criteria |
+| `gpd.sjoin` | Derives point-in-polygon relationships from geometry | Store counts by selected county cannot be computed from location alone |
 | Written interpretation | Converts a visualization into an analytical claim | The work stops at plotting instead of analysis |
 
 ## Geospatial Analysis Playbook
@@ -411,9 +499,11 @@ This is the workflow the course is beginning to build.
 | CRS transform | Geometry conversion from one coordinate reference system to another |
 | Layer | One plotted spatial dataset in a map composition |
 | Basemap | Context layer used to orient the main analytical layer |
+| Geocoding | Converting an address or place name into latitude and longitude |
 | Heatmap | Interactive density layer that summarizes where many point events concentrate |
 | Choropleth | Polygon map that colors regions by an attribute value |
 | Marker styling | Visual encoding of point attributes through color, radius, opacity, or icon state |
+| Point-in-polygon | Test that determines whether point geometry falls inside polygon geometry |
 | Spatial filter | Selection based on location, intersection, containment, or distance |
 | Spatial join | Attribute merge driven by geometry relationships instead of a shared key |
 | Buffer | New geometry representing a fixed distance around existing geometry |
@@ -423,12 +513,13 @@ This is the workflow the course is beginning to build.
 - [YourFirstMapExercise.py](./YourFirstMapExercise.py) - loads Kiva loan shapefile data, plots loan points over a world basemap, filters loans in the Philippines, plots them over a Philippines basemap, and records a regional concentration reading.
 - [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py) - creates bird-location point geometry from longitude/latitude columns, assigns EPSG:4326 CRS metadata, plots migration starts, paths, and endpoints, loads protected-area polygons, reprojects South America before area calculation, and overlays Southern Hemisphere bird observations with non-marine protected areas.
 - [InteractiveMapsExercise.py](./InteractiveMapsExercise.py) - builds Folium maps for Japanese earthquake analysis, including plate-boundary polylines, earthquake heatmaps, depth-colored point markers, prefecture population-density choropleths, and a combined population-density plus earthquake-magnitude exposure view.
+- [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py) - geocodes missing Berkeley Starbucks coordinates, maps repaired store locations, merges California county geometry with demographic tables, filters candidate counties, spatially joins Starbucks points to the selected county polygons, and maps the selected stores.
 
 No completion certificate is present yet because the course is still in progress.
 
 ## Course Notes
 
-- The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, preloaded GeoDataFrames such as `world`, `PHL`, `americas`, `start_gdf`, `path_gdf`, `plate_boundaries`, `prefectures`, and `stats`, GeoPandas/Folium setup, plotting context, HTML embedding helpers, and answer-checking helpers such as `q_1.check()`.
+- The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, preloaded objects such as `world`, `PHL`, `americas`, `start_gdf`, `path_gdf`, `plate_boundaries`, `prefectures`, `stats`, `rows_with_missing`, `starbucks`, `CA_counties`, `CA_pop`, `CA_high_earners`, `CA_median_age`, and `starbucks_gdf`, GeoPandas/Folium setup, plotting context, HTML embedding helpers, and answer-checking helpers such as `q_1.check()`.
 - The CRS exercise uses the course's `{"init": "epsg:4326"}` style because that is what the notebook prompt expects. In modern GeoPandas code, `set_crs(epsg=4326)` is usually clearer when assigning a CRS to geometry that already has coordinates but lacks metadata.
 - The first lesson uses vector data. The shapes are not pixels; they are geometric objects with attributes.
 - The map is analytical because each plotted point is tied back to a row in `world_loans`.
@@ -437,10 +528,12 @@ No completion certificate is present yet because the course is still in progress
 - The protected-area overlay is a visual coverage check, not a formal spatial join yet. A later lesson should replace visual proximity with explicit geometry operations.
 - The third lesson makes browser maps useful for analysis rather than presentation alone: heatmaps summarize event density, choropleths summarize regional exposure, and marker styling keeps individual event attributes visible.
 - Folium maps are saved through Kaggle's `embed_map(...)` helper in the notebook environment. The exported Python file records those calls, but the generated `q_*.html` map files are not stored in this repository.
+- The fourth lesson introduces geocoding through the public `Nominatim` service. In production work, geocoded results should be cached, requests should respect service rate limits, and missing or ambiguous address matches should be handled explicitly.
+- The saved `gpd.sjoin(starbucks_gdf, sel_counties)` calls rely on the Kaggle notebook's GeoPandas behavior for the spatial predicate. In production code, the predicate should be set explicitly when the distinction between `intersects`, `within`, and `contains` matters.
+- The Starbucks county filter is a transparent exercise rule, not a validated expansion model. Its value here is that the spatial data path is auditable: enrich polygons, filter regions, join points, then inspect the map.
 
 ## Next Work
 
-- Add the manipulating-geospatial-data workflow once spatial joins, buffers, and geometry operations are saved.
 - Add the proximity-analysis workflow once distance-based site-selection features are saved.
 - Sync the repository roadmap so Geospatial Analysis is listed as active progress instead of "up next."
 
