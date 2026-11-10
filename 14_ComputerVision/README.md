@@ -749,6 +749,6 @@ The engineering discipline is equally important: reason from kernel to feature m
 
 <div align="center">
 
-[← Intro to Deep Learning](../13_IntroToDeepLearning/) · [Back to Roadmap](../README.md) · [Geospatial Analysis →](https://www.kaggle.com/learn/geospatial-analysis)
+[← Intro to Deep Learning](../13_IntroToDeepLearning/) · [Back to Roadmap](../README.md) · [Geospatial Analysis →](../15_GeospatialAnalysis/)
 
 </div>

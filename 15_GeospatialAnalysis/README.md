@@ -2,17 +2,17 @@
 
 # Geospatial Analysis
 
-**Course 15 of 17 - mapping data, preserving location meaning, and turning geometry into analytical evidence.**
+**Course 15 of 17 - mapping data, preserving location meaning, joining by geometry, and turning distance into decisions.**
 
 [![Kaggle](https://img.shields.io/badge/Kaggle-Geospatial%20Analysis-20BEFF.svg)](https://www.kaggle.com/learn/geospatial-analysis)
-![Status](https://img.shields.io/badge/Status-In%20Progress-f5b642.svg)
-![Lessons](https://img.shields.io/badge/Lessons-4%20of%205-f5b642.svg)
-[![GeoPandas](https://img.shields.io/badge/GeoPandas-ready-139C5A.svg)](https://geopandas.org/)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![Lessons](https://img.shields.io/badge/Lessons-5%20of%205-brightgreen.svg)
+[![GeoPandas](https://img.shields.io/badge/GeoPandas-vector%20data-139C5A.svg)](https://geopandas.org/)
 [![Folium](https://img.shields.io/badge/Folium-interactive%20maps-77B829.svg)](https://python-visualization.github.io/folium/)
 
-`PLACE -> GEOMETRY -> LAYER -> PATTERN -> DECISION`
+`PLACE → GEOMETRY → LAYER → PATTERN → DISTANCE → DECISION`
 
-[Course Snapshot](#course-snapshot) . [Mental Model](#the-core-mental-model) . [Lessons](#lesson-tracker) . [First Map](#implemented-first-map) . [CRS](#implemented-coordinate-reference-systems) . [Interactive Maps](#implemented-interactive-maps) . [Manipulation](#implemented-manipulating-geospatial-data) . [Skills](#skills-practiced) . [Playbook](#geospatial-analysis-playbook) . [Artifacts](#artifacts)
+[Course Snapshot](#course-snapshot) · [Mental Model](#the-core-mental-model) · [Lessons](#lesson-tracker) · [First Map](#implemented-first-map) · [CRS](#implemented-coordinate-reference-systems) · [Interactive Maps](#implemented-interactive-maps) · [Manipulation](#implemented-manipulating-geospatial-data) · [Proximity](#implemented-proximity-analysis) · [Skills](#skills-practiced) · [Playbook](#geospatial-analysis-playbook) · [Failure Modes](#common-failure-modes) · [Artifacts](#artifacts) · [Certificate](#certificate-of-completion)
 
 </div>
 
@@ -24,23 +24,24 @@
 |-------|--------|
 | Position | Course 15 of 17 |
 | Estimated time | 4 hours |
-| Status | **In progress - 4 of 5 lessons archived** |
+| Status | **Complete - 5 of 5 lessons** |
 | Started | June 29, 2026 |
-| Latest archived lesson | Manipulating Geospatial Data |
-| Core libraries | GeoPandas and Folium |
-| Tasks covered | Loading vector geospatial data, building point geometry from coordinates, assigning and transforming CRS metadata, plotting layered maps, measuring projected area, building interactive heatmaps, styling point markers by attribute, combining choropleth polygons with event overlays, geocoding missing addresses, merging polygon geometry with tabular attributes, filtering candidate regions, and spatially joining points to polygons |
-| Running dataset | Kiva loan locations, bird migration tracks, Americas basemap geometry, South American protected areas, Japanese earthquake records, tectonic plate boundaries, Japanese prefecture population density, Berkeley Starbucks stores, California county geometry, and county demographic tables |
-| Repository artifacts | 4 lesson exports |
+| Completed | November 10, 2026 |
+| Final lesson | Proximity Analysis |
+| Core libraries | GeoPandas, Folium, and geopy's Nominatim geocoder |
+| Tasks covered | Loading vector geospatial data, building point geometry from coordinates, assigning and transforming CRS metadata, plotting layered maps, measuring projected area, building interactive heatmaps, styling point markers by attribute, combining choropleth polygons with event overlays, geocoding missing addresses, merging polygon geometry with tabular attributes, filtering candidate regions, spatially joining points to polygons, buffering facility service areas, dissolving buffers into one coverage polygon, isolating uncovered events, routing each event to its nearest facility, ranking facilities by demand, and proposing new sites against a coverage target |
+| Running datasets | Kiva loan locations, bird migration tracks, Americas basemap geometry, South American protected areas, Japanese earthquake records, tectonic plate boundaries, Japanese prefecture population density, Berkeley Starbucks stores, California county geometry, county demographic tables, New York City motor-vehicle collisions, and New York City hospital locations |
+| Repository artifacts | 5 lesson exports, 1 completion certificate |
 | Course page | [Kaggle Learn: Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) |
 | Prerequisite context | [Data Visualization](../4_DataVisualization/), [Pandas](../3_Pandas/), and general feature-engineering discipline |
 
-> **Repository truth:** this directory currently contains the first four official lesson exports: [YourFirstMapExercise.py](./YourFirstMapExercise.py), [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py), [InteractiveMapsExercise.py](./InteractiveMapsExercise.py), and [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py). The remaining proximity-analysis lesson is tracked below but is not backed by saved local work yet.
+> **Repository truth:** this directory contains all five official lesson exports - [YourFirstMapExercise.py](./YourFirstMapExercise.py), [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py), [InteractiveMapsExercise.py](./InteractiveMapsExercise.py), [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py), and [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) - plus the completion certificate. Vector loading, CRS handling, static and interactive layering, geocoding, attribute merges, spatial joins, buffers, coverage unions, nearest-facility distances, and site proposals are all backed by saved work.
 
 ## What This Course Adds
 
 Earlier courses treat most rows as independent observations with ordinary scalar features. Geospatial Analysis adds a new type of feature: **place**. A row can now carry geometry - a point, line, or polygon - and that geometry changes what questions are possible.
 
-The first exercise makes the shift concrete. A shapefile is loaded into a `GeoDataFrame`, the geometry column is plotted as point data, and those points are layered over boundary polygons to make the pattern readable. The second exercise adds the rule that makes those maps trustworthy: coordinates only mean something when their coordinate reference system is explicit. The third exercise moves from static figures to exploratory, browser-native maps, where heatmaps, marker styling, choropleths, and layer composition make dense spatial patterns easier to inspect. The fourth exercise starts changing the data itself: missing store coordinates are geocoded from addresses, county polygons are enriched with demographic tables, candidate counties are selected with explicit business rules, and a spatial join counts which stores fall inside the selected polygons.
+The first exercise makes the shift concrete. A shapefile is loaded into a `GeoDataFrame`, the geometry column is plotted as point data, and those points are layered over boundary polygons to make the pattern readable. The second exercise adds the rule that makes those maps trustworthy: coordinates only mean something when their coordinate reference system is explicit. The third exercise moves from static figures to exploratory, browser-native maps, where heatmaps, marker styling, choropleths, and layer composition make dense spatial patterns easier to inspect. The fourth exercise starts changing the data itself: missing store coordinates are geocoded from addresses, county polygons are enriched with demographic tables, candidate counties are selected with explicit business rules, and a spatial join counts which stores fall inside the selected polygons. The fifth exercise makes distance itself the feature: hospital service areas are buffered and dissolved into one coverage polygon, collisions outside it are isolated, each is routed to its nearest hospital, and two proposed hospital sites are tested against a citywide coverage target.
 
 The important move is not just drawing a map. It is using location as a first-class analytical object:
 
@@ -49,9 +50,10 @@ The important move is not just drawing a map. It is using location as a first-cl
 - **layers** combine multiple spatial datasets in one view;
 - **filters** narrow the map to the geography relevant to the question;
 - **interactive views** support zooming, panning, and density inspection;
-- **visual inspection** turns raw coordinates into a spatial hypothesis.
+- **spatial operations** - joins, buffers, unions, and distances - answer questions that no shared key can;
+- **visual inspection** turns raw coordinates into a spatial hypothesis, and a measured answer turns the hypothesis into a decision.
 
-That pattern will carry through the rest of the course. Coordinate reference systems keep spatial measurements honest. Interactive maps make dense geography easier to inspect. Spatial joins connect points to containing regions when no ordinary key exists. Proximity analysis turns "near what?" into a model-ready feature or a decision rule.
+Each lesson adds one of those moves. Coordinate reference systems keep spatial measurements honest. Interactive maps make dense geography easier to inspect. Spatial joins connect points to containing regions when no ordinary key exists. Proximity analysis turns "near what?" into a model-ready feature or a decision rule. All of them are now backed by saved work.
 
 ## The Core Mental Model
 
@@ -74,7 +76,7 @@ Shapefile / GeoJSON / spatial table
    basemap + points + polygons + style
               |
               v
- Spatial pattern, service area, risk zone, or site decision
+ Spatial pattern, service area, coverage gap, or site decision
 ```
 
 The key habit is to ask whether the operation depends on geometry. Filtering by `country` is ordinary tabular selection. Plotting the result on a country boundary, calculating distance, or asking which features fall within a region is geospatial analysis.
@@ -87,22 +89,22 @@ The key habit is to ask whether the operation depends on geometry. Filtering by 
 | 2 | Coordinate Reference Systems | **Complete** | [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py) |
 | 3 | Interactive Maps | **Complete** | [InteractiveMapsExercise.py](./InteractiveMapsExercise.py) |
 | 4 | Manipulating Geospatial Data | **Complete** | [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py) |
-| 5 | Proximity Analysis | Pending | Not archived yet |
+| 5 | Proximity Analysis | **Complete** | [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) |
 
 ### Course trajectory
 
 ```text
 Load vector data
-      |
+      ↓
 Layer points on polygons
-      |
+      ↓
 Respect coordinate reference systems
-      |
+      ↓
 Inspect geography interactively
-      |
+      ↓
 Geocode, enrich, and spatially join
-      |
-Measure proximity for decisions
+      ↓
+Buffer, measure distance, and decide where to build
 ```
 
 ## Implemented First Map
@@ -396,9 +398,91 @@ for idx, row in gpd.sjoin(starbucks_gdf, sel_counties).iterrows():
 
 The final map displays stores that fall inside the selected counties. This closes the loop: the attribute filter identifies promising regions, the spatial join finds stores located inside them, and the Folium review map makes the result inspectable before treating it as a decision.
 
+## Implemented Proximity Analysis
+
+The fifth saved exercise closes the course with a public-health siting problem in New York City. Two datasets share the EPSG:2263 coordinate reference system: major motor-vehicle collisions from 2013 to 2018 and the city's hospitals. The question is operational rather than descriptive: which crashes happen too far from any hospital, which hospital would absorb them, and where should two new hospitals go so that fewer than ten percent of collisions remain outside the course's 10 km service radius?
+
+### 1. Map collision density
+
+```python
+m_1 = folium.Map(location=[40.7, -74], zoom_start=11)
+
+HeatMap(data=collisions[["LATITUDE", "LONGITUDE"]], radius=15).add_to(m_1)
+for idx, row in collisions.iterrows():
+    Marker([row["LATITUDE"], row["LONGITUDE"]]).add_to(m_1)
+```
+
+The exercise opens by asking which map type is most effective for the collision data. The saved answer uses both candidates at once: a `HeatMap` summarizes where crashes concentrate, and a `Marker` per record keeps individual incidents inspectable at street zoom. The heatmap carries the analytical signal; the markers are the audit trail.
+
+### 2. Map hospital locations
+
+```python
+m_2 = folium.Map(location=[40.7, -74], zoom_start=11)
+
+HeatMap(data=hospitals[["latitude", "longitude"]], radius=15).add_to(m_2)
+for idx, row in hospitals.iterrows():
+    Marker([row["latitude"], row["longitude"]]).add_to(m_2)
+```
+
+The same recipe is applied to the supply side. Drawing both layers at the same center and zoom is what makes the gap visible: dense crash corridors in the outer boroughs with no hospital marker nearby.
+
+### 3. Isolate collisions outside hospital coverage
+
+```python
+coverage = gpd.GeoDataFrame(geometry=hospitals.geometry).buffer(10000)
+my_union = coverage.geometry.unary_union
+outside_range = collisions.loc[~collisions["geometry"].apply(lambda x: my_union.contains(x))]
+```
+
+This is the lesson's central construction. `buffer(10000)` draws a service-area polygon around every hospital in the CRS's linear units, which the course treats as 10 kilometers. `unary_union` dissolves the overlapping circles into one coverage multipolygon, so the containment test is asked once per collision instead of once per hospital. `contains` then flags covered crashes, and the `~` negation keeps the ones that no service area reaches. The archived file keeps the first, loop-based attempt commented above the vectorized version - a record of the shift from "check each hospital for each crash" to "build the coverage once, then filter."
+
+### 4. Route any collision to its nearest hospital
+
+```python
+def best_hospital(collision_location):
+    distances = hospitals.geometry.distance(collision_location)
+    name = hospitals.iloc[distances.idxmin()]["name"]
+    return name
+
+print(best_hospital(outside_range.geometry.iloc[0]))  # CALVARY HOSPITAL INC
+```
+
+`GeoSeries.distance` measures from one collision point to every hospital in a single vectorized call, and `idxmin` returns the index label of the closest one. Because `hospitals` carries its default integer index, `iloc` on that label resolves the row and its `name`. The exercise's own test case - the first out-of-range crash should resolve to Calvary Hospital - is preserved in the saved file.
+
+### 5. Find the hospital under the most pressure
+
+```python
+highest_demand = outside_range.geometry.apply(best_hospital).value_counts().idxmax()
+```
+
+Applying the nearest-hospital function to every out-of-range collision produces one hospital name per crash. `value_counts` tallies them and `idxmax` returns the most frequent: in the saved work, Jamaica Hospital Medical Center. The commented-out dictionary loop above it is the same computation written by hand before being collapsed into one pandas chain.
+
+### 6. Propose two new hospital sites
+
+```python
+lat_1 = 40.6598
+long_1 = -73.7567
+
+lat_2 = 40.6702
+long_2 = -73.8611
+```
+
+Both proposed sites sit in southern Queens, where the out-of-range collisions concentrate: one beside JFK Airport, the other near the Brooklyn-Queens border around Ozone Park. The course's check cell then runs the honest version of the test. The points are built in EPSG:4326 with `points_from_xy`, reprojected to EPSG:2263 so the new buffers use the same units as the existing coverage, dissolved with `unary_union`, and used to recompute the share of all collisions still outside any service area against the target of less than ten percent.
+
+```python
+folium.GeoJson(coverage.geometry.to_crs(epsg=4326)).add_to(m)
+folium.GeoJson(new_coverage.geometry.to_crs(epsg=4326)).add_to(m)
+for idx, row in new_gdf.iterrows():
+    Marker([row["Latitude"], row["Longitude"]]).add_to(m)
+HeatMap(data=new_outside_range[["LATITUDE", "LONGITUDE"]], radius=9).add_to(m)
+folium.LatLngPopup().add_to(m)
+```
+
+The review map introduces two Folium tools the earlier lessons did not need. `GeoJson` draws the existing and proposed coverage polygons after reprojecting them back to latitude/longitude for the web map, and `LatLngPopup` prints the coordinates of any clicked point, which is how the exercise invites you to pick candidate sites. The remaining uncovered crashes are drawn as a tighter heatmap so the residual gap is visible at a glance.
+
 ## Skills Practiced
 
-From the first four solved exercises:
+From the five solved exercises:
 
 - Loading shapefile data with `gpd.read_file`
 - Treating a `GeoDataFrame` as a DataFrame plus geometry
@@ -439,6 +523,19 @@ From the first four solved exercises:
 - Building compound boolean filters over demographic attributes
 - Using `gpd.sjoin` to connect point records with containing polygon regions
 - Counting point-in-polygon matches with `len(...)`
+- Building facility service areas with `GeoSeries.buffer`
+- Dissolving overlapping buffers into one coverage geometry with `unary_union`
+- Testing point containment against a multipolygon with `contains`
+- Negating a boolean selection with `~` to keep uncovered events
+- Measuring point-to-facility distances with `GeoSeries.distance`
+- Selecting the nearest facility with `idxmin`
+- Wrapping nearest-facility lookup in a reusable function
+- Ranking facility demand with `apply`, `value_counts`, and `idxmax`
+- Proposing candidate coordinates and validating them in the projected CRS
+- Drawing polygon layers in Folium with `folium.GeoJson`
+- Reading coordinates interactively with `folium.LatLngPopup`
+- Reprojecting projected geometry back to EPSG:4326 for web-map display
+- Keeping a first draft commented beside the vectorized final answer
 - Exporting notebook maps to HTML with `embed_map`
 - Separating data loading, filtering, visualization, and interpretation into distinct steps
 - Reading spatial concentration as evidence rather than treating the map as decoration
@@ -471,11 +568,19 @@ From the first four solved exercises:
 | `GEOID` merges | Attaches demographic attributes to county polygons through a stable administrative key | County geometry and demographic facts can be mismatched |
 | Compound county filter | Makes the site-selection rule explicit and auditable | Candidate regions are selected by hidden judgment instead of reviewable criteria |
 | `gpd.sjoin` | Derives point-in-polygon relationships from geometry | Store counts by selected county cannot be computed from location alone |
+| `GeoSeries.buffer(10000)` | Turns each facility point into a service-area polygon in projected units | Buffering in degrees produces shapes of meaningless size; buffering in the wrong linear unit shifts the whole threshold |
+| `unary_union` | Dissolves overlapping buffers into one coverage geometry | Overlaps are double-counted and every point must be tested against every buffer |
+| `~ ... contains` filter | Keeps only the events that no service area reaches | The analysis reports covered crashes instead of the gap it is meant to find |
+| `distance` + `idxmin` | Resolves the nearest facility in one vectorized call | Hand-written loops are slower and easier to get wrong at index boundaries |
+| `value_counts().idxmax()` | Converts per-event routing into a facility-level demand ranking | The busiest receiving hospital stays hidden in a list of names |
+| Reprojecting proposals to EPSG:2263 | Tests new sites in the same units as the existing coverage | New buffers are drawn in degrees and the coverage percentage is fiction |
+| `folium.GeoJson` | Draws coverage polygons on the interactive review map | Service areas can only be reasoned about numerically, never seen |
+| `folium.LatLngPopup` | Reads coordinates straight off the map | Candidate sites have to be looked up elsewhere and transcribed |
 | Written interpretation | Converts a visualization into an analytical claim | The work stops at plotting instead of analysis |
 
 ## Geospatial Analysis Playbook
 
-This is the workflow the course is beginning to build.
+This is the workflow the course builds. The five exercises walk it end to end, from loading a shapefile to proposing where a city should build.
 
 1. **Identify the spatial unit.** Know whether each row is a point, line, polygon, grid cell, address, or administrative region.
 2. **Load geometry and attributes together.** Prefer spatial readers such as `gpd.read_file` when a file already encodes geometry.
@@ -485,8 +590,10 @@ This is the workflow the course is beginning to build.
 6. **Preserve CRS meaning.** Assign the source CRS, align layers before plotting, and do not measure distance or area until the CRS makes those units valid.
 7. **Use interactive maps for dense inspection.** Heatmaps, choropleths, and styled markers help when static plots hide overlap or local detail.
 8. **Use spatial operations when the question is spatial.** Buffers, joins, overlays, and distances should answer geography-driven questions, not replace simple tabular filters.
-9. **Interpret the map.** State the visible pattern, the uncertainty, and the decision it supports.
-10. **Record assumptions.** Include projection, filters, data vintage, and any simplification or aggregation that could affect the result.
+9. **Measure in projected units, and confirm which units.** Buffer, distance, and area need a CRS with linear units, and the registry contains both meters and feet - read `crs.axis_info` before trusting a threshold.
+10. **Dissolve before you test.** Merge overlapping service areas into one geometry so each event is checked once against the whole coverage, not once per facility.
+11. **Quantify coverage, not just draw it.** A service-area map is a picture; the share of events outside it is a metric that can be targeted, re-tested, and reported.
+12. **Interpret the map and record assumptions.** State the visible pattern, the uncertainty, the decision it supports, and the projection, filters, data vintage, and simplifications that could change the result.
 
 ## GeoDataFrame Reference
 
@@ -507,6 +614,26 @@ This is the workflow the course is beginning to build.
 | Spatial filter | Selection based on location, intersection, containment, or distance |
 | Spatial join | Attribute merge driven by geometry relationships instead of a shared key |
 | Buffer | New geometry representing a fixed distance around existing geometry |
+| Union (dissolve) | Single geometry formed by merging overlapping shapes, so coverage can be tested once |
+| Service area | Buffer around a facility representing the region it can reasonably reach |
+| Coverage gap | Events or places that fall outside every service area |
+| Nearest facility | The facility at minimum distance from a given point, found with `distance` and `idxmin` |
+| Projected units | Linear units - meters or feet - attached to a projected CRS; the only safe basis for buffers and distances |
+
+## Common Failure Modes
+
+| Symptom | Likely cause | Check first |
+|---------|--------------|-------------|
+| Points land in the ocean or on the wrong continent | Latitude and longitude passed in the wrong order | `points_from_xy(x=longitude, y=latitude)`; Folium wants `[lat, lon]` |
+| Layers do not line up on the same map | Mismatched coordinate reference systems | Compare `.crs` on every layer and align with `to_crs` before plotting |
+| Area or distance values are tiny or absurd | Geometry measured in degrees | Reproject to a projected CRS before calling `.area`, `.distance`, or `.buffer` |
+| Buffers are the right shape but the wrong size | The CRS's linear unit is not what was assumed | Read `gdf.crs.axis_info` and confirm meters versus US survey feet |
+| Spatial join returns zero rows or far too many | CRS mismatch, or the wrong spatial predicate | Align CRSs, then set `predicate="within"` or `"intersects"` explicitly |
+| Choropleth renders with no fill | `key_on` does not match the ids in the GeoJSON | Inspect `__geo_interface__` feature ids against the data index |
+| Heatmap looks like one uniform blob | `radius` too large for the zoom level | Lower `radius` or raise `zoom_start` |
+| Geocoder raises or returns `None` | Ambiguous address, rate limit, or no match | Handle `None`, cache results, and respect the Nominatim usage policy |
+| Nearest-facility lookup returns the wrong row | `idxmin` label used as a position after the index was filtered or reordered | Use `.loc` with the label, or `argmin` with `.iloc` |
+| Folium map shows nothing in the notebook | Layers added to a different map object, or the map was never displayed | Check which `m_*` each `.add_to` targets and call `embed_map` on that one |
 
 ## Artifacts
 
@@ -514,31 +641,61 @@ This is the workflow the course is beginning to build.
 - [CoordinateReferenceSystemsExercise.py](./CoordinateReferenceSystemsExercise.py) - creates bird-location point geometry from longitude/latitude columns, assigns EPSG:4326 CRS metadata, plots migration starts, paths, and endpoints, loads protected-area polygons, reprojects South America before area calculation, and overlays Southern Hemisphere bird observations with non-marine protected areas.
 - [InteractiveMapsExercise.py](./InteractiveMapsExercise.py) - builds Folium maps for Japanese earthquake analysis, including plate-boundary polylines, earthquake heatmaps, depth-colored point markers, prefecture population-density choropleths, and a combined population-density plus earthquake-magnitude exposure view.
 - [ManipulatingGeospatialDataExercise.py](./ManipulatingGeospatialDataExercise.py) - geocodes missing Berkeley Starbucks coordinates, maps repaired store locations, merges California county geometry with demographic tables, filters candidate counties, spatially joins Starbucks points to the selected county polygons, and maps the selected stores.
-
-No completion certificate is present yet because the course is still in progress.
+- [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) - maps New York City collisions and hospitals with heatmaps and markers, buffers hospitals into 10,000-unit service areas, dissolves them with `unary_union`, isolates collisions outside coverage, resolves the nearest hospital for any collision with `distance` and `idxmin`, ranks hospitals by out-of-range demand, and proposes two new hospital sites validated against the course's coverage target.
+- [Cux Prada - Geospatial Analysis.png](./Cux%20Prada%20-%20Geospatial%20Analysis.png) - completion certificate, dated November 10, 2026.
 
 ## Course Notes
 
-- The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, preloaded objects such as `world`, `PHL`, `americas`, `start_gdf`, `path_gdf`, `plate_boundaries`, `prefectures`, `stats`, `rows_with_missing`, `starbucks`, `CA_counties`, `CA_pop`, `CA_high_earners`, `CA_median_age`, and `starbucks_gdf`, GeoPandas/Folium setup, plotting context, HTML embedding helpers, and answer-checking helpers such as `q_1.check()`.
+- The exported `*Exercise.py` files preserve solved Kaggle notebook cells. They are reference material, not guaranteed standalone scripts, because Kaggle provides datasets, preloaded objects such as `world`, `PHL`, `americas`, `start_gdf`, `path_gdf`, `plate_boundaries`, `prefectures`, `stats`, `rows_with_missing`, `starbucks`, `CA_counties`, `CA_pop`, `CA_high_earners`, `CA_median_age`, `starbucks_gdf`, `collisions`, and `hospitals`, GeoPandas/Folium setup, plotting context, HTML embedding helpers, and answer-checking helpers such as `q_1.check()`.
 - The CRS exercise uses the course's `{"init": "epsg:4326"}` style because that is what the notebook prompt expects. In modern GeoPandas code, `set_crs(epsg=4326)` is usually clearer when assigning a CRS to geometry that already has coordinates but lacks metadata.
 - The first lesson uses vector data. The shapes are not pixels; they are geometric objects with attributes.
 - The map is analytical because each plotted point is tied back to a row in `world_loans`.
 - The same object can be filtered like pandas data and plotted like spatial data, which is the practical value of GeoPandas.
 - The second lesson makes coordinate reference systems explicit before serious distance or area reasoning. EPSG:4326 is useful for storing and plotting latitude/longitude positions, but projected CRSs are required when the numeric units need to represent meters or square meters.
-- The protected-area overlay is a visual coverage check, not a formal spatial join yet. A later lesson should replace visual proximity with explicit geometry operations.
+- The protected-area overlay is a visual coverage check, not a formal spatial operation. The fifth lesson replaces visual proximity with explicit buffers, unions, and distances.
 - The third lesson makes browser maps useful for analysis rather than presentation alone: heatmaps summarize event density, choropleths summarize regional exposure, and marker styling keeps individual event attributes visible.
 - Folium maps are saved through Kaggle's `embed_map(...)` helper in the notebook environment. The exported Python file records those calls, but the generated `q_*.html` map files are not stored in this repository.
 - The fourth lesson introduces geocoding through the public `Nominatim` service. In production work, geocoded results should be cached, requests should respect service rate limits, and missing or ambiguous address matches should be handled explicitly.
 - The saved `gpd.sjoin(starbucks_gdf, sel_counties)` calls rely on the Kaggle notebook's GeoPandas behavior for the spatial predicate. In production code, the predicate should be set explicitly when the distinction between `intersects`, `within`, and `contains` matters.
 - The Starbucks county filter is a transparent exercise rule, not a validated expansion model. Its value here is that the spatial data path is auditable: enrich polygons, filter regions, join points, then inspect the map.
+- The fifth lesson's exercise text states that EPSG:2263 has units of meters and frames `buffer(10000)` as a 10 km service radius. The EPSG registry defines 2263 (NAD83 / New York Long Island) in US survey feet, so the same number is a materially shorter radius if the data really is in that projection. The saved answer follows the course convention because that is what the checker expects; in real work, read `gdf.crs.axis_info` before choosing a buffer distance.
+- `unary_union` is the attribute the course teaches. GeoPandas 1.0 deprecates it in favor of `union_all()`, which performs the same dissolve.
+- `best_hospital` indexes with `iloc` on the label returned by `idxmin`. That is only safe because `hospitals` keeps its default integer index; after any filtering or sorting, use `.loc` with the label or `argmin` with `.iloc`.
+- The course's completion check reprojects the proposed sites to EPSG:2263 before buffering. That is the correct order: build geometry in the CRS the coordinates were read in, then transform into the CRS whose units the measurement needs.
+- The commented-out loops in [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) are kept on purpose. They record the first working approach beside the vectorized one that replaced it.
 
-## Next Work
+## Completion Standard
 
-- Add the proximity-analysis workflow once distance-based site-selection features are saved.
-- Sync the repository roadmap so Geospatial Analysis is listed as active progress instead of "up next."
+The course completion standard is satisfied: all five official exercise exports and the certificate are present.
+
+- [x] Your First Map
+- [x] Coordinate Reference Systems
+- [x] Interactive Maps
+- [x] Manipulating Geospatial Data
+- [x] Proximity Analysis
+- [x] Completion certificate archived
+- [x] Root roadmap updated from 14/17 to 15/17
+
+## Takeaway
+
+The five lessons establish one idea at two levels: **location is a feature, and geometry is how it is computed on.** A `GeoDataFrame` keeps attributes and geometry together; the coordinate reference system says what the geometry's numbers mean; layered static and interactive maps turn coordinates into visible pattern; geocoding, merges, and spatial joins attach meaning to places that share no ordinary key; and buffers, unions, and distances turn "near what?" into a number that a decision can be tested against.
+
+The engineering discipline matters as much as the operations: assign the CRS before anything else, align layers before drawing them together, project before measuring, confirm the projected unit, dissolve before testing containment, keep index labels and positions straight, and finish every map with a written claim about what it shows and what it leaves uncertain.
+
+## Certificate of Completion
 
 <div align="center">
 
-[Back to Roadmap](../README.md)
+<a href="./Cux%20Prada%20-%20Geospatial%20Analysis.png"><img src="./Cux%20Prada%20-%20Geospatial%20Analysis.png" width="600" alt="Geospatial Analysis certificate" /></a>
+
+*Completed November 10, 2026.*
+
+</div>
+
+---
+
+<div align="center">
+
+[← Computer Vision](../14_ComputerVision/) · [Back to Roadmap](../README.md) · [Intro to Game AI and Reinforcement Learning →](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning)
 
 </div>

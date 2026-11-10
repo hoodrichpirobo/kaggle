@@ -10,8 +10,10 @@
 [![pandas](https://img.shields.io/badge/pandas-150458.svg?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![BigQuery](https://img.shields.io/badge/Google%20BigQuery-4285F4.svg?logo=googlecloud&logoColor=white)](https://cloud.google.com/bigquery)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
+[![GeoPandas](https://img.shields.io/badge/GeoPandas-139C5A.svg)](https://geopandas.org/)
 
-`██████████████░░░  14 / 17 complete  ·  phase 5 in progress  ·  next: Geospatial Analysis`
+`███████████████░░  15 / 17 complete  ·  phase 5 in progress  ·  next: Intro to Game AI and Reinforcement Learning`
 
 [Why](#why-this-repository-exists) · [At a Glance](#at-a-glance) · [Progress](#progress-by-phase) · [Roadmap](#roadmap) · [Certificates](#certificates) · [Featured Work](#featured-work) · [Skills](#skills-snapshot) · [Layout](#repository-layout) · [Reading Guide](#reading-guide) · [What's Next](#after-kaggle-learn)
 
@@ -29,13 +31,13 @@ The goal is simple: keep the full path **auditable, navigable, and revisitable**
 
 | Metric | Value |
 |--------|-------|
-| Courses completed | **14 / 17** |
-| Hours logged across completed courses | **58** |
-| Exercise files archived | **83** |
-| Certificates earned | **14** |
-| Current milestone | Computer vision complete - transfer learning, convolutional feature extraction, custom ConvNets, label-preserving augmentation, and a TPU/VGG16 flowers submission workflow |
-| Last completed course | [Computer Vision](./14_ComputerVision/) - June 25, 2026 |
-| Up next | [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) |
+| Courses completed | **15 / 17** |
+| Hours logged across completed courses | **62** |
+| Exercise files archived | **90** |
+| Certificates earned | **15** |
+| Current milestone | Geospatial analysis complete - GeoDataFrames, coordinate reference systems, Folium heatmaps and choropleths, Nominatim geocoding, spatial joins, and a buffer-and-distance hospital siting workflow |
+| Last completed course | [Geospatial Analysis](./15_GeospatialAnalysis/) - November 10, 2026 |
+| Up next | [Intro to Game AI and Reinforcement Learning](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning) |
 | Follow-up track | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) |
 
 ## Progress by Phase
@@ -45,7 +47,7 @@ Phase 1  ·  Foundations            ██████████████  
 Phase 2  ·  Data                   ██████████████  100%   3 / 3
 Phase 3  ·  SQL                    ██████████████  100%   2 / 2
 Phase 4  ·  Machine Learning       ██████████████  100%   4 / 4
-Phase 5  ·  Specialized Topics     ███████░░░░░░░   50%   3 / 6
+Phase 5  ·  Specialized Topics     █████████░░░░░   67%   4 / 6
 ```
 
 ## Roadmap
@@ -88,8 +90,8 @@ Phase 5  ·  Specialized Topics     ███████░░░░░░░  
 | 12 | [Time Series](./12_TimeSeries/) | 5h | [Complete](./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png) |
 | 13 | [Intro to Deep Learning](./13_IntroToDeepLearning/) | 4h | [Complete](./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png) |
 | 14 | [Computer Vision](./14_ComputerVision/) | 4h | [Complete](./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png) |
-| 15 | [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis) | 4h | Up next |
-| 16 | [Intro to Game AI and Reinforcement Learning](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning) | 4h | Not started |
+| 15 | [Geospatial Analysis](./15_GeospatialAnalysis/) | 4h | [Complete](./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png) |
+| 16 | [Intro to Game AI and Reinforcement Learning](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning) | 4h | Up next |
 | 17 | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) | 4h | Not started |
 
 ## Certificates
@@ -118,6 +120,7 @@ Phase 5  ·  Specialized Topics     ███████░░░░░░░  
 <tr>
 <td align="center" width="200"><a href="./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png"><img src="./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png" width="180" alt="Intro to Deep Learning certificate" /></a><br/><sub><b>Intro to Deep Learning</b></sub></td>
 <td align="center" width="200"><a href="./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png"><img src="./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png" width="180" alt="Computer Vision certificate" /></a><br/><sub><b>Computer Vision</b></sub></td>
+<td align="center" width="200"><a href="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png"><img src="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png" width="180" alt="Geospatial Analysis certificate" /></a><br/><sub><b>Geospatial Analysis</b></sub></td>
 </tr>
 </table>
 
@@ -129,6 +132,8 @@ Phase 5  ·  Specialized Topics     ███████░░░░░░░  
 
 A few items worth a second look - they go past the base course prompts:
 
+- **Hospital siting from coverage gaps, buffers, and nearest-facility distances.** The Geospatial Analysis track makes location a first-class feature: Kiva loan points layered over country polygons, bird-migration tracks reprojected before any area is measured, Japanese earthquake heatmaps and prefecture choropleths in Folium, and a California Starbucks expansion screen that geocodes missing addresses with Nominatim, merges county demographics on `GEOID`, and counts stores inside candidate counties with a spatial join. The closing exercise turns distance into a decision: New York hospital buffers are dissolved into one coverage polygon with `unary_union`, collisions outside it are isolated, each is routed to its nearest hospital with `distance` and `idxmin`, the highest-demand hospital is read off a `value_counts`, and two proposed hospital sites are reprojected into EPSG:2263 and tested against the city's target of fewer than ten percent of collisions beyond the course's 10 km service radius.
+  → [`15_GeospatialAnalysis/`](./15_GeospatialAnalysis/) · [`ProximityAnalysisExercise.py`](./15_GeospatialAnalysis/ProximityAnalysisExercise.py)
 - **Image classification from reusable features to a custom augmented ConvNet.** The Computer Vision track starts with a frozen pretrained base and a small binary-classification head, then opens the feature extractor operation by operation: convolutional kernels, ReLU, maximum pooling, stride, padding, and the same sliding-window idea applied to 1D signals. It then builds a trainable `Conv2D` hierarchy from scratch and closes with label-preserving augmentation - random contrast, horizontal flips, and small rotations - embedded directly in a batch-normalized cars-versus-trucks classifier. A supplemental flowers workflow extends the course into competition practice with TFRecords, TPU strategy detection, a frozen VGG16 base, global average pooling, multiclass softmax output, scheduled learning rates, and `submission.csv` generation.
   → [`14_ComputerVision/`](./14_ComputerVision/) · [`CreateYourFirstSubmissionExercise.py`](./14_ComputerVision/CreateYourFirstSubmissionExercise.py)
 - **Neural networks from first principles - single neuron to regularized classifier.** The Intro to Deep Learning track builds the Keras toolkit one decision at a time: a single linear `Dense` unit whose learned weights and bias are read straight off `model.weights`, then deep ReLU stacks for nonlinear representation, training by stochastic gradient descent with the Adam optimizer, and learning-curve reading to separate real learning from memorization. It closes by controlling generalization on purpose - early stopping on validation loss, dropout, and batch normalization - and retargets the output to a `sigmoid` unit with `binary_crossentropy` loss for a fully regularized binary classifier built from BatchNorm → Dense → BatchNorm → Dropout blocks.
@@ -150,7 +155,7 @@ A few items worth a second look - they go past the base course prompts:
 
 ## Skills Snapshot
 
-Aggregated from the fourteen completed courses. Each skill is exercised in at least one solved notebook.
+Aggregated from the fifteen completed courses. Each skill is exercised in at least one solved notebook.
 
 | Domain | Core skills |
 |--------|-------------|
@@ -166,6 +171,7 @@ Aggregated from the fourteen completed courses. Each skill is exercised in at le
 | **Time Series** | time-step features, lag features, time-indexed train/validation discipline, centered moving averages, polynomial trends with `DeterministicProcess`, seasonal indicators, Fourier features with `CalendarFourier`, holiday regressors, partial autocorrelation, lag/lead feature alignment, rolling summaries from shifted targets, future-known covariates, hybrid residual models, multioutput/direct/recursive/DirRec forecasting strategies, `RegressorChain` multistep prediction, Store Sales submission formatting |
 | **Deep Learning** | Keras `Sequential` models, `Dense` layers and `input_shape`, reading `model.weights`, ReLU / ELU / SELU / Swish activations and explicit `Activation` layers, stochastic gradient descent with the Adam optimizer, MAE regression loss, `model.fit` over mini-batches and epochs, learning-curve diagnosis of underfitting vs overfitting, `EarlyStopping` with `restore_best_weights`, `Dropout` and `BatchNormalization` regularization, `sigmoid` output with `binary_crossentropy` loss and `binary_accuracy` for classification |
 | **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification, TFRecord input pipelines, TPU-aware training setup, VGG16 feature extraction, multiclass softmax classification, Kaggle vision submission formatting |
+| **Geospatial Analysis** | `GeoDataFrame` loading with `gpd.read_file`, point geometry from coordinates with `points_from_xy`, CRS assignment and `to_crs` reprojection, projected area measurement, layered GeoPandas plots with deliberate draw order, Folium base maps, `HeatMap` density layers, `Circle` markers styled by attribute, `Choropleth` via `__geo_interface__`, `Marker` popups, `GeoJson` overlays, `LatLngPopup`, Nominatim geocoding with `DataFrame.update`, attribute merges on `GEOID`, compound site-selection filters, point-in-polygon counts with `gpd.sjoin`, `buffer` service areas, `unary_union` coverage polygons, `contains` filtering, nearest-facility search with `distance` and `idxmin`, demand ranking with `value_counts`, coverage-gap site proposals |
 
 ## Repository Layout
 
@@ -186,7 +192,8 @@ kaggle/
 ├── 11_FeatureEngineering/          ✓ complete
 ├── 12_TimeSeries/                  ✓ complete
 ├── 13_IntroToDeepLearning/         ✓ complete
-└── 14_ComputerVision/              ✓ complete - latest
+├── 14_ComputerVision/              ✓ complete
+└── 15_GeospatialAnalysis/          ✓ complete - latest
 ```
 
 Each completed or in-progress course directory follows the same shape:
@@ -221,6 +228,6 @@ Once the Kaggle AI track is complete, the plan is to continue with [fast.ai - Pr
 
 **[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
 
-*Last updated: June 26, 2026*
+*Last updated: November 10, 2026*
 
 </div>
