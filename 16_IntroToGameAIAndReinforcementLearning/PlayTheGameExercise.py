@@ -32,34 +32,31 @@ q_2.check()
 q_3.hint()
 
 def my_agent(obs, config):
-    # Your code here: Amend the agent!
     import random
+
     valid_moves = [col for col in range(config.columns) if obs.board[col] == 0]
+
+    # Win immediately if possible
     for move in valid_moves:
         if check_winning_move(obs, config, move, obs.mark):
             return move
 
-    opp_mark = (obs.mark%2)+1
-    n = len(valid_moves) - 1
+    # Otherwise block the opponent
+    opp_mark = 3 - obs.mark
 
-    for i in range(n):
-        move = valid_moves[n - i]
+    for move in valid_moves:
         if check_winning_move(obs, config, move, opp_mark):
             return move
-            
+
     return random.choice(valid_moves)
 
 import inspect
-import os
 
-def write_agent_to_file(function, file):
-    with open(file, "a" if os.path.exists(file) else "w") as f:
-        f.write(inspect.getsource(function))
-        print(function, "written to", file)
+with open("submission.py", "w") as f:
+    f.write("import numpy as np\n")
+    f.write("import random\n\n")
 
-write_agent_to_file(my_agent, "submission.py")
+    for func in (drop_piece, check_winning_move, my_agent):
+        f.write(inspect.getsource(func) + "\n\n")
 
-# Check that submission file was created
 q_5.check()
-
-
