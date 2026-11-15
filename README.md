@@ -2,7 +2,7 @@
 
 # Kaggle Learn - AI Track
 
-**A documented journey from `hello, world` to deep learning.**
+**A documented journey from `hello, world` to deep reinforcement learning.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
 [![Kaggle Learn](https://img.shields.io/badge/Kaggle%20Learn-AI%20Track-20BEFF.svg)](https://www.kaggle.com/learn)
@@ -13,7 +13,7 @@
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![GeoPandas](https://img.shields.io/badge/GeoPandas-139C5A.svg)](https://geopandas.org/)
 
-`███████████████░░  15 / 17 complete  ·  phase 5 in progress  ·  current: Intro to Game AI and Reinforcement Learning`
+`████████████████░  16 / 17 complete  ·  phase 5 in progress  ·  next: Intro to AI Ethics`
 
 [Why](#why-this-repository-exists) · [At a Glance](#at-a-glance) · [Progress](#progress-by-phase) · [Roadmap](#roadmap) · [Certificates](#certificates) · [Featured Work](#featured-work) · [Skills](#skills-snapshot) · [Layout](#repository-layout) · [Reading Guide](#reading-guide) · [What's Next](#after-kaggle-learn)
 
@@ -31,18 +31,17 @@ The goal is simple: keep the full path **auditable, navigable, and revisitable**
 
 | Metric | Value |
 |--------|-------|
-| Courses completed | **15 / 17** |
-| Hours logged across completed courses | **62** |
-| Exercise and practice files archived | **95** |
-| Certificates earned | **15** |
-| Current course | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) - **in progress, 3 of 4 lesson exports archived** |
-| Current milestone | ConnectX agents: immediate wins and blocks, one-step heuristic scoring, and N-step lookahead with alpha-beta pruning |
-| Last completed course | [Geospatial Analysis](./15_GeospatialAnalysis/) - November 10, 2026 |
-| Next Kaggle lesson | [Deep Reinforcement Learning](https://www.kaggle.com/code/alexisbcook/deep-reinforcement-learning) |
+| Courses completed | **16 / 17** |
+| Estimated course hours completed | **66** |
+| Exercise and practice files archived | **96** |
+| Certificates earned | **16** |
+| Latest milestone | All four Game AI lesson exports and the completion certificate archived, from tactical agents and alpha-beta search to PPO training code |
+| Last completed course | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) - November 15, 2026 |
+| Next Kaggle course | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) - **not started; final course in this roadmap** |
 | Next after Kaggle | Andrew Ng's [Machine Learning Specialization](https://www.deeplearning.ai/specializations/machine-learning), followed by the [Deep Learning Specialization](https://www.deeplearning.ai/specializations/deep-learning) |
 | Full learning path | [Kaggle → both Andrew Ng specializations → fast.ai → all Hugging Face Learn courses](#after-kaggle-learn) |
 
-The file count includes lesson exports and supplemental Python practice across completed and in-progress courses. Course completion and certificate totals remain at 15; archived exercises alone do not establish completion.
+The file count includes lesson exports and supplemental Python practice. Completion totals are backed by archived certificates. Hours sum the roadmap's course estimates, rather than measured study time.
 
 ## Progress by Phase
 
@@ -51,7 +50,7 @@ Phase 1  ·  Foundations            ██████████████  
 Phase 2  ·  Data                   ██████████████  100%   3 / 3
 Phase 3  ·  SQL                    ██████████████  100%   2 / 2
 Phase 4  ·  Machine Learning       ██████████████  100%   4 / 4
-Phase 5  ·  Specialized Topics     █████████░░░░░   67%   4 / 6
+Phase 5  ·  Specialized Topics     ████████████░░   83%   5 / 6
 ```
 
 ## Roadmap
@@ -95,7 +94,7 @@ Phase 5  ·  Specialized Topics     █████████░░░░░  
 | 13 | [Intro to Deep Learning](./13_IntroToDeepLearning/) | 4h | [Complete](./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png) |
 | 14 | [Computer Vision](./14_ComputerVision/) | 4h | [Complete](./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png) |
 | 15 | [Geospatial Analysis](./15_GeospatialAnalysis/) | 4h | [Complete](./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png) |
-| 16 | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) | 4h | In progress - 3 of 4 lesson exports archived |
+| 16 | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) | 4h | [Complete](./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png) |
 | 17 | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) | 4h | Not started |
 
 ## Certificates
@@ -125,6 +124,7 @@ Phase 5  ·  Specialized Topics     █████████░░░░░  
 <td align="center" width="200"><a href="./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png"><img src="./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png" width="180" alt="Intro to Deep Learning certificate" /></a><br/><sub><b>Intro to Deep Learning</b></sub></td>
 <td align="center" width="200"><a href="./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png"><img src="./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png" width="180" alt="Computer Vision certificate" /></a><br/><sub><b>Computer Vision</b></sub></td>
 <td align="center" width="200"><a href="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png"><img src="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png" width="180" alt="Geospatial Analysis certificate" /></a><br/><sub><b>Geospatial Analysis</b></sub></td>
+<td align="center" width="200"><a href="./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png"><img src="./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png" width="180" alt="Intro to Game AI and Reinforcement Learning certificate" /></a><br/><sub><b>Intro to Game AI and Reinforcement Learning</b></sub></td>
 </tr>
 </table>
 
@@ -136,8 +136,8 @@ Phase 5  ·  Specialized Topics     █████████░░░░░  
 
 A few items worth a second look - they go past the base course prompts:
 
-- **ConnectX agents from immediate tactics to adversarial search (in progress).** The first three Game AI exports move from choosing an immediate win or blocking a loss to scoring candidate boards with weighted two-, three-, and four-piece windows. The N-Step Lookahead exercise extends that work into a three-ply search with terminal-state checks and alpha-beta pruning. Deep reinforcement learning is the remaining lesson.
-  → [`16_IntroToGameAIAndReinforcementLearning/`](./16_IntroToGameAIAndReinforcementLearning/) · [`N-StepLookaheadExercise.py`](./16_IntroToGameAIAndReinforcementLearning/N-StepLookaheadExercise.py)
+- **ConnectX agents from immediate tactics to search and deep reinforcement learning.** The four Game AI exports progress from immediate wins and blocks to weighted board heuristics, three-ply adversarial search with alpha-beta pruning, and PPO training code. The final lesson wraps ConnectX in a Gym environment, shapes rewards, and uses a custom PyTorch CNN with Stable-Baselines3's `CnnPolicy`, configured for 50,000 training timesteps against `negamax`. The certificate records course completion; trained weights, training logs, and evaluation results are not archived.
+  → [`16_IntroToGameAIAndReinforcementLearning/`](./16_IntroToGameAIAndReinforcementLearning/) · [`N-StepLookaheadExercise.py`](./16_IntroToGameAIAndReinforcementLearning/N-StepLookaheadExercise.py) · [`DeepReinforcementLearningExercise.py`](./16_IntroToGameAIAndReinforcementLearning/DeepReinforcementLearningExercise.py)
 - **Hospital siting from coverage gaps, buffers, and nearest-facility distances.** The Geospatial Analysis track makes location a first-class feature: Kiva loan points layered over country polygons, bird-migration tracks reprojected before any area is measured, Japanese earthquake heatmaps and prefecture choropleths in Folium, and a California Starbucks expansion screen that geocodes missing addresses with Nominatim, merges county demographics on `GEOID`, and counts stores inside candidate counties with a spatial join. The closing exercise turns distance into a decision: New York hospital buffers are dissolved into one coverage polygon with `unary_union`, collisions outside it are isolated, each is routed to its nearest hospital with `distance` and `idxmin`, the highest-demand hospital is read off a `value_counts`, and two proposed hospital sites are reprojected into EPSG:2263 and tested against the city's target of fewer than ten percent of collisions beyond the course's 10 km service radius.
   → [`15_GeospatialAnalysis/`](./15_GeospatialAnalysis/) · [`ProximityAnalysisExercise.py`](./15_GeospatialAnalysis/ProximityAnalysisExercise.py)
 - **Image classification from reusable features to a custom augmented ConvNet.** The Computer Vision track starts with a frozen pretrained base and a small binary-classification head, then opens the feature extractor operation by operation: convolutional kernels, ReLU, maximum pooling, stride, padding, and the same sliding-window idea applied to 1D signals. It then builds a trainable `Conv2D` hierarchy from scratch and closes with label-preserving augmentation - random contrast, horizontal flips, and small rotations - embedded directly in a batch-normalized cars-versus-trucks classifier. A supplemental flowers workflow extends the course into competition practice with TFRecords, TPU strategy detection, a frozen VGG16 base, global average pooling, multiclass softmax output, scheduled learning rates, and `submission.csv` generation.
@@ -161,7 +161,7 @@ A few items worth a second look - they go past the base course prompts:
 
 ## Skills Snapshot
 
-Aggregated from the fifteen completed courses and the saved work in course 16. The Game AI row describes practice in progress; deep reinforcement learning is still ahead.
+Aggregated from the sixteen completed courses and their saved exercises and supplemental practice.
 
 | Domain | Core skills |
 |--------|-------------|
@@ -178,7 +178,7 @@ Aggregated from the fifteen completed courses and the saved work in course 16. T
 | **Deep Learning** | Keras `Sequential` models, `Dense` layers and `input_shape`, reading `model.weights`, ReLU / ELU / SELU / Swish activations and explicit `Activation` layers, stochastic gradient descent with the Adam optimizer, MAE regression loss, `model.fit` over mini-batches and epochs, learning-curve diagnosis of underfitting vs overfitting, `EarlyStopping` with `restore_best_weights`, `Dropout` and `BatchNormalization` regularization, `sigmoid` output with `binary_crossentropy` loss and `binary_accuracy` for classification |
 | **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification, TFRecord input pipelines, TPU-aware training setup, VGG16 feature extraction, multiclass softmax classification, Kaggle vision submission formatting |
 | **Geospatial Analysis** | `GeoDataFrame` loading with `gpd.read_file`, point geometry from coordinates with `points_from_xy`, CRS assignment and `to_crs` reprojection, projected area measurement, layered GeoPandas plots with deliberate draw order, Folium base maps, `HeatMap` density layers, `Circle` markers styled by attribute, `Choropleth` via `__geo_interface__`, `Marker` popups, `GeoJson` overlays, `LatLngPopup`, Nominatim geocoding with `DataFrame.update`, attribute merges on `GEOID`, compound site-selection filters, point-in-polygon counts with `gpd.sjoin`, `buffer` service areas, `unary_union` coverage polygons, `contains` filtering, nearest-facility search with `distance` and `idxmin`, demand ranking with `value_counts`, coverage-gap site proposals |
-| **Game AI (in progress)** | ConnectX observation/configuration interface, legal-move filtering, immediate wins and blocks, board simulation with `drop_piece`, weighted window heuristics across rows/columns/diagonals, random tie-breaking, search-tree growth, depth-limited minimax reasoning, terminal-state detection, alpha-beta pruning implementation and debugging |
+| **Game AI and Reinforcement Learning** | ConnectX observation/configuration interface, legal-move filtering, immediate wins and blocks, board simulation with `drop_piece`, weighted window heuristics, random tie-breaking, depth-limited minimax reasoning, terminal-state detection, alpha-beta pruning, Gym environment wrapping, observation/action spaces, reward shaping, custom PyTorch CNN feature extraction, Stable-Baselines3 PPO training setup against `negamax` |
 
 ## Repository Layout
 
@@ -200,9 +200,11 @@ kaggle/
 ├── 12_TimeSeries/                  ✓ complete
 ├── 13_IntroToDeepLearning/         ✓ complete
 ├── 14_ComputerVision/              ✓ complete
-├── 15_GeospatialAnalysis/          ✓ complete - latest completed
-└── 16_IntroToGameAIAndReinforcementLearning/  ◐ in progress - 3 lesson exports
+├── 15_GeospatialAnalysis/          ✓ complete
+└── 16_IntroToGameAIAndReinforcementLearning/  ✓ complete - latest completed
 ```
+
+Intro to AI Ethics is next; its directory will be added when work begins.
 
 Each completed or in-progress course directory follows the same shape:
 
@@ -245,6 +247,6 @@ The Hugging Face commitment covers **all courses in the Learn catalog**, beyond 
 
 **[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
 
-*Last updated: November 14, 2026*
+*Last updated: November 15, 2026*
 
 </div>
