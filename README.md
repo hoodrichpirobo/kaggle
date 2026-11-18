@@ -2,7 +2,7 @@
 
 # Kaggle Learn - AI Track
 
-**A documented journey from `hello, world` to deep reinforcement learning.**
+**My path from `hello, world` to building game agents and examining bias in model predictions.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
 [![Kaggle Learn](https://img.shields.io/badge/Kaggle%20Learn-AI%20Track-20BEFF.svg)](https://www.kaggle.com/learn)
@@ -13,7 +13,7 @@
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![GeoPandas](https://img.shields.io/badge/GeoPandas-139C5A.svg)](https://geopandas.org/)
 
-`████████████████░  16 / 17 complete  ·  phase 5 in progress  ·  next: Intro to AI Ethics`
+**16 of 17 courses complete** · Currently studying [Intro to AI Ethics](./17_IntroToAIEthics/README.md)
 
 [Why](#why-this-repository-exists) · [At a Glance](#at-a-glance) · [Progress](#progress-by-phase) · [Roadmap](#roadmap) · [Certificates](#certificates) · [Featured Work](#featured-work) · [Skills](#skills-snapshot) · [Layout](#repository-layout) · [Reading Guide](#reading-guide) · [What's Next](#after-kaggle-learn)
 
@@ -23,9 +23,7 @@
 
 ## Why This Repository Exists
 
-This repository is the running log of my path through the [Kaggle Learn](https://www.kaggle.com/learn) AI track. Each course earns its own directory containing the solved exercises, supplemental practice work, lesson notes, and - once finished - the completion certificate.
-
-The goal is simple: keep the full path **auditable, navigable, and revisitable**. If you are evaluating my work, hiring, or following the same track yourself, every artifact is one click away.
+I keep my Kaggle Learn exercises here so I can revisit how I solved them. The roadmap links to each course directory, where you can read the saved notebook cells alongside my notes and open the certificate for each completed course.
 
 ## At a Glance
 
@@ -33,15 +31,15 @@ The goal is simple: keep the full path **auditable, navigable, and revisitable**
 |--------|-------|
 | Courses completed | **16 / 17** |
 | Estimated course hours completed | **66** |
-| Exercise and practice files archived | **97** |
+| Exercise and practice files | **99** Python files (98 with content, 1 empty) |
 | Certificates earned | **16** |
-| Latest milestone | [Halite supplemental practice](./16_IntroToGameAIAndReinforcementLearning/README.md#supplemental-practice-halite) added alongside the four completed Game AI lessons: a stateful resource-collection agent and a four-player match setup |
+| Current course | [Intro to AI Ethics](./17_IntroToAIEthics/README.md) · In progress |
+| Latest saved exercise | [Identifying Bias in AI](./17_IntroToAIEthics/IdentifyingBiasInAIExercise.py) explores how changing an identity term in a neutral comment can affect a toxicity classifier |
 | Last completed course | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) - November 15, 2026 |
-| Next Kaggle course | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) - **not started; final course in this roadmap** |
 | Next after Kaggle | Andrew Ng's [Machine Learning Specialization](https://www.deeplearning.ai/specializations/machine-learning), followed by the [Deep Learning Specialization](https://www.deeplearning.ai/specializations/deep-learning) |
 | Full learning path | [Kaggle → both Andrew Ng specializations → fast.ai → all Hugging Face Learn courses](#after-kaggle-learn) |
 
-The file count includes all `.py` files in the numbered course directories: lesson exports and supplemental practice. Supplemental work does not add to the course or certificate totals. Completion totals are backed by archived certificates. Hours sum the roadmap's course estimates, rather than measured study time.
+The file count includes lesson and supplemental practice files in the numbered course directories. The empty file belongs to the Human-Centered Design for AI lesson. Each completed course has an archived certificate. Hours are the sum of the roadmap estimates for those completed courses.
 
 ## Progress by Phase
 
@@ -95,7 +93,7 @@ Phase 5  ·  Specialized Topics     ████████████░░  
 | 14 | [Computer Vision](./14_ComputerVision/) | 4h | [Complete](./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png) |
 | 15 | [Geospatial Analysis](./15_GeospatialAnalysis/) | 4h | [Complete](./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png) |
 | 16 | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) | 4h | [Complete](./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png) |
-| 17 | [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics) | 4h | Not started |
+| 17 | [Intro to AI Ethics](./17_IntroToAIEthics/README.md) | 4h | In progress |
 
 ## Certificates
 
@@ -163,7 +161,7 @@ A few items worth a second look - they go past the base course prompts:
 
 ## Skills Snapshot
 
-Aggregated from the sixteen completed courses and their saved exercises and supplemental practice.
+These skills appear in the saved course exercises and supplemental practice.
 
 | Domain | Core skills |
 |--------|-------------|
@@ -181,6 +179,7 @@ Aggregated from the sixteen completed courses and their saved exercises and supp
 | **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification, TFRecord input pipelines, TPU-aware training setup, VGG16 feature extraction, multiclass softmax classification, Kaggle vision submission formatting |
 | **Geospatial Analysis** | `GeoDataFrame` loading with `gpd.read_file`, point geometry from coordinates with `points_from_xy`, CRS assignment and `to_crs` reprojection, projected area measurement, layered GeoPandas plots with deliberate draw order, Folium base maps, `HeatMap` density layers, `Circle` markers styled by attribute, `Choropleth` via `__geo_interface__`, `Marker` popups, `GeoJson` overlays, `LatLngPopup`, Nominatim geocoding with `DataFrame.update`, attribute merges on `GEOID`, compound site-selection filters, point-in-polygon counts with `gpd.sjoin`, `buffer` service areas, `unary_union` coverage polygons, `contains` filtering, nearest-facility search with `distance` and `idxmin`, demand ranking with `value_counts`, coverage-gap site proposals |
 | **Game AI and Reinforcement Learning** | ConnectX observation/configuration interface, legal-move filtering, immediate wins and blocks, board simulation with `drop_piece`, weighted window heuristics, random tie-breaking, depth-limited minimax reasoning, terminal-state detection, alpha-beta pruning, Gym environment wrapping, observation/action spaces, reward shaping, custom PyTorch CNN feature extraction, Stable-Baselines3 PPO training setup against `negamax`, Halite `Board` helpers, per-ship collect/deposit state, cargo thresholds, greedy resource collection, queued ship/shipyard actions, four-player match setup |
+| **AI Ethics** | probing a toxicity classifier with identity terms, inspecting word coefficients, identifying possible sources of bias in training data and evaluation |
 
 ## Repository Layout
 
@@ -203,12 +202,9 @@ kaggle/
 ├── 13_IntroToDeepLearning/         ✓ complete
 ├── 14_ComputerVision/              ✓ complete
 ├── 15_GeospatialAnalysis/          ✓ complete
-└── 16_IntroToGameAIAndReinforcementLearning/  ✓ complete - latest completed
+├── 16_IntroToGameAIAndReinforcementLearning/  ✓ complete
+└── 17_IntroToAIEthics/             in progress
 ```
-
-Intro to AI Ethics is next; its directory will be added when work begins.
-
-Each completed or in-progress course directory follows the same shape:
 
 ```text
 CourseName/
@@ -220,13 +216,11 @@ CourseName/
 
 ## Reading Guide
 
-The `*Exercise.py` files preserve the solved cells from Kaggle notebooks. They are study references, not always standalone scripts - Kaggle injects datasets, starter variables, and answer-checking helpers inside the notebook environment.
+The exercise exports preserve cells from Kaggle notebooks. To rerun an exercise that uses Kaggle datasets, starter variables, or answer-checking helpers, open the corresponding notebook on Kaggle and run its setup cells first.
 
-Recommended path through a course directory:
-
-1. Open the course `README.md` for the lesson list, skills, and certificate.
-2. Pick a lesson and open its exercise file.
-3. If a **Supplemental Practice** section is listed, read those last - they extend the lesson into a real Kaggle competition workflow.
+1. Choose a course from the [roadmap](#roadmap) and open its README for the lesson list.
+2. Follow a lesson link to read the exercise file.
+3. Look under **Supplemental Practice** where available for applications such as the [four-player Halite agent](./16_IntroToGameAIAndReinforcementLearning/README.md#supplemental-practice-halite).
 
 ## After Kaggle Learn
 
@@ -249,6 +243,6 @@ The Hugging Face commitment covers **all courses in the Learn catalog**, beyond 
 
 **[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
 
-*Last updated: November 16, 2026*
+*Last updated November 18, 2026*
 
 </div>
