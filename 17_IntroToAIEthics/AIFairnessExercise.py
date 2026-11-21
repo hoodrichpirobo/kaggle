@@ -14,9 +14,11 @@ q_2.check()
 
 # Check your answer (Run this code cell to get credit!)
 
-# If the applicant were from Group A, it would be denied
+# I think now the model has become fairier and less biased,
+# although its demographic parity is still biased towards group B
+# eventho the equal accuracy and equal opportunity is now slightly biased towards A
 
-q_2.check()
+q_3.check()
 
 # Check your answer (Run this code cell to get credit!)
 

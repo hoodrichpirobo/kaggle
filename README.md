@@ -1,99 +1,40 @@
-<div align="center">
-
 # Kaggle Learn - AI Track
 
-**My path from `hello, world` to building game agents and examining bias in model predictions.**
+My solutions to 17 Kaggle Learn courses, from Python to AI ethics, completed between March 22 and November 20, 2026.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](./LICENSE)
-[![Kaggle Learn](https://img.shields.io/badge/Kaggle%20Learn-AI%20Track-20BEFF.svg)](https://www.kaggle.com/learn)
-[![Python](https://img.shields.io/badge/Python-3-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![pandas](https://img.shields.io/badge/pandas-150458.svg?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
-[![BigQuery](https://img.shields.io/badge/Google%20BigQuery-4285F4.svg?logo=googlecloud&logoColor=white)](https://cloud.google.com/bigquery)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00.svg?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
-[![GeoPandas](https://img.shields.io/badge/GeoPandas-139C5A.svg)](https://geopandas.org/)
+## Start here
 
-**16 of 17 courses complete** · Currently studying [Intro to AI Ethics](./17_IntroToAIEthics/README.md)
+Each `.py` file is an exported Kaggle notebook: Kaggle's template plus my answers. The exports don't include outputs, and they need Kaggle's datasets and helpers to run.
 
-[Why](#why-this-repository-exists) · [At a Glance](#at-a-glance) · [Progress](#progress-by-phase) · [Roadmap](#roadmap) · [Certificates](#certificates) · [Featured Work](#featured-work) · [Skills](#skills-snapshot) · [Layout](#repository-layout) · [Reading Guide](#reading-guide) · [What's Next](#after-kaggle-learn)
+These three files hold the most code of my own:
 
-</div>
+- [Greedy forward feature selection](./8_IntroToMachineLearning/HousingPricesCompetitionExercise.py): adds one of 25 housing features per round while validation MAE improves (at most 325 fits instead of 2²⁵ ≈ 33.5 million subsets), then refits and writes `submission.csv`.
+- [Alpha-beta pruning](./16_IntroToGameAIAndReinforcementLearning/N-StepLookaheadExercise.py): added to the tutorial's three-ply minimax Connect Four agent.
+- [Store Sales submission](./12_TimeSeries/ForecastingWithMachineLearningExercise.py): everything after the last answer check, from lag features at the forecast origin to 16-day predictions per product family, joined to the test IDs.
 
----
+## Courses
 
-## Why This Repository Exists
+| # | Course | Covers | Completed (2026) |
+|:-:|--------|--------|:----------------:|
+| 1 | [Intro to Programming](./1_IntroToProgramming/) | Python basics; Titanic random-forest baseline | [Mar 22](./1_IntroToProgramming/Cux%20Prada%20-%20Intro%20to%20Programming.png) |
+| 2 | [Python](./2_Python/) | functions, conditionals, loops, comprehensions, strings, dictionaries, libraries | [Mar 29](./2_Python/Cux%20Prada%20-%20Python.png) |
+| 3 | [Pandas](./3_Pandas/) | indexing, grouping, sorting, missing values, combining | [Apr 8](./3_Pandas/Cux%20Prada%20-%20Pandas.png) |
+| 4 | [Data Visualization](./4_DataVisualization/) | Seaborn charts | [Apr 19](./4_DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
+| 5 | [Data Cleaning](./5_DataCleaning/) | missing values, scaling, dates, encodings, fuzzy matching | [Apr 25](./5_DataCleaning/Cux%20Prada%20-%20Data%20Cleaning.png) |
+| 6 | [Intro to SQL](./6_IntroToSQL/) | BigQuery: filtering, grouping, CTEs, joins | [May 2](./6_IntroToSQL/Cux%20Prada%20-%20Intro%20to%20SQL.png) |
+| 7 | [Advanced SQL](./7_AdvancedSQL/) | joins and unions, window functions, nested data, efficient queries | [May 13](./7_AdvancedSQL/Cux%20Prada%20-%20Advanced%20SQL.png) |
+| 8 | [Intro to Machine Learning](./8_IntroToMachineLearning/) | decision trees, random forests, validation; greedy feature selection | [May 19](./8_IntroToMachineLearning/Cux%20Prada%20-%20Intro%20to%20Machine%20Learning.png) |
+| 9 | [Intermediate Machine Learning](./9_IntermediateMachineLearning/) | missing values, categorical encoding, pipelines, cross-validation, XGBoost, leakage | [May 27](./9_IntermediateMachineLearning/Cux%20Prada%20-%20Intermediate%20Machine%20Learning.png) |
+| 10 | [Machine Learning Explainability](./10_MachineLearningExplainability/) | permutation importance, partial dependence, SHAP | [May 31](./10_MachineLearningExplainability/Cux%20Prada%20-%20Machine%20Learning%20Explainability.png) |
+| 11 | [Feature Engineering](./11_FeatureEngineering/) | mutual information, K-Means and PCA features, target encoding | [Jun 5](./11_FeatureEngineering/Cux%20Prada%20-%20Feature%20Engineering.png) |
+| 12 | [Time Series](./12_TimeSeries/) | trend, seasonality, lag features, hybrid models, multistep forecasting | [Jun 12](./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png) |
+| 13 | [Intro to Deep Learning](./13_IntroToDeepLearning/) | Keras, SGD, dropout, batch normalization, binary classification | [Jun 18](./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png) |
+| 14 | [Computer Vision](./14_ComputerVision/) | CNNs, transfer learning, augmentation; three TPU notebooks | [Jun 25](./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png) |
+| 15 | [Geospatial Analysis](./15_GeospatialAnalysis/) | GeoPandas, projections, Folium maps, spatial joins, proximity analysis | [Nov 10](./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png) |
+| 16 | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) | heuristics, minimax with alpha-beta, PPO; Halite agent | [Nov 15](./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png) |
+| 17 | [Intro to AI Ethics](./17_IntroToAIEthics/) | human-centered design, bias, fairness criteria, model cards | [Nov 20](./17_IntroToAIEthics/Cux%20Prada%20-%20Intro%20to%20AI%20Ethics.png) |
 
-I keep my Kaggle Learn exercises here so I can revisit how I solved them. The roadmap links to each course directory, where you can read the saved notebook cells alongside my notes and open the certificate for each completed course.
-
-## At a Glance
-
-| Metric | Value |
-|--------|-------|
-| Courses completed | **16 / 17** |
-| Estimated course hours completed | **66** |
-| Exercise and practice files | **99** Python files (98 with content, 1 empty) |
-| Certificates earned | **16** |
-| Current course | [Intro to AI Ethics](./17_IntroToAIEthics/README.md) · In progress |
-| Latest saved exercise | [Identifying Bias in AI](./17_IntroToAIEthics/IdentifyingBiasInAIExercise.py) explores how changing an identity term in a neutral comment can affect a toxicity classifier |
-| Last completed course | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) - November 15, 2026 |
-| Next after Kaggle | Andrew Ng's [Machine Learning Specialization](https://www.deeplearning.ai/specializations/machine-learning), followed by the [Deep Learning Specialization](https://www.deeplearning.ai/specializations/deep-learning) |
-| Full learning path | [Kaggle → both Andrew Ng specializations → fast.ai → all Hugging Face Learn courses](#after-kaggle-learn) |
-
-The file count includes lesson and supplemental practice files in the numbered course directories. The empty file belongs to the Human-Centered Design for AI lesson. Each completed course has an archived certificate. Hours are the sum of the roadmap estimates for those completed courses.
-
-## Progress by Phase
-
-```text
-Phase 1  ·  Foundations            ██████████████  100%   2 / 2
-Phase 2  ·  Data                   ██████████████  100%   3 / 3
-Phase 3  ·  SQL                    ██████████████  100%   2 / 2
-Phase 4  ·  Machine Learning       ██████████████  100%   4 / 4
-Phase 5  ·  Specialized Topics     ████████████░░   83%   5 / 6
-```
-
-## Roadmap
-
-### Phase 1 - Foundations
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 1 | [Intro to Programming](./1_IntroToProgramming/) | 5h | [Complete](./1_IntroToProgramming/Cux%20Prada%20-%20Intro%20to%20Programming.png) |
-| 2 | [Python](./2_Python/) | 5h | [Complete](./2_Python/Cux%20Prada%20-%20Python.png) |
-
-### Phase 2 - Data
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 3 | [Pandas](./3_Pandas/) | 4h | [Complete](./3_Pandas/Cux%20Prada%20-%20Pandas.png) |
-| 4 | [Data Visualization](./4_DataVisualization/) | 4h | [Complete](./4_DataVisualization/Cux%20Prada%20-%20Data%20Visualization.png) |
-| 5 | [Data Cleaning](./5_DataCleaning/) | 4h | [Complete](./5_DataCleaning/Cux%20Prada%20-%20Data%20Cleaning.png) |
-
-### Phase 3 - SQL
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 6 | [Intro to SQL](./6_IntroToSQL/) | 3h | [Complete](./6_IntroToSQL/Cux%20Prada%20-%20Intro%20to%20SQL.png) |
-| 7 | [Advanced SQL](./7_AdvancedSQL/) | 4h | [Complete](./7_AdvancedSQL/Cux%20Prada%20-%20Advanced%20SQL.png) |
-
-### Phase 4 - Machine Learning
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 8 | [Intro to Machine Learning](./8_IntroToMachineLearning/) | 3h | [Complete](./8_IntroToMachineLearning/Cux%20Prada%20-%20Intro%20to%20Machine%20Learning.png) |
-| 9 | [Intermediate Machine Learning](./9_IntermediateMachineLearning/) | 4h | [Complete](./9_IntermediateMachineLearning/Cux%20Prada%20-%20Intermediate%20Machine%20Learning.png) |
-| 10 | [Machine Learning Explainability](./10_MachineLearningExplainability/) | 4h | [Complete](./10_MachineLearningExplainability/Cux%20Prada%20-%20Machine%20Learning%20Explainability.png) |
-| 11 | [Feature Engineering](./11_FeatureEngineering/) | 5h | [Complete](./11_FeatureEngineering/Cux%20Prada%20-%20Feature%20Engineering.png) |
-
-### Phase 5 - Specialized Topics
-
-| # | Course | Hours | Status |
-|:-:|--------|:-----:|:------:|
-| 12 | [Time Series](./12_TimeSeries/) | 5h | [Complete](./12_TimeSeries/Cux%20Prada%20-%20Time%20Series.png) |
-| 13 | [Intro to Deep Learning](./13_IntroToDeepLearning/) | 4h | [Complete](./13_IntroToDeepLearning/Cux%20Prada%20-%20Intro%20to%20Deep%20Learning.png) |
-| 14 | [Computer Vision](./14_ComputerVision/) | 4h | [Complete](./14_ComputerVision/Cux%20Prada%20-%20Computer%20Vision.png) |
-| 15 | [Geospatial Analysis](./15_GeospatialAnalysis/) | 4h | [Complete](./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png) |
-| 16 | [Intro to Game AI and Reinforcement Learning](./16_IntroToGameAIAndReinforcementLearning/) | 4h | [Complete](./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png) |
-| 17 | [Intro to AI Ethics](./17_IntroToAIEthics/README.md) | 4h | In progress |
+Each course folder has a README with the lesson-by-lesson details.
 
 ## Certificates
 
@@ -124,111 +65,20 @@ Phase 5  ·  Specialized Topics     ████████████░░  
 <td align="center" width="200"><a href="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png"><img src="./15_GeospatialAnalysis/Cux%20Prada%20-%20Geospatial%20Analysis.png" width="180" alt="Geospatial Analysis certificate" /></a><br/><sub><b>Geospatial Analysis</b></sub></td>
 <td align="center" width="200"><a href="./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png"><img src="./16_IntroToGameAIAndReinforcementLearning/Cux%20Prada%20-%20Intro%20to%20Game%20AI%20and%20Reinforcement%20Learning.png" width="180" alt="Intro to Game AI and Reinforcement Learning certificate" /></a><br/><sub><b>Intro to Game AI and Reinforcement Learning</b></sub></td>
 </tr>
+<tr>
+<td align="center" colspan="4"><a href="./17_IntroToAIEthics/Cux%20Prada%20-%20Intro%20to%20AI%20Ethics.png"><img src="./17_IntroToAIEthics/Cux%20Prada%20-%20Intro%20to%20AI%20Ethics.png" width="180" alt="Intro to AI Ethics certificate" /></a><br/><sub><b>Intro to AI Ethics</b></sub></td>
+</tr>
 </table>
-
-*Click any certificate to view the full-resolution image.*
 
 </div>
 
-## Featured Work
-
-A few items worth a second look - they go past the base course prompts:
-
-- **ConnectX agents from immediate tactics to search and deep reinforcement learning.** The four Game AI exports progress from immediate wins and blocks to weighted board heuristics, three-ply adversarial search with alpha-beta pruning, and PPO training code. The final lesson wraps ConnectX in a Gym environment, shapes rewards, and uses a custom PyTorch CNN with Stable-Baselines3's `CnnPolicy`, configured for 50,000 training timesteps against `negamax`. The certificate records course completion; trained weights, training logs, and evaluation results are not archived.
-  → [`16_IntroToGameAIAndReinforcementLearning/`](./16_IntroToGameAIAndReinforcementLearning/) · [`N-StepLookaheadExercise.py`](./16_IntroToGameAIAndReinforcementLearning/N-StepLookaheadExercise.py) · [`DeepReinforcementLearningExercise.py`](./16_IntroToGameAIAndReinforcementLearning/DeepReinforcementLearningExercise.py)
-- **A stateful Halite agent for resource collection.** Supplemental Game AI practice uses Kaggle's `Board` helpers to queue ship and shipyard actions. Each ship switches between `COLLECT` and `DEPOSIT` using cargo thresholds, picks the richest adjacent cell when local resources run low, and returns cargo to the first shipyard. The export includes a four-player match setup against three random opponents; scores, replays, and competition results are not archived.
-  → [Agent behavior and notebook setup](./16_IntroToGameAIAndReinforcementLearning/README.md#supplemental-practice-halite) · [`GettingStartedWithHaliteExercise.py`](./16_IntroToGameAIAndReinforcementLearning/GettingStartedWithHaliteExercise.py)
-- **Hospital siting from coverage gaps, buffers, and nearest-facility distances.** The Geospatial Analysis track makes location a first-class feature: Kiva loan points layered over country polygons, bird-migration tracks reprojected before any area is measured, Japanese earthquake heatmaps and prefecture choropleths in Folium, and a California Starbucks expansion screen that geocodes missing addresses with Nominatim, merges county demographics on `GEOID`, and counts stores inside candidate counties with a spatial join. The closing exercise turns distance into a decision: New York hospital buffers are dissolved into one coverage polygon with `unary_union`, collisions outside it are isolated, each is routed to its nearest hospital with `distance` and `idxmin`, the highest-demand hospital is read off a `value_counts`, and two proposed hospital sites are reprojected into EPSG:2263 and tested against the city's target of fewer than ten percent of collisions beyond the course's 10 km service radius.
-  → [`15_GeospatialAnalysis/`](./15_GeospatialAnalysis/) · [`ProximityAnalysisExercise.py`](./15_GeospatialAnalysis/ProximityAnalysisExercise.py)
-- **Image classification from reusable features to a custom augmented ConvNet.** The Computer Vision track starts with a frozen pretrained base and a small binary-classification head, then opens the feature extractor operation by operation: convolutional kernels, ReLU, maximum pooling, stride, padding, and the same sliding-window idea applied to 1D signals. It then builds a trainable `Conv2D` hierarchy from scratch and closes with label-preserving augmentation - random contrast, horizontal flips, and small rotations - embedded directly in a batch-normalized cars-versus-trucks classifier. A supplemental flowers workflow extends the course into competition practice with TFRecords, TPU strategy detection, a frozen VGG16 base, global average pooling, multiclass softmax output, scheduled learning rates, and `submission.csv` generation.
-  → [`14_ComputerVision/`](./14_ComputerVision/) · [`CreateYourFirstSubmissionExercise.py`](./14_ComputerVision/CreateYourFirstSubmissionExercise.py)
-- **Neural networks from first principles - single neuron to regularized classifier.** The Intro to Deep Learning track builds the Keras toolkit one decision at a time: a single linear `Dense` unit whose learned weights and bias are read straight off `model.weights`, then deep ReLU stacks for nonlinear representation, training by stochastic gradient descent with the Adam optimizer, and learning-curve reading to separate real learning from memorization. It closes by controlling generalization on purpose - early stopping on validation loss, dropout, and batch normalization - and retargets the output to a `sigmoid` unit with `binary_crossentropy` loss for a fully regularized binary classifier built from BatchNorm → Dense → BatchNorm → Dropout blocks.
-  → [`13_IntroToDeepLearning/`](./13_IntroToDeepLearning/)
-- **Time-series forecasting as supervised learning, with leakage-aware horizons.** The Time Series track turns dates into model inputs: time-step features for trend, Fourier and seasonal indicators for calendar cycles, lagged targets for serial dependence, rolling summaries from shifted values, and known-in-advance promotion features. It closes by decomposing forecasts with a `LinearRegression` + `XGBRegressor` hybrid and by building a 16-step Store Sales submission with `RegressorChain`, lag features, multioutput targets, and nonnegative clipped predictions.
-  → [`12_TimeSeries/`](./12_TimeSeries/)
-- **A full feature-engineering pass on Ames Housing, leakage-aware end to end.** The Feature Engineering track ranks raw columns by mutual information - then uses faceted `sns.lmplot`s to catch interactions a single MI score misses - before *building* signal: ratio and count features, one-hot `× GrLivArea` interaction terms, neighborhood-median context via grouped `transform`, K-Means segment labels plus `fit_transform` centroid-distance features, and PCA components read by their loadings (and reused to trace outliers back to partial sales in the Edwards neighborhood). It closes with target encoding done right - an `MEstimateEncoder` fit on a held-out split so category means never leak into the data the model trains on.
-  → [`11_FeatureEngineering/`](./11_FeatureEngineering/)
-- **Model explainability used as a debugging tool, end to end.** The Machine Learning Explainability track ranks the features a fitted model leans on with permutation importance, reads average feature effects with one- and two-way partial dependence plots, and attributes individual predictions with SHAP. It then *stress-tests* those stories: grouped observed readmission rates sanity-check the partial dependence curves, and synthetic datasets with known response formulas prove that a flat partial-dependence plot can still hide a strong feature interaction.
-  → [`10_MachineLearningExplainability/`](./10_MachineLearningExplainability/)
-- **End-to-end tabular pipeline with cross-validated tuning and XGBoost.** The Intermediate Machine Learning track wires `ColumnTransformer` preprocessing, a `RandomForestRegressor` selected from a cross-validated `n_estimators` sweep, and `XGBRegressor` with early stopping into one reusable workflow. The Data Leakage exercise then audits each feature against the moment a prediction would actually be made.
-  → [`9_IntermediateMachineLearning/`](./9_IntermediateMachineLearning/)
-- **Greedy forward feature selection on Iowa Housing.** A from-scratch wrapper-style selection loop on top of the Intro to Machine Learning random-forest workflow. Iteratively adds the feature that most reduces validation MAE, stops when no further reduction is possible, then refits on the full training set and writes a Kaggle submission.
-  → [`8_IntroToMachineLearning/HousingPricesCompetitionExercise.py`](./8_IntroToMachineLearning/HousingPricesCompetitionExercise.py)
-- **End-to-end Titanic baseline.** Earliest complete Kaggle pipeline in this repo: load the train/test split, compare survival by sex, train a Random Forest, write `submission.csv`. Written while the rest of the toolchain was still being learned.
-  → [`1_IntroToProgramming/GettingStartedWithTitanicExercise.py`](./1_IntroToProgramming/GettingStartedWithTitanicExercise.py)
-- **Data Visualization final project.** Composes the lesson-by-lesson Seaborn primitives into a single chart that argues a point from a real dataset.
-  → [`4_DataVisualization/FinalProjectExercise.py`](./4_DataVisualization/FinalProjectExercise.py)
-
-## Skills Snapshot
-
-These skills appear in the saved course exercises and supplemental practice.
-
-| Domain | Core skills |
-|--------|-------------|
-| **Python** | variables, expressions, functions, conditionals, lists, strings, dictionaries, loops, list comprehensions, external libraries |
-| **Pandas** | DataFrames and Series, reading and writing CSV, indexing and selecting, summary functions and maps, grouping and sorting, data types, missing values, renaming and combining |
-| **Data Cleaning** | quantifying and imputing missing values, scaling and normalization, parsing dates, fixing character encodings, fuzzy string matching for inconsistent entries |
-| **Visualization** | Seaborn line charts, bar charts, heatmaps, scatter plots, distributions, custom styling, choosing the right chart for the question |
-| **SQL on BigQuery** | `SELECT` / `FROM` / `WHERE`, `GROUP BY` / `HAVING` / `COUNT`, `ORDER BY`, aliases and CTEs, `INNER` / `LEFT` / `FULL JOIN`, `UNION`, analytic functions, nested and repeated data, query efficiency |
-| **Machine Learning** | train / validation split, `DecisionTreeRegressor`, `RandomForestRegressor`, MAE evaluation, underfitting vs overfitting, `max_leaf_nodes` tuning, refitting on full training data, Kaggle submission workflow, greedy forward feature selection |
-| **Tabular Modeling Workflow** | missing-value strategies with `SimpleImputer`, ordinal vs one-hot encoding, `OneHotEncoder(handle_unknown="ignore")`, `ColumnTransformer`, reusable `Pipeline` objects, `cross_val_score` for stable estimates, `XGBRegressor` with `learning_rate` / `n_estimators` / `early_stopping_rounds`, target leakage vs train-test contamination |
-| **Model Explainability** | permutation importance with `eli5` / `PermutationImportance`, one- and two-way partial dependence with `PartialDependenceDisplay`, SHAP values via `shap.TreeExplainer`, `force_plot` for single predictions, summary and dependence plots for global behavior, spotting feature interactions, validating explanations against observed rates and synthetic data |
-| **Feature Engineering** | mutual information scoring and ranking, reading MI as investigation prompts, interaction discovery with faceted `sns.lmplot`, ratio / count / combination features, one-hot interaction features, neighborhood context via grouped `transform("median")`, standardizing inputs for distance-based methods, `KMeans` cluster labels and `fit_transform` centroid-distance features, interpreting PCA loadings, PCA for variance summary and outlier detection, leakage-safe target encoding with `MEstimateEncoder` on a held-out split |
-| **Time Series** | time-step features, lag features, time-indexed train/validation discipline, centered moving averages, polynomial trends with `DeterministicProcess`, seasonal indicators, Fourier features with `CalendarFourier`, holiday regressors, partial autocorrelation, lag/lead feature alignment, rolling summaries from shifted targets, future-known covariates, hybrid residual models, multioutput/direct/recursive/DirRec forecasting strategies, `RegressorChain` multistep prediction, Store Sales submission formatting |
-| **Deep Learning** | Keras `Sequential` models, `Dense` layers and `input_shape`, reading `model.weights`, ReLU / ELU / SELU / Swish activations and explicit `Activation` layers, stochastic gradient descent with the Adam optimizer, MAE regression loss, `model.fit` over mini-batches and epochs, learning-curve diagnosis of underfitting vs overfitting, `EarlyStopping` with `restore_best_weights`, `Dropout` and `BatchNormalization` regularization, `sigmoid` output with `binary_crossentropy` loss and `binary_accuracy` for classification |
-| **Computer Vision** | frozen-base transfer learning, convolutional feature maps, learned and fixed kernels, ReLU activation, local maximum pooling, stride and padding geometry, 1D convolutional filters, custom `Conv2D` blocks, channel growth with spatial compression, tensor-shape and parameter-count tracing, dropout, label-preserving image augmentation, `RandomContrast`, `RandomFlip`, `RandomRotation`, batch-normalized binary image classification, TFRecord input pipelines, TPU-aware training setup, VGG16 feature extraction, multiclass softmax classification, Kaggle vision submission formatting |
-| **Geospatial Analysis** | `GeoDataFrame` loading with `gpd.read_file`, point geometry from coordinates with `points_from_xy`, CRS assignment and `to_crs` reprojection, projected area measurement, layered GeoPandas plots with deliberate draw order, Folium base maps, `HeatMap` density layers, `Circle` markers styled by attribute, `Choropleth` via `__geo_interface__`, `Marker` popups, `GeoJson` overlays, `LatLngPopup`, Nominatim geocoding with `DataFrame.update`, attribute merges on `GEOID`, compound site-selection filters, point-in-polygon counts with `gpd.sjoin`, `buffer` service areas, `unary_union` coverage polygons, `contains` filtering, nearest-facility search with `distance` and `idxmin`, demand ranking with `value_counts`, coverage-gap site proposals |
-| **Game AI and Reinforcement Learning** | ConnectX observation/configuration interface, legal-move filtering, immediate wins and blocks, board simulation with `drop_piece`, weighted window heuristics, random tie-breaking, depth-limited minimax reasoning, terminal-state detection, alpha-beta pruning, Gym environment wrapping, observation/action spaces, reward shaping, custom PyTorch CNN feature extraction, Stable-Baselines3 PPO training setup against `negamax`, Halite `Board` helpers, per-ship collect/deposit state, cargo thresholds, greedy resource collection, queued ship/shipyard actions, four-player match setup |
-| **AI Ethics** | probing a toxicity classifier with identity terms, inspecting word coefficients, identifying possible sources of bias in training data and evaluation |
-
-## Repository Layout
-
-```text
-kaggle/
-├── README.md                       ← you are here
-├── LICENSE
-├── 1_IntroToProgramming/           ✓ complete
-├── 2_Python/                       ✓ complete
-├── 3_Pandas/                       ✓ complete
-├── 4_DataVisualization/            ✓ complete
-├── 5_DataCleaning/                 ✓ complete
-├── 6_IntroToSQL/                   ✓ complete
-├── 7_AdvancedSQL/                  ✓ complete
-├── 8_IntroToMachineLearning/       ✓ complete
-├── 9_IntermediateMachineLearning/  ✓ complete
-├── 10_MachineLearningExplainability/  ✓ complete
-├── 11_FeatureEngineering/          ✓ complete
-├── 12_TimeSeries/                  ✓ complete
-├── 13_IntroToDeepLearning/         ✓ complete
-├── 14_ComputerVision/              ✓ complete
-├── 15_GeospatialAnalysis/          ✓ complete
-├── 16_IntroToGameAIAndReinforcementLearning/  ✓ complete
-└── 17_IntroToAIEthics/             in progress
-```
-
-```text
-CourseName/
-├── README.md                  Course overview, lesson tracker, core skills, certificate
-├── *Exercise.py               Exported Kaggle exercise solutions
-├── ...                        Supplemental practice files (when relevant)
-└── Cux Prada - Course.png     Completion certificate after the course is finished
-```
-
-## Reading Guide
-
-The exercise exports preserve cells from Kaggle notebooks. To rerun an exercise that uses Kaggle datasets, starter variables, or answer-checking helpers, open the corresponding notebook on Kaggle and run its setup cells first.
-
-1. Choose a course from the [roadmap](#roadmap) and open its README for the lesson list.
-2. Follow a lesson link to read the exercise file.
-3. Look under **Supplemental Practice** where available for applications such as the [four-player Halite agent](./16_IntroToGameAIAndReinforcementLearning/README.md#supplemental-practice-halite).
-
 ## After Kaggle Learn
 
-After completing the Kaggle AI track, I will complete **both of Andrew Ng's DeepLearning.AI specializations: Machine Learning first, then Deep Learning**. Both come **before I start fast.ai or any Hugging Face Learn course**. This is my chosen learning sequence; projects continue throughout.
+The Kaggle AI track is complete. Next, I will complete **both of Andrew Ng's DeepLearning.AI specializations: Machine Learning first, then Deep Learning**. Both come **before I start fast.ai or any Hugging Face Learn course**. This is my chosen learning sequence; projects continue throughout.
 
 | Order | Program | Focus | Status |
 |:-----:|---------|-------|:------:|
-| 1 | [Machine Learning Specialization](https://www.deeplearning.ai/specializations/machine-learning) - Andrew Ng, DeepLearning.AI and Stanford Online | Complete the three-course foundation in machine learning. | Planned |
+| 1 | [Machine Learning Specialization](https://www.deeplearning.ai/specializations/machine-learning) - Andrew Ng, DeepLearning.AI and Stanford Online | Complete the three-course foundation in machine learning. | **Up next** |
 | 2 | [Deep Learning Specialization](https://www.deeplearning.ai/specializations/deep-learning) - Andrew Ng, DeepLearning.AI | Complete the five-course specialization in neural networks and deep learning. | Planned |
 | 3 | [fast.ai - Practical Deep Learning for Coders](https://course.fast.ai) | Apply and deepen that foundation through practical model building and deployment. | Planned |
 | 4 | [Hugging Face Learn - all courses](https://huggingface.co/learn) | Work through the full course catalog, including LLMs, agents, deep RL, computer vision, audio, diffusion, robotics, and other available courses. | Planned |
@@ -239,10 +89,4 @@ The Hugging Face commitment covers **all courses in the Learn catalog**, beyond 
 
 ---
 
-<div align="center">
-
-**[MIT License](./LICENSE)** · CUX "INDIO" PRADA · 2026
-
-*Last updated November 18, 2026*
-
-</div>
+[MIT License](./LICENSE)

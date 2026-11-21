@@ -146,7 +146,7 @@ The implementation assigns these rewards:
 | Valid move with play continuing | `1 / (rows * columns)` | Continues the episode |
 | Invalid move into a full column | `-10` | Ends the episode immediately |
 
-The continuing-play reward is `1/42` on a 6 × 7 board; the earlier exercise comment says `1/100`, but `change_reward` defines the behavior used by the wrapper. Its terminal branch does not distinguish a draw from a loss. Full columns remain in the action space: this implementation penalizes invalid choices instead of masking them out.
+The continuing-play reward is `1/42` on a 6 × 7 board, as the wrapper's own `# Reward 1/42` comment says; the `1/100` in the export's opening comments answers the exercise's separate reward-design question, not this wrapper. Its terminal branch does not distinguish a draw from a loss. Full columns remain in the action space: this implementation penalizes invalid choices instead of masking them out.
 
 ### Policy and training setup
 
@@ -290,7 +290,7 @@ All four lesson exercise exports and the dated certificate are present. Halite i
 
 ## Next Steps
 
-- Continue to [Intro to AI Ethics](https://www.kaggle.com/learn/intro-to-ai-ethics), the final course in this repository's Kaggle roadmap.
+- Continue to [Intro to AI Ethics](../17_IntroToAIEthics/), the final course in this repository's Kaggle roadmap.
 - For a reproducible agent comparison, preserve package versions, random seeds, trained weights, and win/draw/loss results against named opponents, with games from both player positions.
 - Extend the Halite baseline with wrap-aware routing, collision avoidance, budget checks, and state initialization; compare scores and placements over multiple seeded games and player positions.
 
@@ -300,8 +300,8 @@ The overall learning sequence after Kaggle is maintained in the [root roadmap](.
 
 <div align="center">
 
-[← Geospatial Analysis](../15_GeospatialAnalysis/) · [Back to Roadmap](../README.md) · [Intro to AI Ethics →](https://www.kaggle.com/learn/intro-to-ai-ethics)
+[← Geospatial Analysis](../15_GeospatialAnalysis/) · [Back to Roadmap](../README.md) · [Intro to AI Ethics →](../17_IntroToAIEthics/)
 
-*Last updated: November 16, 2026*
+*Last updated: November 21, 2026*
 
 </div>

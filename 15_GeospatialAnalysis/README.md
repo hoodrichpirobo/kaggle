@@ -434,7 +434,7 @@ my_union = coverage.geometry.unary_union
 outside_range = collisions.loc[~collisions["geometry"].apply(lambda x: my_union.contains(x))]
 ```
 
-This is the lesson's central construction. `buffer(10000)` draws a service-area polygon around every hospital in the CRS's linear units, which the course treats as 10 kilometers. `unary_union` dissolves the overlapping circles into one coverage multipolygon, so the containment test is asked once per collision instead of once per hospital. `contains` then flags covered crashes, and the `~` negation keeps the ones that no service area reaches. The archived file keeps the first, loop-based attempt commented above the vectorized version - a record of the shift from "check each hospital for each crash" to "build the coverage once, then filter."
+This is the lesson's central construction. `buffer(10000)` draws a service-area polygon around every hospital in the CRS's linear units, which the course treats as 10 kilometers. `unary_union` dissolves the overlapping circles into one coverage multipolygon, so the containment test is asked once per collision instead of once per hospital. `contains` then flags covered crashes, and the `~` negation keeps the ones that no service area reaches. The archived file keeps the first, loop-based attempt commented above the union-based version that replaced it - a record of the shift from "check each hospital for each crash" to "build the coverage once, then filter."
 
 ### 4. Route any collision to its nearest hospital
 
@@ -535,7 +535,7 @@ From the five solved exercises:
 - Drawing polygon layers in Folium with `folium.GeoJson`
 - Reading coordinates interactively with `folium.LatLngPopup`
 - Reprojecting projected geometry back to EPSG:4326 for web-map display
-- Keeping a first draft commented beside the vectorized final answer
+- Keeping a first draft commented beside the final answer that replaced it
 - Exporting notebook maps to HTML with `embed_map`
 - Separating data loading, filtering, visualization, and interpretation into distinct steps
 - Reading spatial concentration as evidence rather than treating the map as decoration
@@ -662,7 +662,7 @@ This is the workflow the course builds. The five exercises walk it end to end, f
 - `unary_union` is the attribute the course teaches. GeoPandas 1.0 deprecates it in favor of `union_all()`, which performs the same dissolve.
 - `best_hospital` indexes with `iloc` on the label returned by `idxmin`. That is only safe because `hospitals` keeps its default integer index; after any filtering or sorting, use `.loc` with the label or `argmin` with `.iloc`.
 - The course's completion check reprojects the proposed sites to EPSG:2263 before buffering. That is the correct order: build geometry in the CRS the coordinates were read in, then transform into the CRS whose units the measurement needs.
-- The commented-out loops in [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) are kept on purpose. They record the first working approach beside the vectorized one that replaced it.
+- The commented-out loops in [ProximityAnalysisExercise.py](./ProximityAnalysisExercise.py) are kept on purpose. They record the first working approach beside the `unary_union` and `apply` version that replaced it.
 
 ## Completion Standard
 
@@ -696,6 +696,6 @@ The engineering discipline matters as much as the operations: assign the CRS bef
 
 <div align="center">
 
-[← Computer Vision](../14_ComputerVision/) · [Back to Roadmap](../README.md) · [Intro to Game AI and Reinforcement Learning →](https://www.kaggle.com/learn/intro-to-game-ai-and-reinforcement-learning)
+[← Computer Vision](../14_ComputerVision/) · [Back to Roadmap](../README.md) · [Intro to Game AI and Reinforcement Learning →](../16_IntroToGameAIAndReinforcementLearning/)
 
 </div>
